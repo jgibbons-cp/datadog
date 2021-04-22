@@ -1,5 +1,43 @@
 cd ..
 
+#maven installed
+mvn -v > /dev/null
+if [ "$?" -ne "0" ]
+then
+  echo "mvn not installed.... exiting..."
+  exit -1
+fi
+
+#jdk installed
+javac -version > /dev/null
+if [ "$?" -ne "0" ]
+then
+  echo "openjdk not installed.... tested with 11... exiting..."
+  exit -1
+else
+  #tested version
+  javac -version | grep 11
+  if [ "$?" -ne "0" ]
+  then
+    echo "openjdk version tested with was 11 just to note..."
+  fi
+fi
+
+#docker installed and configured
+docker > /dev/null
+if [ "$?" -ne "0" ]
+then
+  echo "docker not installed.... exiting..."
+  exit -1
+else
+  docker images > /dev/null
+  if [ "$?" -ne "0" ]
+  then
+    echo "docker daemon running, user in group... exiting..."
+    exit -1
+  fi
+fi
+
 #build war
 mvn compile && mvn package
 
