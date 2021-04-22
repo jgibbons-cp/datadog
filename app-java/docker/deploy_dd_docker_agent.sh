@@ -2,7 +2,7 @@
 
 if [ "$DD_API_KEY" == "" ]
 then
-  echo "Populate DD_API_KEY... exiting...\n"
+  echo "Populate DD_API_KEY... exiting..."
   exit -1
 fi
 
