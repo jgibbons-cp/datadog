@@ -1,4 +1,4 @@
-<%@ page language="java" 
+<%@ page language="java"
     contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -47,7 +47,7 @@
 </head>
 <body>
   	<form>
-  		<button type="button" onclick="call(window.location.origin+'/app-java-0.0.1-SNAPSHOT/query', 'POST', 'jdbc_query')">Query DB</button></br>
+  		<button type="button" onclick="call(window.location.origin+'${pageContext.request.contextPath}/query', 'POST', 'jdbc_query')">Query DB</button></br>
     	<pre id="response"></pre>
   	</form>
 </body>
