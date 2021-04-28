@@ -11,8 +11,8 @@
     <script>
         window.DD_RUM &&
             window.DD_RUM.init({
-                clientToken: '<CLIENT_TOKEN>',
-                applicationId: '<APP_ID>',
+                clientToken: 'CLIENT_TOKEN',
+                applicationId: 'APP_ID',
                 site: 'datadoghq.com',
                 service: 'app-java',
                 env: 'lab',
@@ -23,7 +23,7 @@
             })
         window.DD_LOGS &&
             DD_LOGS.init({
-                clientToken: '<CLIENT_TOKEN>',
+                clientToken: 'CLIENT_TOKEN',
                 site: 'datadoghq.com',
                 forwardErrorsToLogs: true,
                 sampleRate: 100,

@@ -74,8 +74,6 @@ if [ -e src/main/webapp/index.jsp.bak ];
     mv src/main/webapp/index.jsp.bak /tmp
 fi
 
-exit
-
 #build war
 mvn compile && mvn package
 
