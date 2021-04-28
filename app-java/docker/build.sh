@@ -37,33 +37,33 @@ args="-i"
 #args diff on mac/linux
 if [ "$os" == "Darwin" ]
   then
-    args="-i '.bak'"
+    args="-i .bak"
 fi
 
 #configure Datadog RUM and logs
-grep \<CLIENT_TOKEN\> src/main/webapp/index.jsp > /dev/null
+grep CLIENT_TOKEN src/main/webapp/index.jsp > /dev/null
 
 if [ "$?" -eq "0" ]
 then
-  echo "\nEnter Datadog clientToken from https://app.datadoghq.com/rum/list: "
+  echo "Enter Datadog clientToken from https://app.datadoghq.com/rum/list: "
   read client_token
   
   if [ ! -z "$client_token" ];
   then
-    sed $args 's/\<CLIENT_TOKEN\>/'$client_token'/g' src/main/webapp/index.jsp
+    sed $args 's/CLIENT_TOKEN/'$client_token'/g' src/main/webapp/index.jsp
   fi
 fi
 
-grep \<APP_ID\> src/main/webapp/index.jsp > /dev/null
+grep APP_ID src/main/webapp/index.jsp > /dev/null
 
 if [ "$?" -eq "0" ]
 then
-  echo "\nEnter Datadog applicationID from https://app.datadoghq.com/rum/list: "
+  echo "Enter Datadog applicationID from https://app.datadoghq.com/rum/list: "
   read application_id
 
   if [ ! -z "$application_id" ];
   then
-    sed $args 's/\<APP_ID\>/'$application_id'/g' src/main/webapp/index.jsp
+    sed $args 's/APP_ID/'$application_id'/g' src/main/webapp/index.jsp
   fi
 fi
 
@@ -73,6 +73,8 @@ if [ -e src/main/webapp/index.jsp.bak ];
     echo "\nGetting rid of backup jsp... moving to /tmp \n"
     mv src/main/webapp/index.jsp.bak /tmp
 fi
+
+exit
 
 #build war
 mvn compile && mvn package
