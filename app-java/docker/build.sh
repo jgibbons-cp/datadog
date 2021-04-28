@@ -12,19 +12,12 @@ fi
 javac -version > /dev/null
 if [ "$?" -ne "0" ]
 then
-  echo "openjdk not installed.... tested with 11... exiting..."
+  echo "openjdk not installed.... tested with 11 and 1.8... exiting..."
   exit -1
-else
-  #tested version
-  javac -version | grep 11
-  if [ "$?" -ne "0" ]
-  then
-    echo "openjdk version tested with was 11 just to note..."
-  fi
 fi
 
 #docker installed and configured
-docker > /dev/null
+docker &> /dev/null
 if [ "$?" -ne "0" ]
 then
   echo "docker not installed.... exiting..."
@@ -38,6 +31,41 @@ else
   fi
 fi
 
+#configure Datadog RUM and logs
+grep \<CLIENT_TOKEN\> src/main/webapp/index.jsp > /dev/null
+
+if [ "$?" -eq "0" ]
+then
+  echo "\nEnter Datadog clientToken from https://app.datadoghq.com/rum/list: "
+  read client_token
+  
+  if [ ! -z "$client_token" ];
+  then
+    sed -i '.bak' 's/\<CLIENT_TOKEN\>/'$client_token'/g' src/main/webapp/index.jsp
+  fi
+fi
+
+grep \<APP_ID\> src/main/webapp/index.jsp > /dev/null
+
+if [ "$?" -eq "0" ]
+then
+  echo "\nEnter Datadog applicationID from https://app.datadoghq.com/rum/list: "
+  read application_id
+
+  if [ ! -z "$application_id" ];
+  then
+    sed -i '.bak' 's/\<APP_ID\>/'$application_id'/g' src/main/webapp/index.jsp
+  fi
+fi
+
+#get .bak out of build if exists
+if [ -e src/main/webapp/index.jsp.bak ];
+  then
+    echo "\nGetting rid of backup jsp... moving to /tmp \n"
+    mv src/main/webapp/index.jsp.bak /tmp
+fi
+
+exit
 #build war
 mvn compile && mvn package
 
