@@ -9,7 +9,7 @@ then
 fi
 
 #jdk installed
-javac -version > /dev/null
+javac -version &> /dev/null
 if [ "$?" -ne "0" ]
 then
   echo "openjdk not installed.... tested with 11 and 1.8... exiting..."
@@ -31,6 +31,15 @@ else
   fi
 fi
 
+os=$(uname)
+args="-i"
+
+#args diff on mac/linux
+if [ "$os" == "Darwin" ]
+  then
+    args="-i '.bak'"
+fi
+
 #configure Datadog RUM and logs
 grep \<CLIENT_TOKEN\> src/main/webapp/index.jsp > /dev/null
 
@@ -41,7 +50,7 @@ then
   
   if [ ! -z "$client_token" ];
   then
-    sed -i '.bak' 's/\<CLIENT_TOKEN\>/'$client_token'/g' src/main/webapp/index.jsp
+    sed $args 's/\<CLIENT_TOKEN\>/'$client_token'/g' src/main/webapp/index.jsp
   fi
 fi
 
@@ -54,7 +63,7 @@ then
 
   if [ ! -z "$application_id" ];
   then
-    sed -i '.bak' 's/\<APP_ID\>/'$application_id'/g' src/main/webapp/index.jsp
+    sed $args 's/\<APP_ID\>/'$application_id'/g' src/main/webapp/index.jsp
   fi
 fi
 
