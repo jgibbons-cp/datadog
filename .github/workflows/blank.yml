@@ -2,8 +2,8 @@ name: snyk-vulnerability-assessment
 on: push
 env:
     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-    DATADOG_API_KEY: ${{ secrets.DD_API_KEY }}
-    DATADOG_APP_KEY: ${{ secrets.DD_APP_KEY }}
+    DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+    DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
     JAVA_HOME: /usr/local/openjdk-11 # Covers a bug in building this version of struts from this version of JDK
 jobs:
     vulnerability_analysis:
@@ -28,7 +28,7 @@ jobs:
         shell: bash
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
-          build-file: 'pom.xml'
+          build-file: 'app-java/pom.xml'
           service: 'java-app'
           version: '.01' # Must align with the version in the CDK for everything to match up
           datadog-api-key: ${{ secrets.DD_API_KEY }}
