@@ -8,11 +8,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
+          node-version: 12.x
       - name: Compute dependency graph
         run: docker run -e "SNYK_TOKEN=$SNYK_TOKEN" -v "$PWD:/project" snyk/snyk-cli:maven-3.6.3_java11 test --print-deps --json --file=app-java/pom.xml > deps.json
         continue-on-error: true
