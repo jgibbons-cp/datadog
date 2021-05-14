@@ -24,14 +24,14 @@ jobs:
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: where
-        run: ls app-java
+        run: cd .. ; ls
         shell: bash
       - name: Build artifacts with Maven
         run: cd .. && mvn install && cd - # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
-          build-file: 'app-java/pom.xml'
+          build-file: 'pom.xml'
           service: 'java-app'
           version: '.01' # Must align with the version in the CDK for everything to match up
           datadog-api-key: ${{ secrets.DD_API_KEY }}
