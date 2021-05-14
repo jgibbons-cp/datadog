@@ -27,7 +27,7 @@ jobs:
         run: cd ../datadog/app-java ; ls
         shell: bash
       - name: Build artifacts with Maven
-        run: cd ../datadog/app-java/ && mvn -Dsnyk.skip install && snyk test > deps.json # Artifacts must be pre-built in order to generate the dependency graph
+        run: cd ../datadog/app-java/ && mvn -Dsnyk.skip install && /opt/hostedtoolcache/node/12.22.1/x64/bin/snyk test > deps.json # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
