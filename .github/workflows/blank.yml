@@ -24,10 +24,10 @@ jobs:
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: where
-        run: cd .. ; ls
+        run: cd ../datadog/app-java ; ls
         shell: bash
       - name: Build artifacts with Maven
-        run: cd .. && mvn install && cd - # Artifacts must be pre-built in order to generate the dependency graph
+        run: cd ../datadog/app-java/ && mvn install && cd # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
