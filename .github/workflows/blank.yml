@@ -24,7 +24,7 @@ jobs:
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: where
-        run: find / -name snyk -print
+        run: find / -name snyk -print 2&>/dev/null
         shell: bash
       - name: Build artifacts with Maven
         run: cd ../datadog/app-java/ && mvn -Dsnyk.skip install && /opt/hostedtoolcache/node/12.22.1/x64/bin/snyk test > deps.json # Artifacts must be pre-built in order to generate the dependency graph
