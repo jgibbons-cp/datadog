@@ -27,7 +27,7 @@ jobs:
         run: ls app-java
         shell: bash
       - name: Build artifacts with Maven
-        run: mvn install # Artifacts must be pre-built in order to generate the dependency graph
+        run: cd .. && mvn install && cd - # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
