@@ -31,7 +31,7 @@ jobs:
       #  run: pwd; ls -l app-java
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
-          run: cd app-java
+          run: find . -name deps.json -print ; cd app-java ; ls ;
           build-file: 'pom.xml'
           service: 'java-app'
           version: '.01' # Must align with the version in the CDK for everything to match up
