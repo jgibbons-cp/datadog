@@ -27,10 +27,11 @@ jobs:
         run: cd ../datadog/app-java/ && mvn install # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
         continue-on-error: true
-      - name: where
-        run: pwd; ls -l app-java
+      #- name: where
+      #  run: pwd; ls -l app-java
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
+          run: cd app-java
           build-file: 'pom.xml'
           service: 'java-app'
           version: '.01' # Must align with the version in the CDK for everything to match up
