@@ -8,6 +8,10 @@ env:
 jobs:
     vulnerability_analysis:
       runs-on: ubuntu-latest
+      defaults:
+        run:
+          shell: bash
+          working-directory: /home/runner/work/datadog/datadog/app-java/
       steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -23,12 +27,12 @@ jobs:
       - name: Install Datadog CI
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
-      #- name: where
-      #  run: ls -l /opt/hostedtoolcache/node/12.22.1/x64/lib/node_modules/snyk/
       - name: Build artifacts with Maven
-        run: cd ../datadog/app-java/ && mvn install # Artifacts must be pre-built in order to generate the dependency graph
+        run: mvn install # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
         continue-on-error: true
+      #- name: where
+      #  run: pwd; ls -l app-java
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
           build-file: 'pom.xml'
@@ -37,3 +41,6 @@ jobs:
           datadog-api-key: ${{ secrets.DD_API_KEY }}
           datadog-app-key: ${{ secrets.DD_APP_KEY }}
           snyk-token: ${{ secrets.SNYK_TOKEN }}
+          continue-on-error: true
+      - name: where
+        run: find . -name deps.json -print
