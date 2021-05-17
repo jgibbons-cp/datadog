@@ -28,7 +28,7 @@ jobs:
         shell: bash
         continue-on-error: true
       - name: where
-        run: pwd; ls -l 
+        run: pwd; ls -l app-java
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
           build-file: 'pom.xml'
