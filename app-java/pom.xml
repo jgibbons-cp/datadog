@@ -1,10 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>app-java</groupId>
+  <!--groupId>app-java</groupId>
   <artifactId>app-java</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>app-java</name>
+  <name>app-java</name-->
+  <groupId>io.github.snyk</groupId>
+    <artifactId>todolist-mvc</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Todolist MVC parent module</name>
+    <description>A vulnerable demo application, initially based on Ben Hassine's TodoMVC.</description>
+    <url>https://github.com/jgibbons-cp/datadog/app-java</url>
   <build>
     <plugins>
       <plugin>
