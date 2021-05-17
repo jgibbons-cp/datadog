@@ -11,7 +11,7 @@ jobs:
       defaults:
         run:
           shell: bash
-          working-directory: app-java
+          working-directory: /home/runner/work/datadog/datadog/app-java/
       steps:
       - name: Checkout repository
         uses: actions/checkout@v2
