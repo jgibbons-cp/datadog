@@ -38,6 +38,7 @@
         <apiToken>${env.SNYK_TOKEN}</apiToken>
         <args>
           <arg>--all-projects</arg>
+          <arg>--json</arg>
         </args>
       </configuration>
     </plugin>
