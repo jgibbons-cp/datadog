@@ -8,8 +8,10 @@ env:
 jobs:
     vulnerability_analysis:
       runs-on: ubuntu-latest
-      env: 
-         working-directory: ./app-java/
+      defaults:
+        run:
+          shell: bash
+          working-directory: app-java
       steps:
       - name: Checkout repository
         uses: actions/checkout@v2
