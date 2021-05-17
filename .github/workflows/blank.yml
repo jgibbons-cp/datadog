@@ -43,4 +43,4 @@ jobs:
           snyk-token: ${{ secrets.SNYK_TOKEN }}
           continue-on-error: true
       - name: where
-        run: find . -name deps.json
+        run: find . -name deps.json -print
