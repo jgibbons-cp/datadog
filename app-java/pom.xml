@@ -15,7 +15,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
       </plugin>
-      <!--plugin>
+      <plugin>
       <groupId>io.snyk</groupId>
       <artifactId>snyk-maven-plugin</artifactId>
       <version>2.0.0</version>
@@ -37,10 +37,12 @@
       <configuration>
         <apiToken>${env.SNYK_TOKEN}</apiToken>
         <args>
-          <arg>json-file-output=/opt/hostedtoolcache/node/12.22.1/x64/lib/node_modules/@datadog/datadog-ci/deps.json</arg>
+          <arg>--print-deps</arg>
+          <arg>--json</arg>
+          <arg>json-file-output=/home/runner/work/datadog/datadog/deps.json</arg>
         </args>
       </configuration>
-    </plugin-->
+    </plugin>
     </plugins>
   </build>
   <dependencies>
