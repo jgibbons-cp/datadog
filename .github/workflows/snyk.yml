@@ -28,7 +28,7 @@ jobs:
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: Install Snyk CLI tools
-        run: npm install -g snyk && snyk 
+        run: npm install -g snyk && snyk test && ls fi
         shell: bash
       - name: Build artifacts with Maven
         run: cd app-java && mvn install # Artifacts must be pre-built in order to generate the dependency graph
