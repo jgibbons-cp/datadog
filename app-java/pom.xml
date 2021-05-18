@@ -1,16 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <!--groupId>app-java</groupId>
+  <groupId>app-java</groupId>
   <artifactId>app-java</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>app-java</name-->
-  <groupId>io.github.snyk</groupId>
-    <artifactId>todolist-mvc</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>Todolist MVC parent module</name>
-    <description>A vulnerable demo application, initially based on Ben Hassine's TodoMVC.</description>
-    <url>https://github.com/jgibbons-cp/datadog/app-java</url>
+  <name>app-java</name>
   <build>
     <plugins>
       <plugin>
@@ -21,7 +15,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
       </plugin>
-      <plugin>
+      <!--plugin>
       <groupId>io.snyk</groupId>
       <artifactId>snyk-maven-plugin</artifactId>
       <version>2.0.0</version>
@@ -43,10 +37,10 @@
       <configuration>
         <apiToken>${env.SNYK_TOKEN}</apiToken>
         <args>
-          <arg>--json-file-output=/opt/hostedtoolcache/node/12.22.1/x64/lib/node_modules/@datadog/datadog-ci/deps.json</arg>
+          <arg>json-file-output=/opt/hostedtoolcache/node/12.22.1/x64/lib/node_modules/@datadog/datadog-ci/deps.json</arg>
         </args>
       </configuration>
-    </plugin>
+    </plugin-->
     </plugins>
   </build>
   <dependencies>
