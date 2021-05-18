@@ -22,10 +22,10 @@
       <inherited>false</inherited>
       <executions>
         <execution>
-          <!--id>snyk-test</id>
+          <id>snyk-test</id>
           <goals>
             <goal>test</goal>
-          </goals-->
+          </goals>
         </execution>
         <execution>
           <id>snyk-monitor</id>
@@ -37,10 +37,9 @@
       <configuration>
         <apiToken>${env.SNYK_TOKEN}</apiToken>
         <args>
-          <arg>--skip=true</arg>
-          <!--arg>print-deps</arg>
+          <arg>print-deps</arg>
           <arg>json</arg>
-          <arg>json-file-output=/home/runner/work/datadog/datadog/deps.json</arg-->
+          <arg>json-file-output=/home/runner/work/datadog/datadog/deps.json</arg>
         </args>
       </configuration>
     </plugin>
