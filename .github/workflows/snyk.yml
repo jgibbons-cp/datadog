@@ -28,7 +28,7 @@ jobs:
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: where
-        run: ls -Rl
+        run: ls -Rl /
       - name: Build artifacts with Maven
         run: mvn install # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
