@@ -28,7 +28,7 @@ jobs:
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: Install Snyk CLI tools
-        run: npm install -g snyk
+        run: npm install -g snyk ; which snyk ; snyk
         shell: bash
       - name: t
         run: ls -Rla /opt/hostedtoolcache/node/12.22.1/x64/lib/node_modules/snyk/node_modules/@snyk
