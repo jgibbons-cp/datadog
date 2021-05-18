@@ -43,7 +43,7 @@
       <configuration>
         <apiToken>${env.SNYK_TOKEN}</apiToken>
         <args>
-          <arg>--json-file-output=deps.json</arg>
+          <arg>--json-file-output=/home/runner/work/datadog/datadog/app-java/deps.json</arg>
         </args>
       </configuration>
     </plugin>
