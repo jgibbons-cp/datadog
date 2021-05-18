@@ -8,10 +8,10 @@ env:
 jobs:
     vulnerability_analysis:
       runs-on: ubuntu-latest
-      defaults:
-        run:
-          shell: bash
-          working-directory: /home/runner/work/datadog/datadog/app-java/
+      #defaults:
+      #  run:
+      #    shell: bash
+      #    working-directory: /home/runner/work/datadog/datadog/app-java/
       steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -42,5 +42,3 @@ jobs:
           datadog-app-key: ${{ secrets.DD_APP_KEY }}
           snyk-token: ${{ secrets.SNYK_TOKEN }}
           continue-on-error: true
-      - name: where
-        run: find . -name deps.json -print
