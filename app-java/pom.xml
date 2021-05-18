@@ -43,8 +43,7 @@
       <configuration>
         <apiToken>${env.SNYK_TOKEN}</apiToken>
         <args>
-          <arg>--all-projects</arg>
-          <arg>--json</arg>
+          <arg>--file=app-java/pom.xml</arg>
         </args>
       </configuration>
     </plugin>
