@@ -25,10 +25,10 @@ jobs:
         with:
           node-version: 12.x
       - name: Install Datadog CI
-        run: npm install -g --save-dev @datadog/datadog-ci
+        run: npm install -g --save-dev @datadog/datadog-ci ; pwd
         shell: bash
       - name: Build artifacts with Maven
-        run: cd app-java && mvn install && cd /home/runner/work/datadog # Artifacts must be pre-built in order to generate the dependency graph
+        run: mvn install && cd /home/runner/work/datadog # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
         continue-on-error: true
       - uses: datadog/github-action-vulnerability-analysis@master
@@ -39,5 +39,3 @@ jobs:
           #datadog-api-key: ${{ secrets.DD_API_KEY }}
           #datadog-app-key: ${{ secrets.DD_APP_KEY }}
           #snyk-token: ${{ secrets.SNYK_TOKEN }}
-        continue-on-error: true
-      - run: pwd ; ls -R /home ; find . -name deps.json -print
