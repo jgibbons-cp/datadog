@@ -40,4 +40,4 @@ jobs:
           #datadog-app-key: ${{ secrets.DD_APP_KEY }}
           #snyk-token: ${{ secrets.SNYK_TOKEN }}
         continue-on-error: true
-      - run: pwd ; ls .. -R ; find . -name deps.json -print
+      - run: pwd ; ls -R /home ; find . -name deps.json -print
