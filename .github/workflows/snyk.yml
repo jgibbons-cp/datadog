@@ -39,3 +39,4 @@ jobs:
           #datadog-api-key: ${{ secrets.DD_API_KEY }}
           #datadog-app-key: ${{ secrets.DD_APP_KEY }}
           #snyk-token: ${{ secrets.SNYK_TOKEN }}
+      - run: pwd ; ls
