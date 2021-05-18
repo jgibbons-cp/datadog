@@ -27,10 +27,8 @@ jobs:
       - name: Install Datadog CI
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
-      - name: sn
-        run: find /home/ -name snyk -print
       - name: Build artifacts with Maven
-        run: mvn install # Artifacts must be pre-built in order to generate the dependency graph
+        run: cd app-java && mvn install && cd /opt/hostedtoolcache/node/12.22.1/x64/lib/node_modules/@datadog/datadog-ci/ # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
         continue-on-error: true
       - uses: datadog/github-action-vulnerability-analysis@master
