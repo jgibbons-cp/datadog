@@ -32,7 +32,7 @@ jobs:
         shell: bash
         continue-on-error: true
       - name: test
-        run: ls -lRa /home/runner/work/datadog/datadog/
+        run: ls -l /home/runner/work/datadog/datadog/
       #- uses: datadog/github-action-vulnerability-analysis@master
       #  with:
       #    #build-file: 'pom.xml'

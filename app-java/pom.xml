@@ -39,7 +39,7 @@
         <args>
           <arg>--print-deps</arg>
           <arg>--json</arg>
-          <arg>json-file-output=/home/runner/work/datadog/datadog/deps.json</arg>
+          <arg>--json-file-output=/home/runner/work/datadog/datadog/deps.json</arg>
         </args>
       </configuration>
     </plugin>
