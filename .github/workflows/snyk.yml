@@ -30,6 +30,8 @@ jobs:
       - name: Install Snyk CLI tools
         run: npm install -g snyk
         shell: bash
+      - name: t
+        run: ls -Ral /opt/hostedtoolcache/node/12.22.1/x64/bin/snyk
       - name: Build artifacts with Maven
         run: cd app-java && /opt/hostedtoolcache/node/12.22.1/x64/bin/snyk test --print-deps --json > deps.json && mvn install # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
