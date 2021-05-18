@@ -33,11 +33,11 @@ jobs:
         continue-on-error: true
       - name: test
         run: ls -l /home/runner/work/datadog/datadog/
-      #- uses: datadog/github-action-vulnerability-analysis@master
-      #  with:
-      #    #build-file: 'pom.xml'
-      #    service: 'java-app'
-      #    version: '.01' # Must align with the version in the CDK for everything to match up
-      #    #datadog-api-key: ${{ secrets.DD_API_KEY }}
-      #    #datadog-app-key: ${{ secrets.DD_APP_KEY }}
-      #    #snyk-token: ${{ secrets.SNYK_TOKEN }}
+      - uses: datadog/github-action-vulnerability-analysis@master
+        with:
+          #build-file: 'pom.xml'
+          service: 'java-app'
+          version: '.01' # Must align with the version in the CDK for everything to match up
+          #datadog-api-key: ${{ secrets.DD_API_KEY }}
+          #datadog-app-key: ${{ secrets.DD_APP_KEY }}
+          #snyk-token: ${{ secrets.SNYK_TOKEN }}
