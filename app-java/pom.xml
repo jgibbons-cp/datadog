@@ -36,7 +36,7 @@
       </executions>
       <configuration>
         <apiToken>${env.SNYK_TOKEN}</apiToken>
-        <skip>true</skip>
+        <skip>false</skip>
         <args>
           <arg>--print-deps</arg>
           <arg>--json</arg>
