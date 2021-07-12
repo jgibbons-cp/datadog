@@ -9,7 +9,7 @@ Steps to set up:
 
 2) From this [documentation](https://webexteamssdk.readthedocs.io/en/latest/user/quickstart.html) I was able to get my personal access token.  This is a developer token so you will likely need to get one from your admin.  I followed this:  
 
-*Get your Webex Teams Access Token*  
+3) Get your Webex Teams Access Token*  
 
 To interact with the Webex Teams APIs, you must have a Webex Teams Access Token. A Webex Teams Access Token is how the Webex Teams APIs validate access and identify the requesting user.  
 
@@ -19,13 +19,13 @@ To get your personal access token:
 * Click on Docs or browse to the [Getting Started](https://developer.webex.com/getting-started.html) page  
 * You will find your personal access token in the [Authentication](https://developer.webex.com/getting-started.html#authentication) section  
 
-2) Set your bearer token like such in a terminal:  
+4) Set your bearer token like such in a terminal:  
 
 export WEBEX_TEAMS_ACCESS_TOKEN=<token>  
 
 You will lose this when you exit the shell unless you put it in your profile and log out and back into the shell.  
 
-3) Using the [Webex REST API](https://developer.webex.com/docs/api/getting-started) you will need to get the room ID.  
+5) Using the [Webex REST API](https://developer.webex.com/docs/api/getting-started) you will need to get the room ID.  
 
 You can use the Python SDK or curl.  I would recommend using curl as it is more similar to the webhook format.  
 
