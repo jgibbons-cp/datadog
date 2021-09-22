@@ -32,7 +32,8 @@ documentation:
   * CORECLR_PROFILER_PATH_64
   * name: CORECLR_PROFILER
   * name: LD_LIBRARY_PATH
-  * name: LD_PRELOAD
+  * name: LD_PRELOAD - note the value in the artifacts is this rather than what
+  is in the docs - Datadog.Linux.ApiWrapper.x64.so
   * name: DD_ENV
   * name: DD_SERVICE
   * name: DD_VERSION
@@ -89,7 +90,7 @@ Apply
 
 You should see this with ```kubectl get pods```  You can confirm that the tracer
 agent is listening with this:  
-  
+
 datadog-agent-kzf57   3/3     Running   0          30s  
 datadog-agent-x5pk2   3/3     Running   0          30s  
 
