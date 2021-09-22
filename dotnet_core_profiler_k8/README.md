@@ -89,15 +89,15 @@ Apply
 
 You should see this with ```kubectl get pods```  You can confirm that the tracer
 agent is listening with this:  
+  
+datadog-agent-kzf57   3/3     Running   0          30s  
+datadog-agent-x5pk2   3/3     Running   0          30s  
 
 To confirm the tracer is running do this:  
 
 ```kubectl exec -it <pod_name> -- agent status```  
 
 and look for APM Agent in the output.  
-  
-datadog-agent-kzf57   3/3     Running   0          30s  
-datadog-agent-x5pk2   3/3     Running   0          30s  
 
 - ```kubectl create -f aspnc.yaml```  
 - ```kubectl create -f aspnc_service.yaml```  
