@@ -28,15 +28,15 @@ Based on the Linux .NET Core profiler documentation, the following environment
 variables have been added and need need to be configured based on the profiler
 documentation:
 
-  - CORECLR_ENABLE_PROFILING
-  - CORECLR_PROFILER_PATH_64
-  - name: CORECLR_PROFILER
-  - name: LD_LIBRARY_PATH
-  - name: LD_PRELOAD
-  - name: DD_ENV
-  - name: DD_SERVICE
-  - name: DD_VERSION
-  - name: DD_AGENT_HOST
+  * CORECLR_ENABLE_PROFILING
+  * CORECLR_PROFILER_PATH_64
+  * name: CORECLR_PROFILER
+  * name: LD_LIBRARY_PATH
+  * name: LD_PRELOAD
+  * name: DD_ENV
+  * name: DD_SERVICE
+  * name: DD_VERSION
+  * name: DD_AGENT_HOST
       valueFrom:
         fieldRef:
           apiVersion: v1
