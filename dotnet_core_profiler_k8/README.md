@@ -90,6 +90,8 @@ Apply
 You should see this with ```kubectl get pods```  You can confirm that the tracer
 agent is listening with this:  
 
+To confirm the tracer is running do this:  
+
 ```kubectl exec -it <pod_name> -- agent status```  
 
 and look for APM Agent in the output.  
