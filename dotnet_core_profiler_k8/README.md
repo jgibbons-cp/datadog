@@ -21,7 +21,8 @@ the following environment variables have been added to the yaml:
           - name: DD_AGENT_HOST
             valueFrom:
               fieldRef:
-                fieldPath: status.hostIP```
+                fieldPath: status.hostIP
+      ```
 
 Based on the Linux .NET Core profiler documentation, the following environment
 variables have been added and need need to be configured based on the profiler
