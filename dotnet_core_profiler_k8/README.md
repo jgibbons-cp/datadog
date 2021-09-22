@@ -86,6 +86,13 @@ Apply
 --
 
 - ```kubectl create -f datadog-agent-apm.yaml```
+
+You should see this with ```kubectl get pods```  
+
+NAME                  READY   STATUS    RESTARTS   AGE
+datadog-agent-kzf57   3/3     Running   0          30s
+datadog-agent-x5pk2   3/3     Running   0          30s
+
 - ```kubectl create -f aspnc.yaml```  
 - ```kubectl create -f aspnc_service.yaml```  
 
