@@ -28,7 +28,7 @@ libraries.
 Create an access policy as noted
 [here](https://docs.microsoft.com/en-us/azure/key-vault/secrets/quick-create-python)  
 
-The AZURE_CLIENT_ID will come from the return json in the rbac call.  
+The AZURE_CLIENT_ID will come from the return json in the RBAC call.  
 
  - az keyvault set-policy --name <YourKeyVaultName> --upn <AZURE_CLIENT_ID> --secret-permissions get
 
@@ -46,8 +46,8 @@ properly in the environment.
   - keyVaultName - the value name in your Azure Key Vault  
   - KVUri - the URI of the vault  
 
-5) Test that your Python script works by running python.exe get_secrets.py from
-within the same directory where you created the file. Once you see your results,
+5) Test that your Python script works by running ```python.exe get_secrets.py```
+from within the same directory where you created the file. Once you see your results,
  it needs to be converted to a binary (e.g. .exe on Windows).  
 
 6) Run ```pip install pyinstaller```, this is an open source Python to exe
@@ -64,7 +64,8 @@ as they were with the Python script.
 
 Note, in the datadog.yaml you will need the following:
 
-```secret_backend_command: <path_to_executable>
+```
+secret_backend_command: <path_to_executable>
 #example argument
 secret_backend_arguments:
   - secret2
