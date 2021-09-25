@@ -16,6 +16,7 @@ example that you have a secret called secret2 in a vault in Azure.
 
   - pip install azure-identity
   - pip install azure-keyvault-secrets
+  - [CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 
 2) Create an access policy as noted
 [here](https://docs.microsoft.com/en-us/azure/key-vault/secrets/quick-create-python)
