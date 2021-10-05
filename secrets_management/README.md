@@ -1,13 +1,21 @@
-Using Azure Vault with Datadog Integration Configurations
+Datadog Secrets Management Examples
 --
 
-This is a sample of how to use Azure Vault secrets with the secrets package to
-alleviate clear text variables in Datadog configuration files.  It is based on a
-repo from [here](https://github.com/DataDog/dpn/tree/master/scripts/secrets-exe)
-and may be merged in with it at some point.
+Examples of how to the secrets package to alleviate clear text variables in
+Datadog configuration files.  It is based on a repo from
+[here](https://github.com/DataDog/dpn/tree/master/scripts/secrets-exe) and may
+be merged in with it at some point.
 
-Setup
+Setup Test
 --
+
+Set ```BACKEND = TEST``` in get_secrets.py and ```value = ``` to the string value
+you want to use in your test.    
+
+Setup Azure
+--
+
+Set ```BACKEND = AZURE``` in get_secrets.py  
 
 The setup here is using an AWS Windows 2019 VM, Python, pip and the Azure CLI.  
 It is assumed for this example that you have a secret called secret2 in a vault
@@ -46,20 +54,23 @@ properly in the environment.
   - keyVaultName - the value name in your Azure Key Vault  
   - KVUri - the URI of the vault  
 
-5) Test that your Python script works by running ```python.exe get_secrets.py```
+Non-Backend Specific
+--
+
+1) Test that your Python script works by running ```python.exe get_secrets.py```
 from within the same directory where you created the file. Once you see your results,
  it needs to be converted to a binary (e.g. .exe on Windows).  
 
-6) Run ```pip install pyinstaller```, this is an open source Python to exe
+2) Run ```pip install pyinstaller```, this is an open source Python to exe
 [converter](https://www.pyinstaller.org/)  
 
-7) Next, run ```pyinstaller.exe --onefile .\get_secrets.py``` from within the same
+3) Next, run ```pyinstaller.exe --onefile .\get_secrets.py``` from within the same
 directory as get_secrets.py  In the same directory, a new directory will be
 created after you run this command called dist. ```cd``` into the it and run the
 new command ```.\get_secrets.exe``` and you should see your secrets output just
 as they were with the Python script.  
 
-8) You can now use this application in your Datadog config as outlined
+4) You can now use this application in your Datadog config as outlined
 [here](https://docs.datadoghq.com/agent/guide/secrets-management/?tab=windows#providing-an-executable)
 
 Note, in the datadog.yaml you will need the following:
@@ -71,7 +82,7 @@ secret_backend_arguments:
   - secret2
 ```
 
-Permissions
+Permissions - Windows
 --
 
 The Datadog Agent will drop the integration if the permissions are not set
@@ -81,3 +92,6 @@ properly on the file, they should be as follows:
  - Administrators group has full control
  - ddagenteruser (or whatever the Agent's user was named) user has read &
  execute access (full control worked, too)
+
+This permissions error will also return if environment variables are not
+available (e.g. AZURE_CLIENT_ID).  
