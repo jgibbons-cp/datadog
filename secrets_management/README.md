@@ -6,13 +6,13 @@ Datadog configuration files.  It is based on a repo from
 [here](https://github.com/DataDog/dpn/tree/master/scripts/secrets-exe) and may
 be merged in with it at some point.
 
-Setup Test
+Setup Test Example
 --
 
 Set ```BACKEND = TEST``` in get_secrets.py and ```value = ``` to the string value
 you want to use in your test.    
 
-Setup Azure
+Setup Azure Vault Example
 --
 
 Set ```BACKEND = AZURE``` in get_secrets.py  
@@ -54,7 +54,7 @@ properly in the environment.
   - keyVaultName - the value name in your Azure Key Vault  
   - KVUri - the URI of the vault  
 
-Non-Backend Specific
+Setup - Non-Backend Specific Related
 --
 
 1) Test that your Python script works by running ```python.exe get_secrets.py```
