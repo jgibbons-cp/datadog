@@ -41,31 +41,31 @@ if [ "$os" == "Darwin" ]
 fi
 
 #configure Datadog RUM and logs
-grep CLIENT_TOKEN src/main/webapp/index.jsp > /dev/null
+#grep CLIENT_TOKEN src/main/webapp/index.jsp > /dev/null
 
-if [ "$?" -eq "0" ]
-then
-  echo "Enter Datadog clientToken from https://app.datadoghq.com/rum/list: "
-  read client_token
-  
-  if [ ! -z "$client_token" ];
-  then
-    sed $args 's/CLIENT_TOKEN/'$client_token'/g' src/main/webapp/index.jsp
-  fi
-fi
+#if [ "$?" -eq "0" ]
+#then
+#  echo "Enter Datadog clientToken from https://app.datadoghq.com/rum/list: "
+#  read client_token
 
-grep APP_ID src/main/webapp/index.jsp > /dev/null
+#  if [ ! -z "$client_token" ];
+#  then
+#    sed $args 's/CLIENT_TOKEN/'$client_token'/g' src/main/webapp/index.jsp
+#  fi
+#fi
 
-if [ "$?" -eq "0" ]
-then
-  echo "Enter Datadog applicationID from https://app.datadoghq.com/rum/list: "
-  read application_id
+#grep APP_ID src/main/webapp/index.jsp > /dev/null
 
-  if [ ! -z "$application_id" ];
-  then
-    sed $args 's/APP_ID/'$application_id'/g' src/main/webapp/index.jsp
-  fi
-fi
+#if [ "$?" -eq "0" ]
+#then
+#  echo "Enter Datadog applicationID from https://app.datadoghq.com/rum/list: "
+#  read application_id
+
+#  if [ ! -z "$application_id" ];
+#  then
+#    sed $args 's/APP_ID/'$application_id'/g' src/main/webapp/index.jsp
+#  fi
+#fi
 
 #get .bak out of build if exists
 if [ -e src/main/webapp/index.jsp.bak ];
@@ -83,7 +83,7 @@ if [ ! -f ./dd-java-agent.jar ]; then
     wget -O dd-java-agent.jar https://dtdg.co/latest-java-tracer
 fi
 
-docker build -t jgibbons-cp/app-java -f docker/Dockerfile.tomcat .
+docker build -t jenksgibbons/app-java -f docker/Dockerfile.tomcat .
 
 if [ ! -d "initdb" ]
 then
@@ -108,7 +108,7 @@ then
   echo "flush privileges;" >> initdb/user_lab.sql
 
   #build mysql container with db
-  docker build -t jgibbons-cp/mysql -f docker/Dockerfile.mysql .
+  docker build -t jenksgibbons/mysql_ja -f docker/Dockerfile.mysql .
 else
   echo "mysql employees scripts already here.... not building mysql container...\n"
 fi

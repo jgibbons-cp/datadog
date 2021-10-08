@@ -4,4 +4,4 @@
 source ./create_network.sh
 
 #deploy mysql employees db
-docker run --detach --network $lab_network --name=mysql_test --publish 3306:3306 jgibbons-cp/mysql
+docker run --detach --network $lab_network --name=mysql-test --publish 3306:3306 jenksgibbons/mysql_ja

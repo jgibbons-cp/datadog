@@ -9,10 +9,17 @@
     <script src="https://www.datadoghq-browser-agent.com/datadog-rum.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://www.datadoghq-browser-agent.com/datadog-logs.js"></script>
     <script>
+        <%
+          /*get Datadog token and id from env and set them in init*/
+          String clientToken = "";
+          clientToken = System.getenv("CLIENT_TOKEN");
+          String applicationId = "";
+          applicationId = System.getenv("APPLICATION_ID");
+        %>
         window.DD_RUM &&
             window.DD_RUM.init({
-                clientToken: 'CLIENT_TOKEN',
-                applicationId: 'APP_ID',
+                clientToken: "<%=clientToken%>",
+                applicationId: "<%=applicationId%>",
                 site: 'datadoghq.com',
                 service: 'app-java',
                 env: 'lab',
@@ -23,7 +30,7 @@
             })
         window.DD_LOGS &&
             DD_LOGS.init({
-                clientToken: 'CLIENT_TOKEN',
+                clientToken: "<%=clientToken%>",
                 site: 'datadoghq.com',
                 forwardErrorsToLogs: true,
                 sampleRate: 100,
