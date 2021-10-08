@@ -26,7 +26,7 @@ This will install mvn and multiple versions of Java.  By default it will use Jav
 in 'Edit Application' with ```export CLIENT_TOKEN=<CLIENT_TOKEN>```  
 - Export your
 [RUM Application ID](https://app.datadoghq.com/rum/list?from_ts=1633643340056&to_ts=1633729740056&live=true)
-in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>  
+in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```  
 - ```cd datadog/app-java/docker/```  
 - Build the app  
   - ```sh build.sh```  
