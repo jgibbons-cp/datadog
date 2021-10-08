@@ -19,6 +19,14 @@ This will install mvn and multiple versions of Java.  By default it will use Jav
 
 - Export your [API key](https://app.datadoghq.com/account/settings#api)  
  'export DD_API_KEY=<API_KEY>'  
+- Add your
+[RUM Client Token](https://app.datadoghq.com/rum/list?from_ts=1633643340056&to_ts=1633729740056&live=true)
+in 'Edit Application' to the environment variable in deploy_app_java.sh by
+replacing <CLIENT_TOKEN>
+- Add your
+[RUM Application ID](https://app.datadoghq.com/rum/list?from_ts=1633643340056&to_ts=1633729740056&live=true)
+in 'Edit Application' to the environment variable in deploy_app_java.sh by
+replacing <APPICATION_ID>
 - 'cd datadog/app-java/docker/'  
 - Build the app  
   - 'sh build.sh'  
