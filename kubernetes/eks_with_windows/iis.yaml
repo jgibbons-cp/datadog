@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: iis
+  name: iis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: iis
+  template:
+    metadata:
+      labels:
+        run: iis
+    spec:
+      containers:
+      - image: mcr.microsoft.com/windows/servercore/iis
+        name: iis
+      nodeSelector:
+        kubernetes.io/os: windows
+      tolerations:
+      - key: "node.kubernetes.io/os"
+        operator: "Equal"
+        value: "windows"
