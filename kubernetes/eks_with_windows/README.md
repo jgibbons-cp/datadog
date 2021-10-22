@@ -1,4 +1,4 @@
-Create an EKS Cluster with a Windows Worker Node
+Create an EKS Cluster with a Windows Worker Node - Deploy Datadog - Deploy IIS 
 --
 
 The following steps will guide you on how to create an EKS Cluster on AWS with
