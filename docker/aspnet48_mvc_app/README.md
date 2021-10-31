@@ -1,6 +1,9 @@
 Build an ASPNet48 MVC Windows Server Core LTSC 2019 App and Trace with Datadog
 --
 
+NOTE: to setup a multi-node / OS cluster in EKS for this see
+[this repo](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/eks_with_windows)  
+  
 Files
 --
 
