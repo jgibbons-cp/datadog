@@ -9,14 +9,14 @@ to execute and trace
 
 2) aspnet48_mvc_win_server_core_ltsc_2019_app\Dockerfile
 
-This will build the container we need to execute the app and start the tracer.
+   This will build the container we need to execute the app and start the tracer.
 
-A few notes about the build as this is a bit different from what I have seen on
-Linux:
+   A few notes about the build as this is a bit different from what I have seen on
+   Linux:
 
-- #base images in Dockerfile and notes
-  FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
-  FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019 AS runtime
+- #base images in Dockerfile and notes  
+  FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build  
+  FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019 AS runtime  
 
   From [Datadog documentation](https://docs.datadoghq.com/agent/troubleshooting/windows_containers/)
   note the following:
@@ -71,7 +71,8 @@ Run
    docker network create --driver <network_name>
    ```
 
-2) Run the Datadog agent
+2) Run the Datadog agent  
+--
 
    ```
     docker run -d --network <network_name> --name dd-agent -e DD_API_KEY=<api_key>
@@ -91,15 +92,7 @@ Run
 3) Run the application
 
    ```
-    docker run -d --network <network_name> -p 80:80
-    -e DD_APM_NON_LOCAL_TRAFFIC="true"
-    -e DD_ENV="<env>"
-    -e DD_SERVICE="<service>"
-    -e DD_VERSION="<version>"
-    -e DD_APM_ENABLED="true"
-    -e DD_AGENT_HOST=dd-agent #name of agent container
-    -e DD_HOSTNAME="<hostname>"
-    -e DD_TRACE_AGENT_PORT=8126 <image>
+    docker run -d --network <network_name> -p 80:80 -e DD_APM_NON_LOCAL_TRAFFIC="true" -e DD_ENV="<env>" -e DD_SERVICE="<service>" -e DD_VERSION="<version>" -e DD_APM_ENABLED="true" -e DD_AGENT_HOST=dd-agent #name of agent container -e DD_HOSTNAME="<hostname>" -e DD_TRACE_AGENT_PORT=8126 <image>
    ```
    # DD_APM_NON_LOCAL_TRAFFIC="true"  - enable tracing from other containers
    # DD_AGENT_HOST=dd-agent - agent host, go to name of agent container
