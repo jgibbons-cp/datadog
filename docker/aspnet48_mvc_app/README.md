@@ -72,7 +72,6 @@ Run
    ```
 
 2) Run the Datadog agent  
---
 
    ```
     docker run -d --network <network_name> --name dd-agent -e DD_API_KEY=<api_key>
@@ -81,13 +80,13 @@ Run
       -v \\.\pipe\docker_engine:\\.\pipe\docker_engine gcr.io/datadoghq/agent
    ```
 
-   DD_API_KEY - Datadog API key
-   [Unified service tagging](https://docs.datadoghq.com/getting_started/tagging/unified_service_tagging/?tab=kubernetes)
-   DD_ENV - Datadog environment tag
-   DD_SERVICE - Datadog service tag
-   DD_VERSION - Datadog Version tag
-   DD_APM_ENABLED="true" - enable APM (application performance monitoring)
-   DD_APM_NON_LOCAL_TRAFFIC="true" - enable tracing from other containers
+   DD_API_KEY - Datadog API key  
+   [Unified service tagging](https://docs.datadoghq.com/getting_started/tagging/unified_service_tagging/?tab=kubernetes)  
+   DD_ENV - Datadog environment tag  
+   DD_SERVICE - Datadog service tag  
+   DD_VERSION - Datadog Version tag  
+   DD_APM_ENABLED="true" - enable APM (application performance monitoring)  
+   DD_APM_NON_LOCAL_TRAFFIC="true" - enable tracing from other containers  
 
 3) Run the application
 
@@ -95,14 +94,14 @@ Run
     docker run -d --network <network_name> -p 80:80 -e
     DD_APM_NON_LOCAL_TRAFFIC="true" -e DD_ENV="<env>" -e DD_SERVICE="<service>"
     -e DD_VERSION="<version>" -e DD_APM_ENABLED="true" -e
-    DD_AGENT_HOST=dd-agent #name of agent container -e DD_HOSTNAME="<hostname>"
+    DD_AGENT_HOST=dd-agent -e DD_HOSTNAME="<hostname>"
     -e DD_TRACE_AGENT_PORT=8126 <image>
    ```
-   DD_APM_NON_LOCAL_TRAFFIC="true"  - enable tracing from other containers
-   DD_AGENT_HOST=dd-agent - agent host, go to name of agent container
-   DD_HOSTNAME - hostname if not automatically picked up
-   DD_TRACE_AGENT_PORT=8126 - trace port
-
+   DD_APM_NON_LOCAL_TRAFFIC="true"  - enable tracing from other containers  
+   DD_AGENT_HOST=dd-agent - agent host, go to name of agent container  
+   DD_HOSTNAME - hostname if not automatically picked up  
+   DD_TRACE_AGENT_PORT=8126 - trace port  
+  
 4) Hit the app to get some traffic
 
    In your browser hit ```http://localhost``` and click around
