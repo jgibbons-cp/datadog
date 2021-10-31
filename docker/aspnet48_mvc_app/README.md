@@ -47,7 +47,7 @@ to execute and trace
 
    will set the IP for the agent container.  I need to look into this, but I think
    this can also just be done with a network the containers share making this
-   unecessary, but for now this works and I will investigate later.
+   unecessary, but for now this works and I will investigate later (so may be redundant and not being used).
 
    Next, it stops/restarts IIS then starts the application.
 
