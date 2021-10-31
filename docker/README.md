@@ -92,7 +92,11 @@ Run
 3) Run the application
 
    ```
-    docker run -d --network <network_name> -p 80:80 -e DD_APM_NON_LOCAL_TRAFFIC="true" -e DD_ENV="<env>" -e DD_SERVICE="<service>" -e DD_VERSION="<version>" -e DD_APM_ENABLED="true" -e DD_AGENT_HOST=dd-agent #name of agent container -e DD_HOSTNAME="<hostname>" -e DD_TRACE_AGENT_PORT=8126 <image>
+    docker run -d --network <network_name> -p 80:80 -e
+    DD_APM_NON_LOCAL_TRAFFIC="true" -e DD_ENV="<env>" -e DD_SERVICE="<service>"
+    -e DD_VERSION="<version>" -e DD_APM_ENABLED="true" -e
+    DD_AGENT_HOST=dd-agent #name of agent container -e DD_HOSTNAME="<hostname>"
+    -e DD_TRACE_AGENT_PORT=8126 <image>
    ```
    DD_APM_NON_LOCAL_TRAFFIC="true"  - enable tracing from other containers
    DD_AGENT_HOST=dd-agent - agent host, go to name of agent container
