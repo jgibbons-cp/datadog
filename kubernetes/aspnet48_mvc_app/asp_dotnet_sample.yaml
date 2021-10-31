@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: sample
+  name: sample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: sample
+  template:
+    metadata:
+      labels:
+        run: sample
+    spec:
+      containers:
+      - image: jenksgibbons/dnet_sample # sample image
+        imagePullPolicy: IfNotPresent
+        name: sample
+        env:
+          - name: DD_AGENT_HOST
+            value: dd-agent
+          - name: DD_APM_NON_LOCAL_TRAFFIC
+            value: "true"
+          - name: DD_ENV
+            value: "test"
+          - name: DD_SERVICE
+            value: "test"
+          - name: DD_VERSION
+            value: "1.0"
+      nodeSelector:
+        kubernetes.io/os: windows
+      tolerations:
+      - key: "node.kubernetes.io/os"
+        operator: "Equal"
+        value: "windows"
