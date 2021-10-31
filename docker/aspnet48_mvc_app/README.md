@@ -57,7 +57,7 @@ Build
 To build the container run:
 
 ```
-docker build -t <image_name> .
+cd aspnet48_mvc_win_server_core_ltsc_2019_app;docker build -t <image_name> .
 ```
 
 Then push it to a repository or run it locally.
