@@ -40,7 +40,7 @@ http://<load_balancerFQDN>
 ```  
 
 4) Connect the trace agent to the Datadog agent with a service on the agent
-after getting pod for Datadog Windows agent pod with (with sample pod name):  
+after getting pod for Datadog Windows agent with (with sample pod name):  
 
 ```
 $ kubectl get po | grep win

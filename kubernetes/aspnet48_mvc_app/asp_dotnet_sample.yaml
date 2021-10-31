@@ -24,11 +24,11 @@ spec:
           - name: DD_APM_NON_LOCAL_TRAFFIC
             value: "true"
           - name: DD_ENV
-            value: "test"
+            value: "<env>"
           - name: DD_SERVICE
-            value: "test"
+            value: "<service>"
           - name: DD_VERSION
-            value: "1.0"
+            value: "<version>"
       nodeSelector:
         kubernetes.io/os: windows
       tolerations:
