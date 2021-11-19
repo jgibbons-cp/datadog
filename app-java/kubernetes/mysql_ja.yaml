@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: mysql
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: mysql
+  template:
+    metadata:
+      labels:
+        run: mysql
+    spec:
+      containers:
+      - image: jenksgibbons/mysql_ja
+        name: mysql
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+          hostPort: 3306
+          name: mysqld
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: mysql
+  name: mysql-test
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    run: mysql
+  type: ClusterIP

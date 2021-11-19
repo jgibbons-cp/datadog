@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: app-java
+  name: app-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: app-java
+  template:
+    metadata:
+      labels:
+        run: app-java
+    spec:
+      containers:
+      - image: jenksgibbons/app-java
+        name: app-java
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: JAVA_OPTS
+          value: "-javaagent:/usr/local/tomcat/lib/dd-java-agent.jar -Ddd.service=java-app -Ddd.version=.01 -Ddd.env=lab -Ddd.logs.injection=true -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256"
+        - name: DD_AGENT_HOST
+          #value: "dd-agent"
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: DD_TRACE_AGENT_PORT
+          value: "8126"
+        - name: CLIENT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: dd-rum-tokens
+              key: CLIENT_TOKEN
+        - name: APPLICATION_ID
+          valueFrom:
+            secretKeyRef:
+              name: dd-rum-tokens
+              key: APPLICATION_ID
+        ports:
+        - containerPort: 8080
+          hostPort: 8080
+          name: "http"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: app-java
+  name: app-java
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: app-java
+  type: LoadBalancer
