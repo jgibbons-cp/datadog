@@ -1,6 +1,8 @@
 Create an EKS Cluster with a Windows Worker Node - Deploy Datadog - Deploy IIS 
 --
-
+  
+NOTE: EKS does not support hostPort out-of-the-box so don't use this for Datadog tracing.  If you know how to get this working on EKS please ping me or submit a PR.  
+   
 The following steps will guide you on how to create an EKS Cluster on AWS with
 a Windows worker node.  It will also guide you in how to deploy the Datadog K8
 agent using helm on the master node as well as the Linix and Windows worker
