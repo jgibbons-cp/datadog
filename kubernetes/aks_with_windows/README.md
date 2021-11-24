@@ -114,7 +114,7 @@ enabled: true #under metrics provider
 enabled: true #under Admissions controller  
 join: true #under existingClusterAgent:  
 serviceName:  dd-agent-datadog-cluster-agent #under existingClusterAgent:  
-tokenSecretName: dd-agent-dat888adog-cluster-agent#under existingClusterAgent:  
+tokenSecretName: dd-agent-datadog-cluster-agent#under existingClusterAgent:  
 ```
 
 ```
