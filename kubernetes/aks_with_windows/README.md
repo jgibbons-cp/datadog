@@ -9,17 +9,17 @@ Instructions - taken from
 
 2) Create a resource group  
 
-`az group create --name \<RESOURCE_GROUP_NAME\> --location \<REGION\>`  
+`az group create --name <RESOURCE_GROUP_NAME> --location <REGION>`  
 
 3) Create a Cluster  
 
 `az aks create \
-    --resource-group \<RESOURCE_GROUP_NAME\> \
-    --name \<CLUSTER_NAME\> \
+    --resource-group <RESOURCE_GROUP_NAME> \
+    --name <CLUSTER_NAME> \
     --node-count 2 \
     --enable-addons monitoring \
     --generate-ssh-keys \
-    --windows-admin-username \<USERNAMER\> \
+    --windows-admin-username <USERNAME> \
     --vm-set-type VirtualMachineScaleSets \
     --kubernetes-version 1.20.7 \
     --network-plugin azure
@@ -30,16 +30,16 @@ After running this provide a Windows Admin password to kick off the deployment.
 4) Add a Windows nodepool  
 
 `az aks nodepool add \
-    --resource-group \<RESOURCE_GROUP_NAME\> \
-    --cluster-name \<CLUSTER_NAME\> \
+    --resource-group <RESOURCE_GROUP_NAME> \
+    --cluster-name <CLUSTER_NAME> \
     --os-type Windows \
-    --name \<NODEPOOL_NAME\> \
+    --name <NODEPOOL_NAME> \
     --node-count 2
 `  
 
 5) Get credentials  
 
-`sudo az aks get-credentials --resource-group \<RESOURCE_GROUP_NAME\> --name \<CLUSTER_NAME\>`  
+`sudo az aks get-credentials --resource-group <RESOURCE_GROUP_NAME> --name <CLUSTER_NAME>`  
 
 6)  Look at cluster... NOTE: not sure why I have to use sudo on kubectl and
 helm... messed with a bit then gave up.  If you know why please ping me or
@@ -60,14 +60,14 @@ aksxxx1     Ready    agent   8m16s   v1.20.7 Windows Server 2019 Datacenter`
 8) Create secrets for agent using keys from
 [here](https://app.datadoghq.com/organization-settings/users).  
 
-`sudo kubectl create secret generic datadog-agent --from-literal api-key=\<key\> --from-literal app-key=\<key\>`  
+`sudo kubectl create secret generic datadog-agent --from-literal api-key=<key> --from-literal app-key=<key>`  
 
 9) Install Linux Datadog agent from
 [here](https://docs.datadoghq.com/agent/kubernetes/?tab=helm)  
 
 In values.yaml set the following:  
 
-`clusterName:  \<cluster_name\>  
+`clusterName:  <cluster_name>  
 tlsVerify: false
 portEnabled: true #under apm  `
 
@@ -79,7 +79,7 @@ sudo helm install dd-agent -f values.yaml datadog/datadog`
 
 In values_win.yaml set the following:  
 
-`clusterName:  \<cluster_name\>  
+`clusterName:  <cluster_name>  
 tlsVerify: false
 portEnabled: true #under apm  
 kubeStateMetricsEnabled: false
