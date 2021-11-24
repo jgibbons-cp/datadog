@@ -71,13 +71,7 @@ aksxxx0     Ready    agent   7m23s   v1.20.7 Windows Server 2019 Datacenter
 aksxxx1     Ready    agent   8m16s   v1.20.7 Windows Server 2019 Datacenter  
 ```
 
-7) Taint the Windows nodes for Datadog agent install  
-
-```
-sudo kubectl taint node <node> node.kubernetes.io/os=windows:NoSchedule
-```  
-
-8) Create secrets for agent using keys from
+7) Create secrets for agent using keys from
 [here](https://app.datadoghq.com/organization-settings/users).  
 
 ```
@@ -86,7 +80,7 @@ sudo kubectl create secret generic datadog-agent \
         --from-literal app-key=<key>
 ```  
 
-9) Install Linux Datadog agent from
+8) Install Linux Datadog agent from
 [here](https://docs.datadoghq.com/agent/kubernetes/?tab=helm)  
 
 In values.yaml set the following:  
@@ -103,7 +97,7 @@ sudo helm repo update
 sudo helm install dd-agent -f values.yaml datadog/datadog  
 ```  
 
-10) Install Windows Datadog agent
+9) Install Windows Datadog agent
 
 In values_win.yaml set the following:  
 
@@ -119,20 +113,21 @@ enabled: false #under Cluster Agent
 enabled: true #under metrics provider  
 enabled: true #under Admissions controller  
 join: true #under existingClusterAgent:  
-serviceName:  dd-agent-datadog-cluster-agent    
+serviceName:  dd-agent-datadog-cluster-agent #under existingClusterAgent:  
+tokenSecretName: dd-agent-dat888adog-cluster-agent#under existingClusterAgent:  
 ```
 
 ```
 sudo helm install dd-agent-win -f values.yaml datadog/datadog
 ```  
 
-11) [Trace](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/aspnet48_mvc_app)
+10) [Trace](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/aspnet48_mvc_app)
 a Windows .NET application in Datadog  
 
-12) Need to connect to a node - see
+11) Need to connect to a node - see
 [here](https://docs.microsoft.com/en-us/azure/aks/rdp)  
 
-13) Delete the cluster  
+12) Delete the cluster  
 
 ```
 az group delete \
