@@ -15,20 +15,20 @@ az login
 
 ```
 az group create \
-        --name <RESOURCE_GROUP_NAME> \
-        --location <REGION>
+        --name RESOURCE_GROUP_NAME \
+        --location REGION
 ```  
 
 3) Create a Cluster  
 
 ```
 az aks create \
-        --resource-group <RESOURCE_GROUP_NAME> \
-        --name <CLUSTER_NAME> \
+        --resource-group RESOURCE_GROUP_NAME \
+        --name CLUSTER_NAME \
         --node-count 2 \
         --enable-addons monitoring \
         --generate-ssh-keys \
-        --windows-admin-username <USERNAME> \
+        --windows-admin-username USERNAME \
         --vm-set-type VirtualMachineScaleSets \
         --kubernetes-version 1.20.7 \
         --network-plugin azure
@@ -40,10 +40,10 @@ After running this provide a Windows Admin password to kick off the deployment.
 
 ```
 az aks nodepool add \
-        --resource-group <RESOURCE_GROUP_NAME> \
-        --cluster-name <CLUSTER_NAME> \
+        --resource-group RESOURCE_GROUP_NAME \
+        --cluster-name CLUSTER_NAME \
         --os-type Windows \
-        --name <NODEPOOL_NAME> \
+        --name NODEPOOL_NAME \
         --node-count 2
 ```  
 
@@ -51,8 +51,8 @@ az aks nodepool add \
 
 ```
 sudo az aks get-credentials \
-        --resource-group <RESOURCE_GROUP_NAME> \
-        --name <CLUSTER_NAME>
+        --resource-group RESOURCE_GROUP_NAME \
+        --name CLUSTER_NAME
 ```  
 
 6)  Look at cluster... NOTE: not sure why I have to use sudo on kubectl and
@@ -92,7 +92,7 @@ sudo kubectl create secret generic datadog-agent \
 In values.yaml set the following:  
 
 ```
-clusterName:  <cluster_name>    
+clusterName:  CLUSTER_NAME    
 tlsVerify: false  
 portEnabled: true #under apm  
 ```
@@ -108,7 +108,7 @@ sudo helm install dd-agent -f values.yaml datadog/datadog
 In values_win.yaml set the following:  
 
 ```
-clusterName:  <cluster_name>  
+clusterName:  CLUSTER_NAME  
 tlsVerify: false  
 portEnabled: true #under apm  
 kubeStateMetricsEnabled: false    
@@ -136,7 +136,7 @@ a Windows .NET application in Datadog
 
 ```
 az group delete \
-        --name <RESOURCE_GROUP_NAME> \
+        --name RESOURCE_GROUP_NAME \
         --yes \
         --no-wait
 ```
