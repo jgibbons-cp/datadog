@@ -13,15 +13,15 @@ Instructions - taken from
 
 3) Create a Cluster  
 
-`az aks create \
-    --resource-group <RESOURCE_GROUP_NAME> \  
-    --name <CLUSTER_NAME> \  
-    --node-count 2 \  
-    --enable-addons monitoring \  
-    --generate-ssh-keys \  
-    --windows-admin-username <USERNAME> \  
-    --vm-set-type VirtualMachineScaleSets \  
-    --kubernetes-version 1.20.7 \  
+`az aks create
+    --resource-group <RESOURCE_GROUP_NAME>
+    --name <CLUSTER_NAME>
+    --node-count 2
+    --enable-addons monitoring
+    --generate-ssh-keys
+    --windows-admin-username <USERNAME>
+    --vm-set-type VirtualMachineScaleSets  
+    --kubernetes-version 1.20.7
     --network-plugin azure  
 `  
 
