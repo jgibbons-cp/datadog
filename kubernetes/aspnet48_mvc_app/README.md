@@ -55,7 +55,8 @@ kubectl expose pod dd-agent-win-datadog-v9rtc --name dd-agent --port 8126
 NOTE: this seems odd to me, but it works across restarts of the Datadog agent.
 It is a ds not a deploy so I exposed the pod with a selector.  I would expect it
 to break when the agent is redeployed but it does not.  I think it is the selector
-but need to look at it.  
+but need to look at it.  This is because EKS does not support hostPort on Windows
+out of the box.
 
 5) Go looks at traces [here](https://app.datadoghq.com/apm/traces)  
 
