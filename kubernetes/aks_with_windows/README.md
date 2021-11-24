@@ -5,14 +5,11 @@ Instructions - taken from
 [here](https://docs.microsoft.com/en-us/azure/aks/windows-container-cli).  
 --  
 
-1) ```
-az login
-```
+1) ```az login```
 
 2) Create a resource group  
 
-```
-az group create --name \<RESOURCE_GROUP_NAME\> --location \<REGION\>
+```az group create --name \<RESOURCE_GROUP_NAME\> --location \<REGION\>
 ```  
 
 3) Create a Cluster  
