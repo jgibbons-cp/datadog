@@ -93,3 +93,6 @@ join: true #under existingClusterAgent:
 serviceName:  dd-agent-datadog-cluster-agent  
 
 `sudo helm install dd-agent-win -f values.yaml datadog/datadog`  
+
+11) [Trace](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/aspnet48_mvc_app)
+a Windows .NET application in Datadog  
