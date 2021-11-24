@@ -47,11 +47,11 @@ submit a PR.
 
 `sudo kubectl get nodes`
 
-`NAME        STATUS   ROLES   AGE     VERSION OS-IMAGE  
+NAME        STATUS   ROLES   AGE     VERSION OS-IMAGE  
 aks-xxx-0   Ready    agent   24m     v1.20.7 Ubuntu 18.04.6 LTS  
 aks-xxx-1   Ready    agent   23m     v1.20.7 Ubuntu 18.04.6 LTS  
 aksxxx0     Ready    agent   7m23s   v1.20.7 Windows Server 2019 Datacenter  
-aksxxx1     Ready    agent   8m16s   v1.20.7 Windows Server 2019 Datacenter`  
+aksxxx1     Ready    agent   8m16s   v1.20.7 Windows Server 2019 Datacenter  
 
 7) Taint the Windows nodes for Datadog agent install  
 
