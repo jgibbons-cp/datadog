@@ -14,8 +14,7 @@ Instructions - taken from
 
 3) Create a Cluster  
 
-```
-az aks create \
+```az aks create \
     --resource-group \<RESOURCE_GROUP_NAME\> \
     --name \<CLUSTER_NAME\> \
     --node-count 2 \
@@ -25,7 +24,7 @@ az aks create \
     --vm-set-type VirtualMachineScaleSets \
     --kubernetes-version 1.20.7 \
     --network-plugin azure
-```  
+    ```  
 
 After running this provide a Windows Admin password to kick off the deployment.  
 
