@@ -22,7 +22,7 @@ az group create \
 3) Create a Cluster  
 
 ```
-az aks create
+az aks create \
         --resource-group <RESOURCE_GROUP_NAME> \
         --name <CLUSTER_NAME> \
         --node-count 2 \
