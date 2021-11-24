@@ -23,15 +23,15 @@ az group create \
 
 ```
 az aks create
-        --resource-group <RESOURCE_GROUP_NAME> \  
-        --name <CLUSTER_NAME> \  
-        --node-count 2 \  
-        --enable-addons monitoring \  
-        --generate-ssh-keys \  
-        --windows-admin-username <USERNAME> \  
-        --vm-set-type VirtualMachineScaleSets \  
-        --kubernetes-version 1.20.7 \  
-        --network-plugin azure  
+        --resource-group <RESOURCE_GROUP_NAME> \
+        --name <CLUSTER_NAME> \
+        --node-count 2 \
+        --enable-addons monitoring \
+        --generate-ssh-keys \
+        --windows-admin-username <USERNAME> \
+        --vm-set-type VirtualMachineScaleSets \
+        --kubernetes-version 1.20.7 \
+        --network-plugin azure
 ```  
 
 After running this provide a Windows Admin password to kick off the deployment.  
@@ -39,20 +39,20 @@ After running this provide a Windows Admin password to kick off the deployment.
 4) Add a Windows nodepool  
 
 ```
-az aks nodepool add \  
-        --resource-group <RESOURCE_GROUP_NAME> \  
-        --cluster-name <CLUSTER_NAME> \  
-        --os-type Windows \  
-        --name <NODEPOOL_NAME> \  
-        --node-count 2  
+az aks nodepool add \
+        --resource-group <RESOURCE_GROUP_NAME> \
+        --cluster-name <CLUSTER_NAME> \
+        --os-type Windows \
+        --name <NODEPOOL_NAME> \
+        --node-count 2
 ```  
 
 5) Get credentials  
 
 ```
-sudo az aks get-credentials \  
-        --resource-group <RESOURCE_GROUP_NAME> \  
-        --name <CLUSTER_NAME>  
+sudo az aks get-credentials \
+        --resource-group <RESOURCE_GROUP_NAME> \
+        --name <CLUSTER_NAME>
 ```  
 
 6)  Look at cluster... NOTE: not sure why I have to use sudo on kubectl and
@@ -60,7 +60,7 @@ helm... messed with a bit then gave up.  If you know why please ping me or
 submit a PR.  
 
 ```
-sudo kubectl get nodes  
+sudo kubectl get nodes
 ```
 
 ```
@@ -81,9 +81,9 @@ sudo kubectl taint node <node> node.kubernetes.io/os=windows:NoSchedule
 [here](https://app.datadoghq.com/organization-settings/users).  
 
 ```
-sudo kubectl create secret generic datadog-agent \  
-        --from-literal api-key=<key> \  
-        --from-literal app-key=<key>  
+sudo kubectl create secret generic datadog-agent \
+        --from-literal api-key=<key> \
+        --from-literal app-key=<key>
 ```  
 
 9) Install Linux Datadog agent from
@@ -135,8 +135,8 @@ a Windows .NET application in Datadog
 13) Delete the cluster  
 
 ```
-az group delete \  
-        --name <RESOURCE_GROUP_NAME> \  
-        --yes \  
-        --no-wait  
+az group delete \
+        --name <RESOURCE_GROUP_NAME> \
+        --yes \
+        --no-wait
 ```
