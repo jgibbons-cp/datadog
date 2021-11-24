@@ -14,9 +14,9 @@ az login
 2) Create a resource group  
 
 ```
-az group create \  
-        --name <RESOURCE_GROUP_NAME> \  
-        --location <REGION>  
+az group create \
+        --name <RESOURCE_GROUP_NAME> \
+        --location <REGION>
 ```  
 
 3) Create a Cluster  
