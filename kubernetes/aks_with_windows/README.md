@@ -67,9 +67,9 @@ aksxxx1     Ready    agent   8m16s   v1.20.7 Windows Server 2019 Datacenter
 
 In values.yaml set the following:  
 
-`clusterName:  <cluster_name>  
+clusterName:  <cluster_name>    
 tlsVerify: false  
-portEnabled: true #under apm  `
+portEnabled: true #under apm  
 
 `sudo helm repo add datadog https://helm.datadoghq.com  
 sudo helm repo update  
@@ -79,7 +79,7 @@ sudo helm install dd-agent -f values.yaml datadog/datadog`
 
 In values_win.yaml set the following:  
 
-`clusterName:  <cluster_name>  
+clusterName:  <cluster_name>  
 tlsVerify: false  
 portEnabled: true #under apm  
 kubeStateMetricsEnabled: false  
@@ -90,6 +90,6 @@ enabled: false #under Cluster Agent
 enabled: true #under metrics provider  
 enabled: true #under Admissions controller  
 join: true #under existingClusterAgent:  
-serviceName:  dd-agent-datadog-cluster-agent`  
+serviceName:  dd-agent-datadog-cluster-agent  
 
 `sudo helm install dd-agent-win -f values.yaml datadog/datadog`  
