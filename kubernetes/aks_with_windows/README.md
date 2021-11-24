@@ -29,11 +29,11 @@ After running this provide a Windows Admin password to kick off the deployment.
 
 4) Add a Windows nodepool  
 
-`az aks nodepool add \  
-    --resource-group <RESOURCE_GROUP_NAME> \  
-    --cluster-name <CLUSTER_NAME> \  
-    --os-type Windows \  
-    --name <NODEPOOL_NAME> \  
+`az aks nodepool add
+    --resource-group <RESOURCE_GROUP_NAME>
+    --cluster-name <CLUSTER_NAME>
+    --os-type Windows
+    --name <NODEPOOL_NAME>
     --node-count 2  
 `  
 
