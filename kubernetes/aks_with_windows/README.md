@@ -14,27 +14,27 @@ Instructions - taken from
 3) Create a Cluster  
 
 `az aks create \
-    --resource-group <RESOURCE_GROUP_NAME> \
-    --name <CLUSTER_NAME> \
-    --node-count 2 \
-    --enable-addons monitoring \
-    --generate-ssh-keys \
-    --windows-admin-username <USERNAME> \
-    --vm-set-type VirtualMachineScaleSets \
-    --kubernetes-version 1.20.7 \
-    --network-plugin azure
+    --resource-group <RESOURCE_GROUP_NAME> \  
+    --name <CLUSTER_NAME> \  
+    --node-count 2 \  
+    --enable-addons monitoring \  
+    --generate-ssh-keys \  
+    --windows-admin-username <USERNAME> \  
+    --vm-set-type VirtualMachineScaleSets \  
+    --kubernetes-version 1.20.7 \  
+    --network-plugin azure  
 `  
 
 After running this provide a Windows Admin password to kick off the deployment.  
 
 4) Add a Windows nodepool  
 
-`az aks nodepool add \
-    --resource-group <RESOURCE_GROUP_NAME> \
-    --cluster-name <CLUSTER_NAME> \
-    --os-type Windows \
-    --name <NODEPOOL_NAME> \
-    --node-count 2
+`az aks nodepool add \  
+    --resource-group <RESOURCE_GROUP_NAME> \  
+    --cluster-name <CLUSTER_NAME> \  
+    --os-type Windows \  
+    --name <NODEPOOL_NAME> \  
+    --node-count 2  
 `  
 
 5) Get credentials  
@@ -47,10 +47,10 @@ submit a PR.
 
 `sudo kubectl get nodes`
 
-`NAME        STATUS   ROLES   AGE     VERSION OS-IMAGE
-aks-xxx-0   Ready    agent   24m     v1.20.7 Ubuntu 18.04.6 LTS
-aks-xxx-1   Ready    agent   23m     v1.20.7 Ubuntu 18.04.6 LTS
-aksxxx0     Ready    agent   7m23s   v1.20.7 Windows Server 2019 Datacenter
+`NAME        STATUS   ROLES   AGE     VERSION OS-IMAGE  
+aks-xxx-0   Ready    agent   24m     v1.20.7 Ubuntu 18.04.6 LTS  
+aks-xxx-1   Ready    agent   23m     v1.20.7 Ubuntu 18.04.6 LTS  
+aksxxx0     Ready    agent   7m23s   v1.20.7 Windows Server 2019 Datacenter  
 aksxxx1     Ready    agent   8m16s   v1.20.7 Windows Server 2019 Datacenter`  
 
 7) Taint the Windows nodes for Datadog agent install  
@@ -68,28 +68,28 @@ aksxxx1     Ready    agent   8m16s   v1.20.7 Windows Server 2019 Datacenter`
 In values.yaml set the following:  
 
 `clusterName:  <cluster_name>  
-tlsVerify: false
+tlsVerify: false  
 portEnabled: true #under apm  `
 
-`sudo helm repo add datadog https://helm.datadoghq.com
-sudo helm repo update
-sudo helm install dd-agent -f values.yaml datadog/datadog`
+`sudo helm repo add datadog https://helm.datadoghq.com  
+sudo helm repo update  
+sudo helm install dd-agent -f values.yaml datadog/datadog`  
 
 10) Install Windows Datadog agent
 
 In values_win.yaml set the following:  
 
 `clusterName:  <cluster_name>  
-tlsVerify: false
+tlsVerify: false  
 portEnabled: true #under apm  
-kubeStateMetricsEnabled: false
-nonLocalTraffic: true
-leaderElection: false
-enabled: true #under orchestratorExplorer:
-enabled: false #under Cluster Agent
-enabled: true #under metrics provider
-enabled: true #under Admissions controller
-join: true #under existingClusterAgent:
-serviceName:  dd-agent-datadog-cluster-agent`
+kubeStateMetricsEnabled: false  
+nonLocalTraffic: true  
+leaderElection: false  
+enabled: true #under orchestratorExplorer:  
+enabled: false #under Cluster Agent  
+enabled: true #under metrics provider  
+enabled: true #under Admissions controller  
+join: true #under existingClusterAgent:  
+serviceName:  dd-agent-datadog-cluster-agent`  
 
 `sudo helm install dd-agent-win -f values.yaml datadog/datadog`  
