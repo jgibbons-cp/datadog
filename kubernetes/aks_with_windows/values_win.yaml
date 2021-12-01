@@ -80,7 +80,7 @@ datadog:
   kubeStateMetricsCore:
     # datadog.kubeStateMetricsCore.enabled -- Enable the kubernetes_state_core check in the Cluster Agent (Requires Cluster Agent 1.12.0+)
     ## ref: https://docs.datadoghq.com/integrations/kubernetes_state_core
-    enabled: false
+    enabled: true
 
     # datadog.kubeStateMetricsCore.ignoreLegacyKSMCheck -- Disable the auto-configuration of legacy kubernetes_state check (taken into account only when datadog.kubeStateMetricsCore.enabled is true)
     ## Disabling this field is not recommended as it results in enabling both checks, it can be useful though during the migration phase.
@@ -110,10 +110,9 @@ datadog:
   #   <KUBERNETES_NODE_LABEL>: <DATADOG_TAG_KEY>
 
   # datadog.podLabelsAsTags -- Provide a mapping of Kubernetes Labels to Datadog Tags
-  #podLabelsAsTags: #{}
-  #  value: '{"*":"%%label%%"}'
+  podLabelsAsTags: {}
   #   release: helm_release
-  #   <KUBERNETES_LABEL>: <DATADOG_TAG_KEY>
+    #<KUBERNETES_LABEL>: <DATADOG_TAG_KEY>
 
   # datadog.podAnnotationsAsTags -- Provide a mapping of Kubernetes Annotations to Datadog Tags
   podAnnotationsAsTags: {}
@@ -128,7 +127,6 @@ datadog:
   # datadog.tags -- List of static tags to attach to every metric, event and service check collected by this Agent.
   ## Learn more about tagging: https://docs.datadoghq.com/tagging/
   tags: []
-  #   - "<KEY_1>:<VALUE_1>"
   #   - "<KEY_2>:<VALUE_2>"
 
   # datadog.checksCardinality -- Sets the tag cardinality for the checks run by the Agent.
@@ -162,7 +160,7 @@ datadog:
 
     # datadog.dogstatsd.originDetection -- Enable origin detection for container tagging
     ## https://docs.datadoghq.com/developers/dogstatsd/unix_socket/#using-origin-detection-for-container-tagging
-    originDetection: false
+    originDetection: true
 
     # datadog.dogstatsd.tags -- List of static tags to attach to every custom metric, event and service check collected by Dogstatsd.
     ## Learn more about tagging: https://docs.datadoghq.com/tagging/
@@ -172,11 +170,11 @@ datadog:
 
     # datadog.dogstatsd.tagCardinality -- Sets the tag cardinality relative to the origin detection
     ## https://docs.datadoghq.com/developers/dogstatsd/unix_socket/#using-origin-detection-for-container-tagging
-    tagCardinality: low
+    tagCardinality: orchestrator
 
     # datadog.dogstatsd.useSocketVolume -- Enable dogstatsd over Unix Domain Socket with an HostVolume
     ## ref: https://docs.datadoghq.com/developers/dogstatsd/unix_socket/
-    useSocketVolume: true
+    useSocketVolume: false
 
     # datadog.dogstatsd.socketPath -- Path to the DogStatsD socket
     socketPath: /var/run/datadog/dsd.socket
@@ -190,7 +188,7 @@ datadog:
     ##
     ## WARNING: Make sure that hosts using this are properly firewalled otherwise
     ## metrics and traces are accepted from any host able to connect to this host.
-    useHostPort: false
+    useHostPort: true
 
     # datadog.dogstatsd.useHostPID -- Run the agent in the host's PID namespace
     ## This is required for Dogstatsd origin detection to work.
@@ -737,7 +735,7 @@ existingClusterAgent:
   join: true
 
   # existingClusterAgent.tokenSecretName -- Existing secret name to use for external Cluster Agent token
-  tokenSecretName:  # <EXISTING_DCA_SECRET_NAME>
+  tokenSecretName: dd-agent-datadog-cluster-agent
 
   # existingClusterAgent.serviceName -- Existing service name to use for reaching the external Cluster Agent
   serviceName:  dd-agent-datadog-cluster-agent
@@ -1344,7 +1342,7 @@ kube-state-metrics:
   # kube-state-metrics.nodeSelector -- Node selector for KSM. KSM only supports Linux.
   nodeSelector:
     kubernetes.io/os: linux
-
+  
   # # kube-state-metrics.image -- Override default image information for the kube-state-metrics container.
   # image:
   #  # kube-state-metrics.repository -- Override default image registry for the kube-state-metrics container.
