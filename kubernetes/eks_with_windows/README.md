@@ -1,8 +1,8 @@
-Create an EKS Cluster with a Windows Worker Node - Deploy Datadog - Deploy IIS 
+Create an EKS Cluster with a Windows Worker Node - Deploy Datadog - Deploy IIS
 --
-  
+
 NOTE: EKS does not support hostPort out-of-the-box so don't use this for Datadog tracing.  If you know how to get this working on EKS please ping me or submit a PR.  
-   
+
 The following steps will guide you on how to create an EKS Cluster on AWS with
 a Windows worker node.  It will also guide you in how to deploy the Datadog K8
 agent using helm on the master node as well as the Linix and Windows worker
@@ -92,20 +92,9 @@ ip-xxxx.us-west-1.compute.internal    Ready    <none>   26m    v1.20.10-eks-3bcd
 6) The agent documentation for Datadog is from this
 [documentation](https://docs.datadoghq.com/agent/troubleshooting/windows_containers/)  
 
-To avoid installing kube-state-metrics twice (as there will need to be two
-  helm installs - one for Linux and one for Windows) taint the Window node.
-
-```
-kubectl taint node <node> node.kubernetes.io/os=windows:NoSchedule
-```  
-
-And then you should see this:  
-
-```
-kubectl describe node <node> | grep -i taint
-Taints:             node.kubernetes.io/os=windows:NoSchedule
-```  
-
+Turn kube-state-metrics off in both agents and use the Core metrics check from
+ the cluster-agent.
+ 
 7)  Create your app and api key secrets:  
 
 ```
