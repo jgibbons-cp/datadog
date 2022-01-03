@@ -1,0 +1,39 @@
+api_key: <redacted>
+
+site: datadoghq.com
+
+dd_url: http://ip_of_proxy:3834
+
+proxy:
+    https: http://ip_of_proxy:3834
+    http: http://ip_of_proxy:3834
+
+skip_ssl_validation: true
+
+logs_enabled: true
+
+logs_config:
+
+  logs_dd_url: ip_of_proxy:3837
+  use_http: true
+  logs_no_ssl: true
+
+apm_config:
+
+  apm_dd_url: http://ip_of_proxy:3835
+
+process_config:
+
+  enabled: "true"
+  process_dd_url: http://ip_of_proxy:3836
+
+database_monitoring:
+    metrics:
+        logs_dd_url: ip_of_proxy:3838
+        logs_no_ssl: true
+    activity:
+        logs_dd_url: ip_of_proxy:3838
+        logs_no_ssl: true
+    samples:
+        logs_dd_url: ip_of_proxy:3839
+        logs_no_ssl: true
