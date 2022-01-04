@@ -25,7 +25,7 @@ Agent Setup Example (AWS)
 *  Replace <redacted> with your API key from the install step above  
 *  Replace ip_of_proxy with the private IP or FQDN of the proxy  
 *  Restart agent  
-  ```sudo datadog-agent restart```  
+  ```sudo systemctl restart datadog-agent```  
 * Allow outbound traffic to the security group of the proxy on TCP ports
 3834-3839
 
