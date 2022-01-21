@@ -574,6 +574,8 @@ spec:
               value: "clusterchecks endpointschecks"
             - name: DD_EXPVAR_PORT
               value: "6000"
+            - name: DD_KUBELET_TLS_VERIFY
+              value: "false"
           volumeMounts:
             - name: installinfo
               subPath: install_info
@@ -750,10 +752,10 @@ spec:
               value: "/var/run/datadog/dsd.socket"
             - name: DD_ORCHESTRATOR_EXPLORER_ENABLED
               value: "true"
+            - name: DD_CLUSTER_NAME
+              value: "example"
             - name: DD_KUBELET_TLS_VERIFY
               value: "false"
-            - name: DD_CLUSTER_NAME
-              value: example
           volumeMounts:
             - name: config
               mountPath: /etc/datadog-agent
