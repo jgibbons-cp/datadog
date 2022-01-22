@@ -42,15 +42,17 @@ https://<ip_of_ec2_instance>:444
 
 5) Use your bootstrap password, then change your password and login.  
 
-You now have a local Ranche instance with a one node Kubernetes cluster.  Go to
-the hamburger menu on the top left then to local cluster.  
+You now have a local Rancher instance with a one node Kubernetes cluster.  Go to
+the hamburger menu on the top left then to local cluster.  If you have trouble
+seeing your cluster refresh / may be the self-signed certificates.  You can also
+add/create clusters from the UI.  
 
 NOTE: In Apps and Marketplace there is a UI that installs the Datadog agent (NOTE:
 it will require tolerations to install on the controlplane nodes normally but not
 here).  We were able to get it to install with the UI, but it obbuscates everything
 creates a difficult to manage values file.  We were not able to get live containers
 working from the UI install and I kept getting ClusterRole errors.  There seems to
-be an issue especially if you want live containers and the Core KubeStateMetrics.  
+be an issue especially if you want live containers and the Core KubeStateMetrics.
 I installed from the command line in the Rancher instance using helm and my own
 values and all worked as expected.  
 
