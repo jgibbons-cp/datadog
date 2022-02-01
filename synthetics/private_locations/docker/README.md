@@ -25,7 +25,7 @@ using your location
 * Run your container in detached mode  
 
 ```  
-$ docker run -d -v $PWD/<your_config>.json:/etc/datadog/synthetics-check-runner.json datadog/synthetics-private-location-worker  
+docker run -d -v $PWD/<your_config>.json:/etc/datadog/synthetics-check-runner.json datadog/synthetics-private-location-worker  
 ```  
 
 For advanced options use:  
