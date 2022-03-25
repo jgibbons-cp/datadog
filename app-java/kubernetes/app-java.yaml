@@ -17,7 +17,7 @@ spec:
       containers:
       - image: jenksgibbons/app-java
         name: app-java
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: JAVA_OPTS
           value: "-javaagent:/usr/local/tomcat/lib/dd-java-agent.jar -Ddd.service=java-app -Ddd.version=.01 -Ddd.env=lab -Ddd.logs.injection=true -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256"

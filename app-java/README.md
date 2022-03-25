@@ -19,7 +19,8 @@ injection
   - The dependencies for both are in pom.xml  
   - In QueryEmployees.java it defaults to log4j2. If you want to use logback
 then comment out the log4j2 imports and Logger declaration and uncomment those
-for logback.  
+for logback.  NOTE: if you change this you will need to use an image other than
+the one in my registry.  
 2. Deploy  
 
 - Export your [API key](https://app.datadoghq.com/account/settings#api)  
