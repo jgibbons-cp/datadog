@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-    <layout class="ch.qos.logback.contrib.json.classic.JsonLayout"/>
+    <!--layout class="ch.qos.logback.contrib.json.classic.JsonLayout"/-->
     <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
   </appender>
   <root level="INFO">
