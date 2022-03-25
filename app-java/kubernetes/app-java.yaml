@@ -17,12 +17,11 @@ spec:
       containers:
       - image: jenksgibbons/app-java
         name: app-java
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: JAVA_OPTS
           value: "-javaagent:/usr/local/tomcat/lib/dd-java-agent.jar -Ddd.service=java-app -Ddd.version=.01 -Ddd.env=lab -Ddd.logs.injection=true -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256"
         - name: DD_AGENT_HOST
-          #value: "dd-agent"
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP

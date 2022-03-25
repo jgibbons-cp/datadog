@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-   <Appenders>
-    <Console name="LogInJSON" target="SYSTEM_OUT">
-      <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true"/>
-    </Console>
-    <File name="FILE" fileName="logs/app.log" >
-      <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true" />
-    </File>
-  </Appenders>
-  <Loggers>
-    <Root level="INFO">
-       <AppenderRef ref="LogInJSON" />
-    </Root>
-  </Loggers>
+ <Appenders>
+   <Console name="LogInJSON" target="SYSTEM_OUT">
+     <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true"/>
+   </Console>
+ </Appenders>
+ <Loggers>
+  <Root level="INFO">
+    <AppenderRef ref="LogInJSON" />
+  </Root>
+ </Loggers>
 </Configuration>

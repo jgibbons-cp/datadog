@@ -14,7 +14,11 @@ This will install mvn and multiple versions of Java.  By default it will use Jav
   - ```sudo usermod -aG docker $USER```  
   - exit the shell to complete  
   - start the service ```sudo service docker start```  
-
+- Decide whether you are going to use log4j2 or logback for logs and traceID
+injection  
+  - The dependencies for both are in pom.xml  
+  - In QueryEmployees.java uncomment it defaults to log4j2 so you want to use logback
+then comment out the log4j2 imports and Logger declaration and uncomment those for logback.  
 2. Deploy  
 
 - Export your [API key](https://app.datadoghq.com/account/settings#api)  

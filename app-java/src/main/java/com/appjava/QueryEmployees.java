@@ -11,14 +11,23 @@ import javax.naming.NamingException;
 //new
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+//log4j2
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+//logback
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
 public final class QueryEmployees {
+	//log4j2
 	private static final Logger logger = LogManager.getLogger(QueryEmployees.class);
 
+	//logback
+	//private static final Logger logger = LoggerFactory.getLogger(QueryEmployees.class);
+
     public static void query(PrintWriter out) throws NamingException {
-    	MysqlDataSource ds = null;
+    	  MysqlDataSource ds = null;
         Connection connect = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -52,7 +61,7 @@ public final class QueryEmployees {
     } catch (SQLException e) { e.printStackTrace(out);
     } finally {
         // Close the connection and release the resources used.
-    	try { resultSet.close(); } catch (SQLException e) { e.printStackTrace(out); }
+    	  try { resultSet.close(); } catch (SQLException e) { e.printStackTrace(out); }
         try { statement.close(); } catch (SQLException e) { e.printStackTrace(out); }
         try { connect.close(); } catch (SQLException e) { e.printStackTrace(out); }
     }
