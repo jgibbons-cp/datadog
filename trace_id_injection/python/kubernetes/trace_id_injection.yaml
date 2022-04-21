@@ -1,0 +1,60 @@
+#deployment not great example to use here but change if desired
+#apiVersion: apps/v1
+#kind: Deployment
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: python-trace-id-injection
+  labels:
+    tags.datadoghq.com/env: "sample"
+    tags.datadoghq.com/service: "sample"
+    tags.datadoghq.com/version: "1"
+#deployment not great example to use here but change if desired
+#    app: trace_id_injection
+spec:
+#deployment not great example to use here but change if desired
+#  selector:
+#    matchLabels:
+#      app: trace_id_injection
+  template:
+    metadata:
+      labels:
+        tags.datadoghq.com/env: "sample"
+        tags.datadoghq.com/service: "sample"
+        tags.datadoghq.com/version: "1"
+        app: python-trace-id-injection
+      annotations:
+        #set the log source if you don't want to convert into json in app
+        ad.datadoghq.com/python-trace-id-injection.logs: '[{"source": "python"}]'
+    spec:
+      volumes:
+        - hostPath:
+            path: /var/run/datadog/
+          name: apmsocketpath
+      containers:
+      - name: python-trace-id-injection
+        image: jenksgibbons/python_trace_id_injection
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: apmsocketpath
+            mountPath: /var/run/datadog
+        env:
+          - name: DD_ENV
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/env']
+          - name: DD_SERVICE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/service']
+          - name: DD_VERSION
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/version']
+          - name: DD_LOGS_INJECTION
+            value: "true"
+          - name: DD_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+      restartPolicy: Never
