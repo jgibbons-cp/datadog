@@ -44,4 +44,9 @@ in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```
 3. Full Stack Monitoring  
 
 - RUM
-- Front-End linked to back-end APM trace
+- Front-End linked to back-end APM trace  
+
+4. Integrations  
+
+- mysql  
+- jmx  
