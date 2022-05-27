@@ -136,7 +136,7 @@ then
       echo "DEALLOCATE PREPARE stmt;"  >> initdb/user_dd.sql
   echo "END $$"  >> initdb/user_dd.sql
   echo "DELIMITER ;"  >> initdb/user_dd.sql
-  echo "GRANT EXECUTE ON PROCEDURE employees.explain_statement TO datadog@'%';"  >> initdb/user_dd.sql
+  echo "GRANT EXECUTE ON PROCEDURE Employees.explain_statement TO datadog@'%';"  >> initdb/user_dd.sql
   echo "DELIMITER $$"  >> initdb/user_dd.sql
    echo "CREATE PROCEDURE datadog.enable_events_statements_consumers()"  >> initdb/user_dd.sql
       echo "SQL SECURITY DEFINER"  >> initdb/user_dd.sql
