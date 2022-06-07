@@ -20,7 +20,9 @@ spec:
         name: sample
         env:
           - name: DD_AGENT_HOST
-            value: dd-agent
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
           - name: DD_APM_NON_LOCAL_TRAFFIC
             value: "true"
           - name: DD_ENV
