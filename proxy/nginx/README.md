@@ -17,7 +17,7 @@ Configuration
   - ```wget https://github.com/opentracing-contrib/nginx-opentracing/releases/download/v0.24.0/linux-amd64-nginx-1.18.0-ngx_http_module.so.tgz```  
   - Unarchive it and move it  
   ```
-  sudo mv ngx_http_opentracing_module.so /usr/lib/nginx/modules/ngx_http_opentracing_module.so  
+  sudo mv ngx_http_opentracing_module.so /usr/lib/nginx/modules/  
   ```
 
   - For this version of nginx use release
