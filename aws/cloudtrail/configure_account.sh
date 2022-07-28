@@ -7,8 +7,10 @@ source ./env_vars.sh
 TEARDOWN=""
 
 INSTALL_DD_AWS_INTEGRATION=true
-PATH_TO_DD_AWS_INTEGRATION_REPO=
-PATH_TO_DD_LAMBDA_FORWARDER_REPO=
+PATH_TO_DD_AWS_INTEGRATION_REPO="/Users/jenks.gibbons/Documents/\
+datadog-experience/deployment/terraform/aws-datadog"
+PATH_TO_DD_LAMBDA_FORWARDER_REPO="/Users/jenks.gibbons/Documents/\
+vivent/datadog/aws/lambda_forwarder"
 
 #set to empty if don't want to auto-approve terraform apply
 AUTO_APPROVE="-auto-approve"
@@ -39,7 +41,6 @@ then
 
     #and back
     popd > /dev/null
-    exit
 fi
 
 #cd
