@@ -1,0 +1,6 @@
+{
+  "aws_lambda_region":"",
+  "region":[""],
+  "add_cloudtrail": 1,
+  "remove_cloudtrail": 0
+}
