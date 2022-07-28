@@ -19,7 +19,8 @@ Files
 
 1) config.json - configuration for configure_cloudtrail_logs.py  
   - aws_lambda_region (string) - region where the datadog forwarder was
-  installed using the lambda_forwarder repository [here]().  
+  installed using the lambda_forwarder repository
+  [here](https://github.com/jgibbons-cp/datadog/tree/main/aws/lambda_forwarder).  
   - region (array of string(s)) - regions where CloudTrail logs will be
   configured to be forwarded.  
   - add_cloudtrail - 1 to configure logs or 0 if the configuration will be
