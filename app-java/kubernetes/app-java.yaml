@@ -50,6 +50,12 @@ spec:
             secretKeyRef:
               name: dd-rum-tokens
               key: APPLICATION_ID
+        - name: DD_APPSEC_ENABLED
+          value: "true"
+        - name: DB_HOST
+          value: ""
+        - name: DB
+          value: ""
         ports:
         - containerPort: 8080
           hostPort: 8080

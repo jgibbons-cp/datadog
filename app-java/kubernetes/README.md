@@ -2,7 +2,7 @@ Deploy Java App on Kubernetes
 --
 
 Basic app that has a servlet front-end and talks to MySQL.  This simply deploys
-on Kubernetes that incudes Datadog RUM and APM.  
+on Kubernetes that incudes Datadog RUM, APM and application security.  
 
 Manifests
 --
@@ -29,5 +29,5 @@ Deploy
 
 3) Configure the load  balancer rules to accept traffic from your IP
 
-Hit it at ```http://LoadBalancer:8080/app-java-0.0.1-SNAPSHOT/``` 
+Hit it at ```http://LoadBalancer:8080/app-java-0.0.1-SNAPSHOT/```
 and look at traces.  

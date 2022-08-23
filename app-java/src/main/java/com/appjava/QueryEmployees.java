@@ -2,9 +2,12 @@ package com.appjava;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.io.StringWriter;
+import java.lang.System;
 
 import javax.naming.NamingException;
 
@@ -26,45 +29,101 @@ public final class QueryEmployees {
 	//logback
 	//private static final Logger logger = LoggerFactory.getLogger(QueryEmployees.class);
 
-    public static void query(PrintWriter out) throws NamingException {
-    	  MysqlDataSource ds = null;
-        Connection connect = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+	//print and log stacktrace
+	static void printLogException(Exception e, PrintWriter out) {
+		StringWriter writer = new StringWriter();
+		PrintWriter printWriter = new PrintWriter( writer );
+		e.printStackTrace( printWriter );
+		printWriter.flush();
 
-        try {
-            // Create a new DataSource (MySQL specifically)
-            // and provide the relevant information to be used by Tomcat.
-            ds = new MysqlDataSource();
-            ds.setUrl("jdbc:mysql://mysql-test:3306/employees");
-            ds.setUser("lab");
-            ds.setPassword("lab");
+		String stackTrace = writer.toString();
+		out.println(stackTrace);
+		logger.error(stackTrace);
+	}
 
-	        connect = ds.getConnection();
+  public static void query(PrintWriter out) throws NamingException {
+  	  MysqlDataSource ds = null;
+			String dbHost = null;
+			String db = null;
+			String connString = "";
+      Connection connect = null;
+      Statement statement = null;
+      ResultSet resultSet = null;
 
-	        // Create the statement to be used to get the results.
-	        statement = connect.createStatement();
-	        String query = "select distinct first_name FROM employees where first_name='Georgi'";
+			//get environment variables to use different mysql dbs
+			dbHost = System.getenv("DB_HOST");
+			db = System.getenv("DB");
 
-	        // Execute the query and get the result set.
-	        resultSet = statement.executeQuery(query);
-	        out.println("<strong>Printing result using DataSource...</strong><br>");
+			//default to the mysql pod
+			if (dbHost == null || dbHost.isEmpty()){
+        dbHost = "mysql-test";
+			}
 
-	        while (resultSet.next()) {
-	        	String employeeName = resultSet.getString("first_name");
+			//default to sample db in pod
+			if (db == null || db.isEmpty()){
+				db = "employees";
+			}
 
-	        	out.println("Name: " + employeeName + "<br>");
-	        }
+      try {
+        // Create a new DataSource (MySQL specifically)
+        // and provide the relevant information to be used by Tomcat.
+        ds = new MysqlDataSource();
+				connString = String.format("jdbc:mysql://%s:3306/%s", dbHost, db);
+				ds.setUrl(connString);
+        ds.setUser("lab");
+        ds.setPassword("lab");
 
-	        logger.info("log for traceID correlation");
+				connect = ds.getConnection();
 
-    } catch (SQLException e) { e.printStackTrace(out);
-    } finally {
-        // Close the connection and release the resources used.
-    	  try { resultSet.close(); } catch (SQLException e) { e.printStackTrace(out); }
-        try { statement.close(); } catch (SQLException e) { e.printStackTrace(out); }
-        try { connect.close(); } catch (SQLException e) { e.printStackTrace(out); }
-    }
-    }
+        // Create the statement to be used to get the results.
+        statement = connect.createStatement();
+        String query = "select distinct first_name FROM employees where first_name='Georgi'";
 
+        // Execute the query and get the result set.
+        resultSet = statement.executeQuery(query);
+        out.println("<strong>Printing result using DataSource...</strong><br>");
+
+        while (resultSet.next()) {
+        	String employeeName = resultSet.getString("first_name");
+					out.println("Name: " + employeeName + "<br>");
+        }
+
+        logger.info("log for traceID correlation");
+
+  			}
+			catch (SQLException e)
+				{
+					printLogException(e, out);
+				}
+			catch (NullPointerException e)
+				{
+					printLogException(e, out);
+				}
+  		finally
+				{
+	        // Close the connection and release the resources used.
+	    	try {
+						resultSet.close();
+					}
+				catch (SQLException e)
+					{
+						printLogException(e, out);
+					}
+				catch (NullPointerException e)
+					{
+						printLogException(e, out);
+					}
+	      try {
+					statement.close();
+					}
+				catch (SQLException e)
+					{
+						printLogException(e, out);
+					}
+				catch (NullPointerException e)
+					{
+						printLogException(e, out);
+					}
+  			}
+  	}
 }

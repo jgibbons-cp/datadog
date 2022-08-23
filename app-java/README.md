@@ -33,6 +33,9 @@ in 'Edit Application' with ```export CLIENT_TOKEN=<CLIENT_TOKEN>```
 - Export your
 [RUM Application ID](https://app.datadoghq.com/rum/list?from_ts=1633643340056&to_ts=1633729740056&live=true)
 in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```  
+- By default the application will use mysql with the sample employees database.
+  You can use the environment variables DB_HOST and DB to switch to a different
+  database host and db.  
 - ```cd datadog/app-java/docker/```  
 - Build the app  
   - ```sh build.sh```  
