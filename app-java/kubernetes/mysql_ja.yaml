@@ -11,8 +11,22 @@ spec:
       run: mysql
   template:
     metadata:
+      annotations:
+        ad.datadoghq.com/mysql.check_names: '["mysql"]'
+        ad.datadoghq.com/mysql.init_configs: '[{"service": "mysql"}]'
+        ad.datadoghq.com/mysql.instances: |
+          [
+            {
+              "host": "%%host%%",
+              "username": "datadog",
+              "password": "lab",
+              "dbm": true
+            }
+          ]
       labels:
+        app.kubernetes.io/name: mysql
         run: mysql
+        name: mysql
     spec:
       containers:
       - image: jenksgibbons/mysql_ja

@@ -107,44 +107,60 @@ then
   echo "grant all on *.* to 'lab'@'%';" >> initdb/user_lab.sql
   echo "flush privileges;" >> initdb/user_lab.sql
 
+
   #setup database monitoring Datadog
-  echo "CREATE USER datadog@'%' IDENTIFIED WITH mysql_native_password by 'lab';" > initdb/user_dd.sql
-  echo "ALTER USER datadog@'%' WITH MAX_USER_CONNECTIONS 5;"  >> initdb/user_dd.sql
-  echo "GRANT REPLICATION CLIENT ON *.* TO datadog@'%';"  >> initdb/user_dd.sql
-  echo "GRANT PROCESS ON *.* TO datadog@'%';"  >> initdb/user_dd.sql
-  echo "GRANT SELECT ON performance_schema_max_sql_text_length.* TO datadog@'%';"  >> initdb/user_dd.sql
-  echo "CREATE SCHEMA IF NOT EXISTS datadog;"  >> initdb/user_dd.sql
-  echo "GRANT EXECUTE ON datadog.* to datadog@'%';"  >> initdb/user_dd.sql
-  echo "GRANT CREATE TEMPORARY TABLES ON datadog.* TO datadog@'%';"  >> initdb/user_dd.sql
-  echo "DELIMITER $$"  >> initdb/user_dd.sql
-  echo "CREATE PROCEDURE datadog.explain_statement(IN query TEXT)"  >> initdb/user_dd.sql
-      echo "SQL SECURITY DEFINER"  >> initdb/user_dd.sql
-  echo "BEGIN"  >> initdb/user_dd.sql
-      echo "SET @explain := CONCAT('EXPLAIN FORMAT=json ', query);"  >> initdb/user_dd.sql
-      echo "PREPARE stmt FROM @explain;"  >> initdb/user_dd.sql
-      echo "EXECUTE stmt;"  >> initdb/user_dd.sql
-      echo "DEALLOCATE PREPARE stmt;"  >> initdb/user_dd.sql
-  echo "END $$"  >> initdb/user_dd.sql
-  echo "DELIMITER ;"  >> initdb/user_dd.sql
-  echo "DELIMITER $$"  >> initdb/user_dd.sql
-  echo "CREATE PROCEDURE employees.explain_statement(IN query TEXT)"  >> initdb/user_dd.sql
-      echo "SQL SECURITY DEFINER"  >> initdb/user_dd.sql
-  echo "BEGIN"  >> initdb/user_dd.sql
-      echo "SET @explain := CONCAT('EXPLAIN FORMAT=json ', query);"  >> initdb/user_dd.sql
-      echo "PREPARE stmt FROM @explain;"  >> initdb/user_dd.sql
-      echo "EXECUTE stmt;"  >> initdb/user_dd.sql
-      echo "DEALLOCATE PREPARE stmt;"  >> initdb/user_dd.sql
-  echo "END $$"  >> initdb/user_dd.sql
-  echo "DELIMITER ;"  >> initdb/user_dd.sql
-  echo "GRANT EXECUTE ON PROCEDURE Employees.explain_statement TO datadog@'%';"  >> initdb/user_dd.sql
-  echo "DELIMITER $$"  >> initdb/user_dd.sql
-   echo "CREATE PROCEDURE datadog.enable_events_statements_consumers()"  >> initdb/user_dd.sql
-      echo "SQL SECURITY DEFINER"  >> initdb/user_dd.sql
-  echo "BEGIN"  >> initdb/user_dd.sql
-      echo "UPDATE performance_schema_max_sql_text_length.setup_consumers SET enabled='YES' WHERE name LIKE 'events_statements_%';"  >> initdb/user_dd.sql
-  echo "END $$"  >> initdb/user_dd.sql
-  echo "DELIMITER ;"  >> initdb/user_dd.sql
-  echo "GRANT EXECUTE ON PROCEDURE datadog.enable_events_statements_consumers TO datadog@'%';"  >> initdb/user_dd.sql
+  cat <<-'EOF' >> initdb/user_dd.sql
+#Create the datadog user and grant basic permissions
+CREATE USER datadog@'%' IDENTIFIED WITH mysql_native_password by 'lab';
+ALTER USER datadog@'%' WITH MAX_USER_CONNECTIONS 5;
+GRANT REPLICATION CLIENT ON *.* TO datadog@'%';
+GRANT PROCESS ON *.* TO datadog@'%';
+GRANT SELECT ON performance_schema.* TO datadog@'%';
+
+#Create the datadog schema
+CREATE SCHEMA IF NOT EXISTS datadog;
+GRANT EXECUTE ON datadog.* to datadog@'%';
+GRANT CREATE TEMPORARY TABLES ON datadog.* TO datadog@'%';
+
+#Create the the explain_statement procedure to enable the Agent to collect
+#explain plans
+DELIMITER $$
+CREATE PROCEDURE datadog.explain_statement(IN query TEXT)
+  SQL SECURITY DEFINER
+BEGIN
+  SET @explain := CONCAT('EXPLAIN FORMAT=json ', query);
+  PREPARE stmt FROM @explain;
+  EXECUTE stmt;
+  DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+#create this procedure in every schema from which you want to collect explain
+#plans
+DELIMITER $$
+CREATE PROCEDURE employees.explain_statement(IN query TEXT)
+  SQL SECURITY DEFINER
+BEGIN
+  SET @explain := CONCAT('EXPLAIN FORMAT=json ', query);
+  PREPARE stmt FROM @explain;
+  EXECUTE stmt;
+  DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+GRANT EXECUTE ON PROCEDURE employees.explain_statement TO datadog@'%';
+
+#give the Agent the ability to enable performance_schema.events_* consumers
+#at runtime
+DELIMITER $$
+CREATE PROCEDURE datadog.enable_events_statements_consumers()
+  SQL SECURITY DEFINER
+BEGIN
+  UPDATE performance_schema.setup_consumers SET enabled='YES' WHERE name LIKE 'events_statements_%';
+  UPDATE performance_schema.setup_consumers SET enabled='YES' WHERE name = 'events_waits_current';
+END $$
+DELIMITER ;
+GRANT EXECUTE ON PROCEDURE datadog.enable_events_statements_consumers TO datadog@'%';
+EOF
 
   #build mysql container with db
   docker build -t jenksgibbons/mysql_ja -f docker/Dockerfile.mysql .
