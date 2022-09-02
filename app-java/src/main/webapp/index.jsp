@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Tomcat JDBC Example</title>
     <script src="https://www.datadoghq-browser-agent.com/datadog-rum.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://www.datadoghq-browser-agent.com/datadog-logs.js"></script>
@@ -38,7 +38,7 @@
         DD_LOGS.logger.info('Added ' + window.location.origin + ' to allowedTracingOrigins.')
     </script>
     <script>
-    	function call(url, method = "POST", payload) {
+        function call(url, method = "POST", payload) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -48,14 +48,18 @@
             };
             xhttp.open(method, url, true);
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhttp.send(payload);
+            name=document.getElementById('last_name').value;
+            xhttp.send(payload + '&' + 'last_name=' + name);
         }
     </script>
 </head>
 <body>
-  	<form>
-  		<button type="button" onclick="call(window.location.origin+'${pageContext.request.contextPath}/query', 'POST', 'jdbc_query')">Query DB</button></br>
-    	<pre id="response"></pre>
-  	</form>
+        <form>
+      <label for="lname">Last name: </label><input type="text" id="last_name" value="Facello" /></br>
+      </br>
+                <button type="button" onclick="call(window.location.origin+'${pageContext.request.contextPath}/query?', 'POST', 'jdbc_query')">Query DB</button></br>
+      <!--button type="button" onclick="call(window.location.origin+'${pageContext.request.contextPath}/query?'+document.getElementById('last_name').value, 'POST', 'jdbc_query&document.getElementById(\'last_name\').value')">Query DB</button></br-->
+        <pre id="response"></pre>
+        </form>
 </body>
 </html>

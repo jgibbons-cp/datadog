@@ -41,7 +41,7 @@ public final class QueryEmployees {
 		logger.error(stackTrace);
 	}
 
-  public static void query(PrintWriter out) throws NamingException {
+  public static void query(String lastName, PrintWriter out) throws NamingException {
   	  MysqlDataSource ds = null;
 			String dbHost = null;
 			String db = null;
@@ -77,16 +77,23 @@ public final class QueryEmployees {
 
         // Create the statement to be used to get the results.
         statement = connect.createStatement();
-        String query = "select distinct first_name FROM employees where first_name='Georgi'";
+        String query = String.format("select first_name, last_name FROM employees where last_name='%s'", lastName);
 
         // Execute the query and get the result set.
         resultSet = statement.executeQuery(query);
-        out.println("<strong>Printing result using DataSource...</strong><br>");
+				out.println("<strong>Printing result using DataSource...</strong><br>");
 
-        while (resultSet.next()) {
-        	String employeeName = resultSet.getString("first_name");
-					out.println("Name: " + employeeName + "<br>");
-        }
+				if(resultSet.next() == false){
+					out.println("Employee Name: No Employees Matched Query<br>");
+				}
+				else{
+	        while (resultSet.next()) {
+	        	String empFirstName = resultSet.getString("first_name");
+						String empLastName = resultSet.getString("last_name");
+						out.println("Employee Name: " + empFirstName + "&nbsp;" + empLastName + "<br>");
+
+	        }
+				}
 
         logger.info("log for traceID correlation");
 
