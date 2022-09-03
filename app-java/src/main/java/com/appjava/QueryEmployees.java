@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.io.StringWriter;
 import java.lang.System;
 
@@ -47,7 +47,7 @@ public final class QueryEmployees {
 			String db = null;
 			String connString = "";
       Connection connect = null;
-      Statement statement = null;
+      PreparedStatement statement = null;
       ResultSet resultSet = null;
 
 			//get environment variables to use different mysql dbs
@@ -75,12 +75,17 @@ public final class QueryEmployees {
 
 				connect = ds.getConnection();
 
+				String sqlQuery = String.format("select first_name, " +
+																		 "last_name FROM employees where last_name" +
+																		 "= ? ");
+
         // Create the statement to be used to get the results.
-        statement = connect.createStatement();
-        String query = String.format("select first_name, last_name FROM employees where last_name='%s'", lastName);
+				//validate last name
+				statement = connect.prepareStatement(sqlQuery);
+				statement.setString(1, lastName);
 
         // Execute the query and get the result set.
-        resultSet = statement.executeQuery(query);
+        resultSet = statement.executeQuery();
 				out.println("<strong>Printing result using DataSource...</strong><br>");
 
 				if(resultSet.next() == false){
@@ -91,7 +96,6 @@ public final class QueryEmployees {
 	        	String empFirstName = resultSet.getString("first_name");
 						String empLastName = resultSet.getString("last_name");
 						out.println("Employee Name: " + empFirstName + "&nbsp;" + empLastName + "<br>");
-
 	        }
 				}
 
@@ -108,7 +112,7 @@ public final class QueryEmployees {
 				}
   		finally
 				{
-	        // Close the connection and release the resources used.
+	      // Close the connection and release the resources used.
 	    	try {
 						resultSet.close();
 					}
