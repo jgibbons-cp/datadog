@@ -75,7 +75,7 @@ if [ -e src/main/webapp/index.jsp.bak ];
 fi
 
 #build war
-mvn compile && mvn package
+mvn clean && mvn compile && mvn package
 
 #build app container
 
