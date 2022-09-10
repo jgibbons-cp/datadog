@@ -18,14 +18,12 @@ public class TomcatServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        // If the button that we have in our jsp page made a POST
-        // then the servlet is activated and does whatever we programmed
-        // it to do.
         if (request.getParameter("jdbc_query") != null) {
             try {
               // Use this class if you have created the context.xml file.
               String name = request.getParameter("last_name");
-            	QueryEmployees.query(name, out);
+              QueryEmployees queryEmployees = new QueryEmployees();
+              queryEmployees.query(name, out);
             } catch (NamingException e) {
                 e.printStackTrace();
             }
