@@ -63,23 +63,23 @@ spec:
         - containerPort: 9012
           hostPort: 9012
           name: "jmx"
-#---
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  labels:
-#    run: app-java
-#  name: app-java
-#spec:
-#  ports:
-#  - port: 8080
-#    protocol: TCP
-#    targetPort: 8080
-#    name: "http"
-#  - port: 9012
-#    protocol: TCP
-#    targetPort: 9012
-#    name: "jmx"
-#  selector:
-#    run: app-java
-#  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: app-java
+  name: app-java
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: "http"
+  - port: 9012
+    protocol: TCP
+    targetPort: 9012
+    name: "jmx"
+  selector:
+    run: app-java
+  type: LoadBalancer
