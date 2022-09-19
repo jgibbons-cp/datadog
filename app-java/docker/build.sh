@@ -79,11 +79,16 @@ mvn clean && mvn compile && mvn package
 
 #build app container
 
-if [ ! -f ./dd-java-agent.jar ]; then
-    wget -O dd-java-agent.jar https://dtdg.co/latest-java-tracer
-fi
+#if want otel tracing
+OTEL=0
 
-docker build -t jenksgibbons/app-java -f docker/Dockerfile.tomcat .
+if [ "$OTEL" = 1 ]; then
+  wget -O otel-java-tracer.jar https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
+  docker build -t jenksgibbons/app-java -f docker/Dockerfile.tomcat --build-arg TRACER=otel-java-tracer.jar .
+else
+    wget -O dd-java-tracer.jar https://dtdg.co/latest-java-tracer
+    docker build -t jenksgibbons/app-java -f docker/Dockerfile.tomcat --build-arg TRACER=dd-java-tracer.jar .
+fi
 
 if [ ! -d "initdb" ]
 then
