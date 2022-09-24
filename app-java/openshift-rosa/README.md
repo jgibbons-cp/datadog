@@ -47,7 +47,8 @@ dd-agent-datadog-k66fd                            5/5     Running   0          7
 dd-agent-datadog-wrdsd                            5/5     Running   0          70m  
 dd-agent-datadog-x4md5                            5/5     Running   0          69m  
 
-5) Apply the custom Datadog scc for all features documented
+5) NOTE: This should not be required as the values file applies it via the
+agents: podSecurity: Apply the custom Datadog scc for all features documented
 [here](https://docs.datadoghq.com/integrations/openshift/?tab=daemonset#custom-datadog-scc-for-all-features)
  by saving the [scc](https://github.com/DataDog/datadog-agent/blob/main/Dockerfiles/manifests/openshift/scc.yaml)
  to a file and applying it:  
