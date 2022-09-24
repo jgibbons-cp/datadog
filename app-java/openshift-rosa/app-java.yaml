@@ -29,7 +29,7 @@ spec:
       containers:
       - image: jenksgibbons/app-java
         name: app-java
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         #needed to deploy on rosa
         securityContext:
           allowPrivilegeEscalation: false
