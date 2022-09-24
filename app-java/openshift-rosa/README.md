@@ -8,7 +8,7 @@ A: Datadog Agent Installation and Configuration
 
 - Change:  
   - ```clustername: openshift``` to ```clustername: <clustername>```  
-  - Add you apiKey and appKey from the ACCESS menu
+  - Add your apiKey and appKey from the ACCESS menu
 [here](https://app.datadoghq.com/organization-settings/users).  Rather than
 add them in the values file you can add them as secrets as documented
 [here](https://github.com/DataDog/helm-charts/blob/main/charts/datadog/values.yaml#L29-L49).  
@@ -24,7 +24,7 @@ add them in the values file you can add them as secrets as documented
 3) Create a datadog project to install the agents:  
 
    ```
-   sudo oc new-project datadog --display-name 'datadog'
+   oc new-project datadog --display-name 'datadog'
    ```  
 
 4) In the Datadog project apply with
@@ -99,17 +99,18 @@ kube_apiserver_metrics (3.2.0)
 B: OpenShift Metrics
 
 openshift.* metrics come from the Kubernetes API Server as documented
-[here](https://docs.datadoghq.com/integrations/openshift/?tab=daemonset#overview).  
+[here](https://docs.datadoghq.com/integrations/openshift/?tab=daemonset#overview).
 To see them, quotas must be enabled and used.  Cluster Resource Quotas are
 documented [here](https://docs.openshift.com/container-platform/4.6/applications/quotas/quotas-setting-across-multiple-projects.html). An example for a project named app-java can be see here:  
 
 ```
-sudo oc create clusterresourcequota app-java     --project-label-selector=kubernetes.io/metadata.name=app-java --hard=pods=10 --hard=secrets=20
+oc create clusterresourcequota app-java     --project-label-selector=kubernetes.io/metadata.name=app-java --hard=pods=10 --hard=secrets=20
 ```
 
 which creates the quota.  The quota can be viewed like such:  
 
 ```  
+$ oc describe AppliedClusterResourceQuota  
 Name:		app-java  
 Created:	About an hour ago  
 Labels:		<none>  
@@ -126,14 +127,14 @@ secrets		7	20
 and now we can see openshift.* metrics in datadog
 [here](https://app.datadoghq.com/metric/summary?filter=openshift).  
 
-C: Tracing Java App on ROSA
+C: Tracing a Java App on ROSA
 
-Basic app that has a servlet front-end and talks to MySQL.  This simply deploys
-on Kubernetes that incudes Datadog RUM, APM and application security.  
+Basic app that has a servlet front-end and talks to MySQL.  This deploys
+on ROSA and incudes Datadog RUM, APM and application security.  
 
 NOTE: mysql is going into a crashloopbackoff based on the securityContext
 required in ROSA.  I have not had time to fix it and may or may not based on
-whether I need to.  That being said, the app traces just gets 500s.  
+whether I need to.  That being said, the app traces showing 500s.  
 
 a: Manifests
 
