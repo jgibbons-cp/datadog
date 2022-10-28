@@ -3,7 +3,14 @@ Run an ASPNet48 MVC Windows Server Core LTSC 2019 App and Trace with Datadog
 
 For a multi OS cluster and Datadog agent
 setup see
-[here](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/eks_with_windows)  
+[here](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/aks_with_windows)
+NOTE: for hostPort to work the CNI must support it.  The CNI on AKS and GKE
+supports hostPort.  If hostPort is not supported, on Kubernetes >= 1.22, the
+agent Service can route traffic to the agent pod on the same node with
+```  
+internalTrafficPolicy: Local  
+```  
+.  
 
 To build the container we will use here see
 [here](https://github.com/jgibbons-cp/datadog/tree/main/docker/aspnet48_mvc_app)  
@@ -12,6 +19,18 @@ Deploy and trace on K8
 --
 
 1) Deploy the pod  
+
+NOTE: I have been unable to get container and K8 tags in my traces on AKS.  I have
+worked around this using something like this in the application manifest:  
+
+```  
+- name: POD_NAME  
+  valueFrom:  
+    fieldRef:  
+      fieldPath: metadata.name  
+- name: DD_TAGS  
+  value: pod_name:$(POD_NAME)  
+```  
 
 ```
 kubectl create -f asp_dotnet_sample.yaml  
@@ -39,25 +58,6 @@ and add security group rules to allow traffic if needed
 http://<load_balancerFQDN>
 ```  
 
-4) Connect the trace agent to the Datadog agent with a service on the agent
-after getting pod for Datadog Windows agent with (with sample pod name):  
-
-```
-$ kubectl get po | grep win
-dd-agent-win-datadog-v9rtc                        3/3     Running   0          25h
-```   
-
-```
-kubectl expose pod dd-agent-win-datadog-v9rtc --name dd-agent --port 8126
---target-port 8126 --selector="app=dd-agent-win-datadog"  
-```  
-
-NOTE: this seems odd to me, but it works across restarts of the Datadog agent.
-It is a ds not a deploy so I exposed the pod with a selector.  I would expect it
-to break when the agent is redeployed but it does not.  I think it is the selector
-but need to look at it.  This is because EKS does not support hostPort on Windows
-out of the box.
-
-5) Go looks at traces [here](https://app.datadoghq.com/apm/traces)  
+4) Go looks at traces [here](https://app.datadoghq.com/apm/traces)  
 
 Have fun...  
