@@ -83,12 +83,10 @@ sudo kubectl create secret generic datadog-agent \
 8) Install Linux Datadog agent from
 [here](https://docs.datadoghq.com/agent/kubernetes/?tab=helm)  
 
-In values.yaml set the following:  
+values.yaml is for Linux and has default values configured. Set the following:  
 
 ```
-clusterName:  CLUSTER_NAME    
-tlsVerify: false  
-portEnabled: true #under apm  
+clusterName: CLUSTER_NAME  
 ```
 
 ```
@@ -99,26 +97,14 @@ sudo helm install dd-agent -f values.yaml datadog/datadog
 
 9) Install Windows Datadog agent
 
-In values_win.yaml set the following:  
+values_win.yaml is for Windows and has default values configured. Set the following:  
 
 ```
-clusterName:  CLUSTER_NAME  
-tlsVerify: false  
-portEnabled: true #under apm  
-kubeStateMetricsEnabled: false    
-nonLocalTraffic: true  
-leaderElection: false  
-enabled: true #under orchestratorExplorer:  
-enabled: false #under Cluster Agent  
-enabled: true #under metrics provider  
-enabled: true #under Admissions controller  
-join: true #under existingClusterAgent:  
-serviceName:  dd-agent-datadog-cluster-agent #under existingClusterAgent:  
-tokenSecretName: dd-agent-datadog-cluster-agent #under existingClusterAgent:  
+clusterName: CLUSTER_NAME  
 ```
 
 ```
-sudo helm install dd-agent-win -f values.yaml datadog/datadog
+sudo helm install dd-agent-win -f values_win.yaml datadog/datadog
 ```  
 
 10) [Trace](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/aspnet48_mvc_app)
