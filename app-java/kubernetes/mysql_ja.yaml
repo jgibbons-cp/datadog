@@ -36,6 +36,8 @@ spec:
         - containerPort: 3306
           hostPort: 3306
           name: mysqld
+      nodeSelector:
+        kubernetes.io/os: linux
 ---
 apiVersion: v1
 kind: Service

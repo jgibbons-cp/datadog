@@ -63,3 +63,5 @@ spec:
         - containerPort: 9012
           hostPort: 9012
           name: "jmx"
+      nodeSelector:
+        kubernetes.io/os: linux        
