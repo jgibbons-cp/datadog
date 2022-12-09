@@ -3,7 +3,8 @@ import json
 import os
 import shutil
 import socket
-import sys
+import urllib.request
+import requests
 
 import git
 from kubernetes import client, utils
@@ -30,26 +31,15 @@ def k8_cluster(local_base_repo, k8_repo, destroy):
             git.Repo.clone_from(git_base_repo, local_base_repo)
 
         #vars needed to create cluster
-        tfvars_path = """/Users/jenks.gibbons/Documents/vivent/datadog/\
-Azure_Terraform/k8/terraform.tfvars"""
-        dst = local_base_repo + k8_repo + tfvars
-        shutil.copyfile(tfvars_path, dst)
+        tfvars_path = """terraform.tfvars"""
+        if os.path.exists(tfvars_path):
+            dst = local_base_repo + k8_repo + tfvars
+            shutil.copyfile(tfvars_path, dst)
 
         #create cluster
-        ret_val = terraform.init(upgrade=True)
-        last_index = int(len(ret_val))-1
-
-        #if version mismatch fail gracefully
-        try:
-            if "Error" in ret_val[last_index]:
-                send_log(ret_val[last_index])
-                sys.exit(-1)
-        except Exception as e:
-            pass
-
-        ret_val = terraform.apply(skip_plan=True)
-
-        return ret_val
+        #TODO how to manage error exceptions better
+        terraform.init(upgrade=True)
+        terraform.apply(skip_plan=True)
 
 def get_state_info(local_base_repo, k8_repo):
     '''get state info'''
@@ -242,3 +232,26 @@ def datadog_browser_test(lb_ip):
 {return_data.result.failure.message}""")
 
     return test_passed
+
+def configure_load_balancer_for_traffic(service_manifest):
+    '''configures the loadBalancerSourceRanges in the service to allow
+    the access from the host we are on and dd synthetics hosts
+    parameter service_manifest - path to the k8 svc manifest'''
+
+    #get ip of host
+    external_ip = requests.get('https://checkip.amazonaws.com').text.strip()
+
+    #make sure don't add source ips more than once
+
+    #get synthetic source ips if not there
+    cmd = f"grep {external_ip} {service_manifest}"
+    added = os.popen(cmd).read()
+    if not added:
+        with urllib.request.urlopen('https://ip-ranges.datadoghq.com/') as url:
+            dd_ip_ranges = json.load(url)
+        with open(service_manifest, "a", encoding='ascii') as file_pointer:
+            file_pointer.write(f"  loadBalancerSourceRanges:\n    - {external_ip}/32")
+            for ip_address in range(len(dd_ip_ranges["synthetics"]["prefixes_ipv4"])):
+                file_pointer.write(f"""
+    - {dd_ip_ranges["synthetics"]["prefixes_ipv4"][ip_address]}""")
+            file_pointer.close()
