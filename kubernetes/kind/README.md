@@ -3,6 +3,11 @@ Create a Kind K8 Cluster
 
 These scripts will create and delete a Kind Kubernetes cluster.  
 
+Requirements
+-
+
+1) docker  
+  
 Files
 -
 
