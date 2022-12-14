@@ -96,7 +96,7 @@ def main():
 
     destroy = 'true'
     local_base_repo = './Azure_Terraform/'
-    #k8_cluster(local_base_repo, k8_repo, destroy)
+    k8_cluster(local_base_repo, k8_repo, destroy)
 
 if __name__ == "__main__":
     main()
