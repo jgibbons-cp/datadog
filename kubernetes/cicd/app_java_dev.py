@@ -1,7 +1,4 @@
 '''create k8 cluster, test agents, deploy and test app containers, app, kill cluster'''
-import requests
-import urllib.request
-
 from cicd_functions import *
 from kubernetes import config
 
@@ -70,24 +67,12 @@ def main():
         #any errors in any containers in pods
         containers_running = check_for_errors(namespace, label_selector)
 
-        manifest = local_base_repo + path_to_service
+        service_manifest = local_base_repo + path_to_service
 
-        #restrict traffic from test host and dd snythetics
-        external_ip = requests.get('https://checkip.amazonaws.com').text.strip()
-
-        #get synthetic source ips
-        if pre_push_test is False:
-            with urllib.request.urlopen('https://ip-ranges.datadoghq.com/') as url:
-                dd_ip_ranges = json.load(url)
-            with open(manifest, "a", encoding='ascii') as file_pointer:
-                file_pointer.write(f"  loadBalancerSourceRanges:\n    - {external_ip}/32")
-                for ip_address in range(len(dd_ip_ranges["synthetics"]["prefixes_ipv4"])):
-                    file_pointer.write(f"""
-    - {dd_ip_ranges["synthetics"]["prefixes_ipv4"][ip_address]}""")
-            file_pointer.close()
+        configure_load_balancer_for_traffic(service_manifest)
 
         #deploy service
-        deploy_k8_object(k8s_api_client, manifest)
+        deploy_k8_object(k8s_api_client, service_manifest)
 
         lb_ip = get_load_balancer_ip(k8s_api_client)
 
