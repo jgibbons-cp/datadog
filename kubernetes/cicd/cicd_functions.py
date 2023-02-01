@@ -1,14 +1,16 @@
-'''k8 cicd functions'''
-import git
+'''
+k8 cicd functions
+'''
 import json
 import os
 import shutil
 import socket
+import sys
 import urllib.request
 import requests
 
 import git
-from kubernetes import client, utils
+from kubernetes import client, utils, watch
 from python_terraform import Terraform
 from datadog_api_client.exceptions import NotFoundException
 from datadog_api_client import ApiClient, Configuration
@@ -16,7 +18,12 @@ from datadog_api_client.v2.api.logs_api import LogsApi
 from datadog_api_client.v1.api.synthetics_api import SyntheticsApi
 
 def k8_cluster(local_base_repo, k8_repo, destroy):
-    '''create k8 cluster, kill cluster'''
+    '''
+    create k8 cluster, kill cluster
+    local_base_repo (string) - base repo
+    k8_repo (string) - terraform repo inside base repo
+    destroy (string) - flag to destroy cluster
+    '''
     repo_dir = local_base_repo + k8_repo
     terraform = Terraform(working_dir=repo_dir)
 
@@ -43,7 +50,11 @@ def k8_cluster(local_base_repo, k8_repo, destroy):
         terraform.apply(skip_plan=True)
 
 def get_state_info(local_base_repo, k8_repo):
-    '''get state info'''
+    '''
+    get terraform state info
+    local_base_repo (string) - base repo
+    k8_repo (string) - terraform repo inside base repo
+    '''
 
     state_file = local_base_repo + k8_repo + 'terraform.tfstate'
     access_mode = 'r'
@@ -53,15 +64,18 @@ def get_state_info(local_base_repo, k8_repo):
 
     return tfstate
 
-def send_log(message):
-    '''send log to datadog'''
+def send_log(message, service):
+    '''
+       Send log to datadog
+       Parameter 1 (string): message to send to logs
+       Parameter 2 (string): service (in Datadog terms) being tested
+    '''
 
     hostname = socket.gethostname()
-    service = get_service()
 
     body = [{
                 "ddsource": "integration_testing",
-                "ddtags": "env:test,version:1.0",
+                "ddtags": "env:dev",
                 "hostname": hostname,
                 "message": message,
                 "service": service
@@ -71,62 +85,13 @@ def send_log(message):
         api_instance = LogsApi(api_client)
         api_instance.submit_log(body=body)
 
-def check_for_errors(namespace, label_selector):
-    '''check if containers are running'''
-
-    kubectl_client = client.CoreV1Api()
-    pod_json = kubectl_client.list_namespaced_pod(namespace=namespace, \
-                                label_selector=label_selector)
-
-    reason = 'ContainerCreating'
-    containers_running = None
-    while (reason == 'ContainerCreating') and (containers_running is None):
-        #reset for more than one attempt
-        containers_running = 'true'
-
-        #cycle through containers
-        for container_json in pod_json.items:
-
-            containers_in_pod = len(container_json.status.container_statuses)
-
-            for container in range(0, containers_in_pod):
-                containers_running = \
-                    container_json.status.container_statuses[container].state.running
-
-                #see if any are not running
-                if containers_running is None:
-                    #if not, fail it get new status to try again
-                    containers_running = None
-                    pod_json = \
-                        kubectl_client.list_namespaced_pod(namespace=namespace, \
-                                            label_selector=label_selector)
-                    container_name = \
-                        container_json.status.container_statuses[container].name
-                    reason = \
-                        container_json.status.container_statuses[container].state.waiting.reason
-                    error_message = \
-                        container_json.status.container_statuses[container].state.waiting.message
-                    break
-
-    if containers_running == 'false':
-        #if containercreating still
-        if error_message is not None:
-            message = "Error in integration test. Container: " + \
-                container_name + " Reason: " + reason + " " + error_message
-        else:
-            message = "Error in integration test. Container: " + \
-                      container_name + " Reason: " + reason
-        send_log(message)
-
-    return containers_running
-
-def get_service():
-    '''get service'''
-    service = 'app_java'
-    return service
 
 def get_credentials(local_base_repo, k8_repo):
-    '''get kubeconfig'''
+    '''
+    get kubeconfig
+    local_base_repo (string) - base repo
+    k8_repo (string) - terraform repo inside base repo
+    '''
     tfstate = get_state_info(local_base_repo, k8_repo)
 
     # get resources group
@@ -146,17 +111,29 @@ def get_credentials(local_base_repo, k8_repo):
 
     return fq_config_path
 
-def deploy_k8_object(k8s_api_client, manifest):
-    '''deploy k8 object via yaml'''
+
+def deploy_k8_object(k8s_api_client, manifest, service):
+    '''
+        Deploy k8 object via yaml
+        k8s_api_client - api client object
+        manifest - yaml manifest, only tested with deployments/services atm
+        service (string) - dd service name
+    '''
     json = None
 
     try:
         json = utils.create_from_yaml(k8s_api_client, manifest)
     except utils.FailToCreateError as error:
-        send_log(f"Exception when applying yaml: {error}\n")
+        send_log(f"Exception when applying yaml: {error}\n", service)
+
 
 def create_k8_secret(name, data, secret_data):
-    '''create k8 secret'''
+    '''
+    create k8 secret
+    name (string) - name of secret
+    data - {}
+    secret_data (kv pairs) - secret data
+    '''
     secret = client.V1Secret(
         api_version="v1",
         kind="Secret",
@@ -173,10 +150,15 @@ def create_k8_secret(name, data, secret_data):
         client_api.create_namespaced_secret(namespace="default",
                                             body=secret)
     except client.exceptions.ApiException as exception:
-        send_log(f"Exception when creating secret: {exception}\n")
+        send_log(f"Error Exception when creating secret: {exception}\n", name)
+
 
 def get_load_balancer_ip(k8s_api_client):
-    '''get lb ip'''
+    '''
+    get lb ip
+    k8s_api_client - client object
+    '''
+    #TODO update when move to pre-prod testing
     service_name = "app-java"
     namespace = "default"
 
@@ -191,11 +173,17 @@ def get_load_balancer_ip(k8s_api_client):
 
     return lb_ip
 
+
+# TODO need to get rid of hard-coded test id and url
 def datadog_browser_test(lb_ip):
-    '''execute dd browser test'''
+    '''
+    execute dd browser test
+    lb_ip (string) - ip address of load balancer
+    '''
     #update load balancer ip, set dd test id
+    #TODO - make it generic when move to pre-prod
     start_url = f"http://{lb_ip}:8080/app-java-0.0.1-SNAPSHOT/"
-    public_id = '476-sd6-bh6'
+    public_id = ''
 
     body = {"tests": [{
                 "public_id": public_id,
@@ -228,16 +216,21 @@ def datadog_browser_test(lb_ip):
                 not_found_exception = True
 
     if test_passed is False:
-        send_log(message=f"""Test run failed, code: \
-{return_data.result.failure.code}, message: \
-{return_data.result.failure.message}""")
+        service = "add_service_here"
+        message = f"""Test run failed, code:
+ {return_data.result.failure.code}, message:
+ {return_data.result.failure.message}"""
+        send_log(message, service)
 
     return test_passed
 
+
 def configure_load_balancer_for_traffic(service_manifest):
-    '''configures the loadBalancerSourceRanges in the service to allow
+    '''
+    configures the loadBalancerSourceRanges in the service to allow
     the access from the host we are on and dd synthetics hosts
-    parameter service_manifest - path to the k8 svc manifest'''
+    parameter service_manifest - path to the k8 svc manifest
+    '''
 
     #get ip of host
     external_ip = requests.get('https://checkip.amazonaws.com').text.strip()
@@ -256,3 +249,48 @@ def configure_load_balancer_for_traffic(service_manifest):
                 file_pointer.write(f"""
     - {dd_ip_ranges["synthetics"]["prefixes_ipv4"][ip_address]}""")
             file_pointer.close()
+
+
+def wait_for_running_pods(namespace, label_selector):
+    '''
+       Wait for pods to deploy or error
+       Parameter 1: pod namespace
+       Parameter 2: pod label selector
+    '''
+    watcher = watch.Watch()
+    core_v1 = client.CoreV1Api()
+    for event in watcher.stream(func=core_v1.list_namespaced_pod,
+                          namespace=namespace,
+                          label_selector=label_selector,
+                          timeout_seconds=90):
+        container_statuses = event["object"].status.container_statuses
+
+        if event["object"].status.phase == "Running":
+            watcher.stop()
+        elif event["object"].status.phase == "Pending":
+            try:
+                for container_status in container_statuses:
+                    if container_status.state.waiting.message is None:
+                        pass
+                    else:
+                        send_log(f"""ERROR Run failed: \
+{container_status.state.waiting.message}""", label_selector)
+                        watcher.stop()
+                        sys.exit(1)
+            except TypeError:
+                continue
+
+
+def get_browser_test_result(public_id):
+    '''
+       Get the result of the Datadog browser test
+       Parameter 1: test public id
+    '''
+    configuration = Configuration()
+    with ApiClient(configuration) as api_client:
+        api_instance = SyntheticsApi(api_client)
+        response = api_instance.get_browser_test_latest_results(
+            public_id = public_id
+        )
+
+    return response
