@@ -12,7 +12,7 @@ jobs:
           python-version: 3.8 #install the python needed
       - name: execute py script
         run: |
-          pip install datadog-api-client
+          pip install datadog-api-client \
 	  ls -lR /home/runner/work/datadog/datadog/
         shell: bash
         working-directory: /home/runner/work/datadog/datadog/
