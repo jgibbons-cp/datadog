@@ -13,6 +13,7 @@ jobs:
       - name: execute py script
         run: |
           pip install datadog-api-client
+          pwd
         shell: bash
       #- name: execute py script
       #  run: |
