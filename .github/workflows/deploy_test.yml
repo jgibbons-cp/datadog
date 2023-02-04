@@ -10,11 +10,13 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8 #install the python needed
-      - name: execute py script
+      - name: install libraries
         run: |
           pip install datadog-api-client
-          pwd
-          ls
+          pushd kubernetes/cicd/dev/
+      - name: run manifest ci
+        run: |
+          python dev.py
         shell: bash
       #- name: execute py script
       #  run: |
