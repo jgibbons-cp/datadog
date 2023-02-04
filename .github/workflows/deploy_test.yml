@@ -13,6 +13,7 @@ jobs:
       - name: install libraries
         run: |
           pip install datadog-api-client
+          pip install yaml
           pushd kubernetes/cicd/dev/
           python dev.py
         shell: bash
