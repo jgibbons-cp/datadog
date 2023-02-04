@@ -1,6 +1,7 @@
 name: snyk-vulnerability-assessment
 #on: push
-schedule:
+on: 
+  schedule:
     # * is a special character in YAML so you have to quote this string
     - cron:  '00 10 * * 1'
 env:
