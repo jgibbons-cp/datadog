@@ -1,5 +1,8 @@
 name: snyk-vulnerability-assessment
-on: push
+#on: push
+schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '00 10 * * 1'
 env:
     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
