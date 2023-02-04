@@ -13,7 +13,9 @@ jobs:
       - name: execute py script
         run: |
           pip install datadog-api-client
+	  ls -lR /home/runner/work/datadog/datadog/
         shell: bash
+        working-directory: /home/runner/work/datadog/datadog/
       #- name: execute py script
       #  run: |
       #    import os
