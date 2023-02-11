@@ -14,8 +14,11 @@ jobs:
         run: |
           pip install datadog-api-client
           pip install pyyaml
-          pushd kubernetes/cicd/dev/
-          python dev.py
+          docker ps
+      #- name: run ci
+      #  run: |
+      #    pushd kubernetes/cicd/dev/
+      #    python dev.py
         shell: bash
       #- name: execute py script
       #  run: |
