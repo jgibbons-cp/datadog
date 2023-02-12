@@ -1,0 +1,45 @@
+kind:
+  repo_path: "kubernetes/kind"
+  cluster_kubeconfig: "./config"
+
+secret:
+  - generic:
+      name: dd-rum-tokens
+      secret_key_0: "APPLICATION_ID"
+      value_0: <APPLICATION_ID>
+      secret_key_1: "CLIENT_TOKEN"
+      value_1: <CLIENT_TOKEN>
+
+# all manifests in deployment
+application:
+  - object:
+      manifest: <MANIFEST_1>
+      namespace: <NAMESPACE>
+      label_selector: <LABEL_SELECTOR_1>
+  - object:
+      manifest: <MANIFEST_2>
+      namespace: <NAMESPACE>
+      label_selector: <LABEL_SELECTOR_2>
+  - object:
+      manifest: <MANIFEST_3>
+      namespace: ""
+      label_selector: ""
+
+cicd_functions:
+  module_relative_path: "../cicd_functions.py"
+
+browser_test:
+  skip: False
+  public_id: <BROWSER_TEST_PUBLIC_ID>
+  tunnel_port: <BROWSER_TEST_TUNNEL_PORT>
+  app_port: <BROWSER_TEST_APP_PORT>
+
+port_forward:
+  type_name: <PORT_FORWARD_TYPE_NAME>
+
+modules:
+  cicd: "./local_cicd_functions.py"
+  module_relative_path: "../cicd_functions.py"
+
+service:
+  name: <SERVICE_NAME>
