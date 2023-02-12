@@ -15,6 +15,7 @@ jobs:
           pip install datadog-api-client
           pip install pyyaml
       - name: configure ci
+        run: |
           sed -i .bak 's/<APPLICATION_ID>/\"${{ secrets.APPLICATION_ID }}\"/' config.yaml
           sed -i .bak 's/<CLIENT_TOKEN>/\"${{ secrets.CLIENT_TOKEN }}\"/' config.yaml
           sed -i .bak 's/<MANIFEST_1>/\"app-java\/kubernetes\/app-java.yaml\"/' config.yaml
