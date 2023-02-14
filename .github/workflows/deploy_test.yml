@@ -29,7 +29,6 @@ jobs:
           sed -i 's/<BROWSER_TEST_APP_PORT>/8080/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<PORT_FORWARD_TYPE_NAME>/\"deploy\/app-java\"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<SERVICE_NAME>/"app-java"/' kubernetes/cicd/dev/config.yaml
-        #sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
           sed -i 's/config.yaml/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/setup.py
           sed -i 's/..\/cicd_functions.py/kubernetes\/cicd\/cicd_functions.py/' kubernetes/cicd/dev/config.yaml
       - name: run ci
