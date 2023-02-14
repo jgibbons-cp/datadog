@@ -16,6 +16,7 @@ jobs:
           pip install pyyaml
           pip install requests
           pip install gitpython
+          pip install kubernetes
       - name: configure ci
         run: |
           sed -i 's/<APPLICATION_ID>/\"${{ secrets.APPLICATION_ID }}\"/' kubernetes/cicd/dev/config.yaml
