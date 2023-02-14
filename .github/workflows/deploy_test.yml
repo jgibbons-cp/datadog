@@ -14,6 +14,7 @@ jobs:
         run: |
           pip install datadog-api-client
           pip install pyyaml
+          pip install requests
       - name: configure ci
         run: |
           sed -i 's/<APPLICATION_ID>/\"${{ secrets.APPLICATION_ID }}\"/' kubernetes/cicd/dev/config.yaml
