@@ -34,7 +34,8 @@ jobs:
           sed -i 's/..\/cicd_functions.py/kubernetes\/cicd\/cicd_functions.py/' kubernetes/cicd/dev/config.yaml
       - name: run ci
         run: |
-          python kubernetes/cicd/dev/dev.py
+          pushd kubernetes/cicd/dev/
+          python dev.py
         shell: bash
       #- name: execute py script
       #  run: |
