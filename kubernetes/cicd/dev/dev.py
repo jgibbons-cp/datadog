@@ -138,7 +138,7 @@ def main():
     fcntl(kubectl_pid.stdout, F_SETFL, flags | O_NONBLOCK)
     flags = fcntl(kubectl_pid.stderr, F_GETFL)
     fcntl(kubectl_pid.stderr, F_SETFL, flags | O_NONBLOCK)
-    time.sleep(1)
+    time.sleep(5)
 
     try:
         output_stream = kubectl_pid.stdout.read()
@@ -179,8 +179,8 @@ of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
         os.system(f"kill -9 {kubectl_pid.pid}")
     else:
         send_log("Success", service)
-    #os.spawnlp(os.P_WAIT, "bash", "bash",
-    #           f"{config_data['kind']['repo_path']}/delete_kind.sh")
+    os.spawnlp(os.P_WAIT, "bash", "bash",
+               f"{config_data['kind']['repo_path']}/delete_kind.sh")
     local_module = config_data["modules"]["cicd"]
     os.remove(f"{script_directory}/{local_module}")
 
