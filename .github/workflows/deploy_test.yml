@@ -31,7 +31,7 @@ jobs:
           sed -i 's/<SERVICE_NAME>/"app-java"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
           sed -i 's/config.yaml/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/setup.py
-          sed -i 's/..\/cicd_functions.py/kubernetes\/cicd\/cicd_functions.py/' kubernetes/cicd/dev/setup.py
+          sed -i 's/..\/cicd_functions.py/kubernetes\/cicd\/cicd_functions.py/' kubernetes/cicd/dev/config.yaml
       - name: run ci
         run: |
           python kubernetes/cicd/dev/dev.py
