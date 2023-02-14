@@ -2,7 +2,7 @@ name: deploy_test
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner.
@@ -20,21 +20,21 @@ jobs:
           pip install python_terraform
       - name: configure ci
         run: |
-          sed -i 's/<APPLICATION_ID>/\"${{ secrets.APPLICATION_ID }}\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<CLIENT_TOKEN>/\"${{ secrets.CLIENT_TOKEN }}\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<MANIFEST_1>/\"..\/..\/app-java\/kubernetes\/app-java.yaml\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<NAMESPACE>/\"default\"/g' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<LABEL_SELECTOR_1>/\"run=app-java\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<MANIFEST_2>/\"..\/..\/app-java\/kubernetes\/mysql_ja.yaml\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<LABEL_SELECTOR_2>/\"run=mysql\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<MANIFEST_3>/\"..\/..\/app-java\/kubernetes\/app_java_service.yaml\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<BROWSER_TEST_PUBLIC_ID>/\"476-sd6-bh6\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<BROWSER_TEST_TUNNEL_PORT>/33333/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<BROWSER_TEST_APP_PORT>/8080/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<PORT_FORWARD_TYPE_NAME>/\"deploy\/app-java\"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<SERVICE_NAME>/"app-java"/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/kubernetes\/kind/..\/..\/kind/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/kubernetes\/kind/..\/..\/kind/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<APPLICATION_ID>/\"${{ secrets.APPLICATION_ID }}\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<CLIENT_TOKEN>/\"${{ secrets.CLIENT_TOKEN }}\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<MANIFEST_1>/\"..\/..\/app-java\/kubernetes\/app-java.yaml\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<NAMESPACE>/\"default\"/g' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<LABEL_SELECTOR_1>/\"run=app-java\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<MANIFEST_2>/\"..\/..\/app-java\/kubernetes\/mysql_ja.yaml\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<LABEL_SELECTOR_2>/\"run=mysql\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<MANIFEST_3>/\"..\/..\/app-java\/kubernetes\/app_java_service.yaml\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<BROWSER_TEST_PUBLIC_ID>/\"476-sd6-bh6\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<BROWSER_TEST_TUNNEL_PORT>/33333/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<BROWSER_TEST_APP_PORT>/8080/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<PORT_FORWARD_TYPE_NAME>/\"deploy\/app-java\"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/<SERVICE_NAME>/"app-java"/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/kubernetes\/kind/..\/..\/kind/' kubernetes/cicd/dev/config.yaml
+          sed -i .bak 's/kubernetes\/kind/..\/..\/kind/' kubernetes/cicd/dev/config.yaml
       - name: run ci
         run: |
           pushd kubernetes/cicd/dev/
