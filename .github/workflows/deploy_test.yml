@@ -34,7 +34,9 @@ jobs:
       - name: run ci
         run: |
           pushd kubernetes/cicd/dev/
+          echo "ls"
           ls
+          echo "ls .."
           ls ..
           python dev.py
         shell: bash
