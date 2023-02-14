@@ -34,6 +34,7 @@ jobs:
           sed -i 's/<PORT_FORWARD_TYPE_NAME>/\"deploy\/app-java\"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<SERVICE_NAME>/"app-java"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/\/kubernetes\/kind/..\/..\/kubernetes\/kind/' kubernetes/cicd/dev/config.yaml
       - name: run ci
         run: |
           pushd kubernetes/cicd/dev/
