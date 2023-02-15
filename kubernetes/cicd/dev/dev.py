@@ -122,11 +122,11 @@ def main():
     # 1) os.popen - waits
     # 2) kubernetes python client port forward - waits
     # 3) spawnlp with --kubeconfig: error on flag? so passed via env var
-    os.environ["KUBECONFIG"] = f"{config_data['kind']['repo_path']}/{kubeconfig}"
-    os.getenv("KUBECONFIG")
+    #os.environ["KUBECONFIG"] = f"{config_data['kind']['repo_path']}/{kubeconfig}"
+    #os.getenv("KUBECONFIG")
 
     # command to forward port for test
-    cmd = f'kubectl port-forward {config_data["port_forward"]["type_name"]} \
+    cmd = f'kubectl port-forward --kubeconfig {kubeconfig} {config_data["port_forward"]["type_name"]} \
 {config_data["browser_test"]["tunnel_port"]}\
 :{config_data["browser_test"]["app_port"]}'
 
