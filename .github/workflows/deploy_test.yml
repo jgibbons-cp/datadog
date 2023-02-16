@@ -43,6 +43,7 @@ jobs:
           sed -i 's/{/{"scripts": {"datadog-ci-synthetics": "datadog-ci synthetics run-tests"},/' package.json
       - name: run ci
         run: |
+          pushd kubernetes/cicd/dev/
           python dev.py
         shell: bash
       #sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
