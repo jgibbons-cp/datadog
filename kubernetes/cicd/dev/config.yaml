@@ -30,6 +30,7 @@ cicd_functions:
 
 browser_test:
   skip: False
+  id_config: "cicd.synthetics.json"
   public_id: <BROWSER_TEST_PUBLIC_ID>
   tunnel_port: <BROWSER_TEST_TUNNEL_PORT>
   app_port: <BROWSER_TEST_APP_PORT>
