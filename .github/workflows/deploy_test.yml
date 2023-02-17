@@ -44,6 +44,8 @@ jobs:
       - name: run ci
         run: |
           pushd kubernetes/cicd/dev/
+          echo $DATADOG_APP_KEY
+          echo $DATADOG_API_KEY
           npm run datadog-ci-synthetics
     #python dev.py
         shell: bash
