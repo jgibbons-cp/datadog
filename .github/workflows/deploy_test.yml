@@ -1,10 +1,10 @@
 name: deploy_test
+env:
+  DATADOG_APP_KEY: {{ secrets.DATADOG_APP_KEY }}
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DATADOG_APP_KEY: {{ secrets.DATADOG_APP_KEY }}
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner.
