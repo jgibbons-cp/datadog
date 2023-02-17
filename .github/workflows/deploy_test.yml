@@ -44,6 +44,7 @@ jobs:
       - name: run ci
         run: |
           pushd kubernetes/cicd/dev/
+          npm run datadog-ci-synthetics
           python dev.py
         shell: bash
       #sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
