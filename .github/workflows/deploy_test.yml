@@ -1,9 +1,8 @@
 name: deploy_test
-env:
-  DATADOG_APP_KEY: {{ secrets.DATADOG_APP_KEY }}
 on: [push]
 jobs:
   build:
+    environment: datadog
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
