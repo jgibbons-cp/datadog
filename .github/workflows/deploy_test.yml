@@ -48,8 +48,7 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
-          npm run datadog-ci-synthetics
-     #python dev.py
+          python dev.py
         shell: bash
       #sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
       #- name: execute py script
