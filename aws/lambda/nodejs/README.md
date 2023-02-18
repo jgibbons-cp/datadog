@@ -1,4 +1,4 @@
-Datadog Node.js 18.x Instrumentaton Examples
+Datadog Node.js 18.x Instrumentation Examples
 --
 
 Here are several examples of how to [instrument](https://docs.datadoghq.com/serverless/installation/nodejs/?tab=custom) a Node.js example in Lambda with Datadog.  
