@@ -52,6 +52,7 @@ jobs:
           echo {\"global\": { \"startUrl\": \"http://127.0.0.1:33333/app-java-0.0.1-SNAPSHOT/\" },\"tunnel\": true} > datadog-ci.json
           echo {\"tests\": [{\"id\": \"476-sd6-bh6\"}]} > cicd.synthetics.json
           npm run datadog-ci-synthetics
+          kubectl port-forward --kubeconfig ../../config deploy/app-java 33333:8080 &
 #python dev.py
         shell: bash
       #sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
