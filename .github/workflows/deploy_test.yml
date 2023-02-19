@@ -44,7 +44,8 @@ jobs:
           sed -i 's/{/{"scripts": {"datadog-ci-synthetics": "datadog-ci synthetics run-tests"},/' package.json
       - name: run ci
         env:
-          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+          #DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
