@@ -159,8 +159,7 @@ def main():
         # create config files cicd.synthetics.json and datadog-ci.json
         # or update
         setup.configure_datadog_continuous_testing()
-        #os.system("npm run datadog-ci-synthetics")
-
+        time.sleep(5)
         try:
             # datadog browser test
             output = subprocess.check_output(["npm", "run", "datadog-ci-synthetics"])
