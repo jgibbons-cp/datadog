@@ -159,10 +159,11 @@ def main():
         # create config files cicd.synthetics.json and datadog-ci.json
         # or update
         setup.configure_datadog_continuous_testing()
-        time.sleep(5)
+        
         try:
             # datadog browser test
             output = subprocess.check_output(["npm", "run", "datadog-ci-synthetics"])
+            time.sleep(10)
             output = output.decode()
             output = output.split("=== REPORT ===\n", 1)[1]
             output = "".join(output)
