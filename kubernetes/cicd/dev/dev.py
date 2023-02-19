@@ -163,7 +163,7 @@ def main():
         try:
             # datadog browser test
             output = subprocess.check_output(["npm", "run", "datadog-ci-synthetics"])
-            time.sleep(10)
+            print(f'output: {output}')
             output = output.decode()
             output = output.split("=== REPORT ===\n", 1)[1]
             output = "".join(output)
