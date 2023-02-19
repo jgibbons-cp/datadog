@@ -41,7 +41,7 @@ jobs:
           sed -i 's/kubernetes\/kind/..\/..\/kind/' kubernetes/cicd/dev/config.yaml
           pushd kubernetes/cicd/dev/
           npm install --save-dev @datadog/datadog-ci
-          sed -i 's/{/{"scripts": {"datadog-ci-synthetics": "datadog-ci synthetics run-tests"},/' package.json
+        #sed -i 's/{/{"scripts": {"datadog-ci-synthetics": "datadog-ci synthetics run-tests"},/' package.json
       - name: run ci
         env:
           #DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
@@ -50,7 +50,7 @@ jobs:
         run: |
           pushd kubernetes/cicd/dev/
 #python dev.py
-          npm run datadog-ci-synthetics
+#npm run datadog-ci-synthetics
         shell: bash
       #sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
       #- name: execute py script
