@@ -46,10 +46,6 @@ def create_test_id_config(test_public_id, config_file):
     with open(config_file, "w", encoding="ascii") as file:
         file_json = f'{{"tests": [{{"id": \"{test_public_id}\"}}]}}'
         file.write(file_json)
-    os.system("pwd")
-    os.system("ls")
-    os.system("cat cicd.synthetics.json")
-
 
 def create_tunnel_config(start_url, config_file):
     '''

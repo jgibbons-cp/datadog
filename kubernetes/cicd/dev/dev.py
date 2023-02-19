@@ -163,12 +163,12 @@ def main():
         try:
             # datadog browser test
             output = subprocess.check_output(["npm", "run", "datadog-ci-synthetics"])
-            print(f'output: {output}')
             output = output.decode()
             output = output.split("=== REPORT ===\n", 1)[1]
             output = "".join(output)
             send_log(f"info {output}", service)
         except subprocess.CalledProcessError:
+            println(f'output: {output}')
             result = get_browser_test_result(config_data["browser_test"]["public_id"])
             message = f"""ERROR {result["results"][0]["result"]["errorMessage"]} \
     Error occurred after step \
