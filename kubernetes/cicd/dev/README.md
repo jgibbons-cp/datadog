@@ -26,6 +26,7 @@ Pre-Requisites
 Configuration
 --
 
+```
 # this is used for app-java RUM to set values for the Datadog tokens  
 secret:
   - generic:
@@ -80,3 +81,4 @@ modules:
 # service name (e.g. app-java, petclinic)
 service:
   name: <SERVICE_NAME>
+```
