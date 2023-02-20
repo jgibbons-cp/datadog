@@ -168,7 +168,6 @@ def main():
             output = "".join(output)
             send_log(f"info {output}", service)
         except subprocess.CalledProcessError:
-            print(f'output: {output}')
             result = get_browser_test_result(config_data["browser_test"]["public_id"])
             message = f"""ERROR {result["results"][0]["result"]["errorMessage"]} \
     Error occurred after step \
