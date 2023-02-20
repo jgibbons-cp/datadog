@@ -17,7 +17,7 @@ jobs:
           pip install pyyaml
           pip install kubernetes
           pip install gitpython
-#pip install python_terraform
+          pip install python_terraform
 #pip install requests
       - name: configure ci
         run: |
