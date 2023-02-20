@@ -6,11 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content to github runner.
+        uses: actions/checkout@v2
       - name: setup python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8 #install the python needed
+          python-version: 3.8
       - name: install libraries
         run: |
           pip install datadog-api-client
@@ -42,7 +42,6 @@ jobs:
           pushd kubernetes/cicd/dev/
           npm install --save-dev @datadog/datadog-ci
           echo '{"scripts": {"datadog-ci-synthetics": "datadog-ci synthetics run-tests"},"devDependencies": {"@datadog/datadog-ci": "^2.4.1"}}' > package.json
-#sed -i 's/{/{"scripts": {"datadog-ci-synthetics": "datadog-ci synthetics run-tests"},/' package.json
       - name: run ci
         env:
           DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
@@ -51,22 +50,4 @@ jobs:
         run: |
           pushd kubernetes/cicd/dev/
           python3 dev.py
-#echo {\"global\": { \"startUrl\": \"http://127.0.0.1:33333/app-java-0.0.1-SNAPSHOT/\" },\"tunnel\": true} > datadog-ci.json
-#echo {\"tests\": [{\"id\": \"476-sd6-bh6\"}]} > cicd.synthetics.json
-#npm run datadog-ci-synthetics
-#kubectl port-forward --kubeconfig ../../config deploy/app-java 33333:8080 &
-#python dev.py
         shell: bash
-      #sed -i 's/.\/config/kubernetes\/cicd\/dev\/config.yaml/' kubernetes/cicd/dev/config.yaml
-      #- name: execute py script
-      #  run: |
-      #    import os
-      #    print(os.environ['PATH'])
-      #  shell: python
-      #- name: execute py script # run the run.py to get the latest data
-      #  run: |
-      #    python run.py
-      #  env:
-      #    key: ${{ secrets.key }} # if run.py requires passwords..etc, set it as secrets
-      #- name: export index
-      #  .... # use crosponding script or actions to help export.
