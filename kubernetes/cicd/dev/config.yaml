@@ -1,7 +1,9 @@
+# relative to dev directory so default should be fine  
 kind:
   repo_path: "kubernetes/kind"
   cluster_kubeconfig: "./config"
 
+# this is used for app-java RUM to set values for the Datadog tokens  
 secret:
   - generic:
       name: dd-rum-tokens
@@ -10,7 +12,7 @@ secret:
       secret_key_1: "CLIENT_TOKEN"
       value_1: <CLIENT_TOKEN>
 
-# all manifests in deployment
+# all manifests in deployment - three here as app-java has three  
 application:
   - object:
       manifest: <MANIFEST_1>
@@ -25,23 +27,29 @@ application:
       namespace: ""
       label_selector: ""
 
-cicd_functions:
-  module_relative_path: "../cicd_functions.py"
-
+# Datadog [CI configuration](https://docs.datadoghq.com/continuous_testing/cicd_integrations/configuration/?tab=npm)
 browser_test:
   skip: False
+  # test to run
   id_config: "cicd.synthetics.json"
+  # start url and tunnel option
   tunnel_config: "datadog-ci.json"
+  # public id of test from browser test UI in Datadog
   public_id: <BROWSER_TEST_PUBLIC_ID>
+  # tunnel port
   tunnel_port: <BROWSER_TEST_TUNNEL_PORT>
+  # app port
   app_port: <BROWSER_TEST_APP_PORT>
 
+# port forward type and name (e.g. deploy/app-java)
 port_forward:
   type_name: <PORT_FORWARD_TYPE_NAME>
 
+# local functions
 modules:
   cicd: "./local_cicd_functions.py"
   module_relative_path: "../cicd_functions.py"
 
+# service name (e.g. app-java, petclinic)
 service:
   name: <SERVICE_NAME>
