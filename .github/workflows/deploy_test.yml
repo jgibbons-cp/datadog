@@ -16,9 +16,9 @@ jobs:
           pip install datadog-api-client
           pip install pyyaml
           pip install kubernetes
+          pip install gitpython
 #pip install python_terraform
 #pip install requests
-#pip install gitpython
       - name: configure ci
         run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
