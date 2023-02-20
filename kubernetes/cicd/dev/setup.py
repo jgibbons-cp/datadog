@@ -81,7 +81,7 @@ def configure_datadog_continuous_testing():
     tunnel_config = config_data["browser_test"]["tunnel_config"]
     ip_address = "127.0.0.1"
     port = config_data["browser_test"]["tunnel_port"]
-    start_url = f"http://{ip_address}:{port}"
+    start_url = f"http://{ip_address}:{port}/app-java-0.0.1-SNAPSHOT/"
 
     try:
         with open(tunnel_config, 'r', encoding="ascii") as file:
