@@ -3,12 +3,12 @@ COPY . .
 RUN npm install
 # install tracer
 RUN npm install dd-trace --save
-# talk to local agent service
+# talk to local agent service - this is probably it
 ENV DD_AGENT_HOST="datadog-agent"
 # correlation tags
-ENV DD_SERVICE="app-java"
-ENV DD_VERSION="1"
-ENV DD_ENV="lab"
+ENV DD_SERVICE=""
+ENV DD_VERSION=""
+ENV DD_ENV=""
 # code profiling
 ENV DD_PROFILING_ENABLED="true"
 # runtime metrics
