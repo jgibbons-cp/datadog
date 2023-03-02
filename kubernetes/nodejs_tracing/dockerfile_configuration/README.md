@@ -28,7 +28,7 @@ docker build -t <repo>/<image> .;docker push <repo>/<image>
 - update ```<ip>``` with your IP so you can access the app via the loadbalancer  
 - ```kubectl create -f .```  
   
-5) Hit the app http://<loadbalancer_ip>  
+5) Hit the app http://<loadbalancer_ip>  - ```kubectl get svc knote``` to get IP  
   
 6) Look at [traces](https://app.datadoghq.com/apm/traces), [profiles](https://app.datadoghq.com/profiling/search), and [runtime metrics](https://app.datadoghq.com/dash/integration/30269/nodejs-runtime-metrics) or in the metrics section of a trace panel.  
   
