@@ -25,13 +25,12 @@ docker build -t <repo>/<image> .;docker push <repo>/<image>
   
 4) Deploy  
 - update ```<repo>/<image>``` in knote.yaml with your container  
+- update ```<ip>``` with your IP so you can access the app via the loadbalancer  
 - ```kubectl create -f .```  
   
-5) update ```<ip>``` with your IP so you can access the app via the loadbalancer  
+5) Hit the app http://<loadbalancer_ip>  
   
-6) Hit the app http://<loadbalancer_ip>  
-  
-7) Look at [traces](https://app.datadoghq.com/apm/traces), [profiles](https://app.datadoghq.com/profiling/search), and [runtime metrics](https://app.datadoghq.com/dash/integration/30269/nodejs-runtime-metrics) or in the metrics section of a trace panel.  
+6) Look at [traces](https://app.datadoghq.com/apm/traces), [profiles](https://app.datadoghq.com/profiling/search), and [runtime metrics](https://app.datadoghq.com/dash/integration/30269/nodejs-runtime-metrics) or in the metrics section of a trace panel.  
   
 Have fun!  
 
