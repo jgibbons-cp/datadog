@@ -7,10 +7,7 @@ Files
 --
 
 1) dockerfile - container configuration and noted options  
-a) This environment variable configures communication with the agent service.  To get the name of your service use:  
-```  
-kubectl get svc -o custom-columns="SERVICE NAME":.metadata.name| grep agent  
-```  
+a) This environment variable configures communication with the agent service.  To get the name of your service see [services](https://app.datadoghq.com/orchestration/overview/service)    
 - ENV DD_AGENT_HOST="<agent_service_name>"  
 b) correlation tags  
 - ENV DD_SERVICE="<name_of_service_to_be_traced>"  
