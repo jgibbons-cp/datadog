@@ -14,7 +14,7 @@ b) correlation tags
 - ENV DD_VERSION="<version_of_service_to_be_traced>"  
 - ENV DD_ENV="<env_of_service_to_be_traced>"  
   
-Once the options are configured, build and push:  
+Once the options are configured, build and push (NOTE: requires you to pull repo and ```cd knote-js/01``` to build):  
 ```  
 docker build -t <repo>/<image> .;docker push <repo>/<image>  
 ```  
