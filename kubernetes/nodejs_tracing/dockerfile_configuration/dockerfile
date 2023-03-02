@@ -1,0 +1,16 @@
+FROM node:18.0-slim
+COPY . .
+RUN npm install
+# install tracer
+RUN npm install dd-trace --save
+# talk to local agent service
+ENV DD_AGENT_HOST="datadog-agent"
+# correlation tags
+ENV DD_SERVICE="app-java"
+ENV DD_VERSION="1"
+ENV DD_ENV="lab"
+# code profiling
+ENV DD_PROFILING_ENABLED="true"
+# runtime metrics
+ENV DD_RUNTIME_METRICS_ENABLED="true"
+CMD [ "node", "index.js", "--require dd-trace/init"]
