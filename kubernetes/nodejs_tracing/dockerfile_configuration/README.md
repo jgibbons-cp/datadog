@@ -7,16 +7,15 @@ Files
 --
 
 1) dockerfile - container configuration and noted options  
-# talk to local agent service  
-# you can confirm the name of your service with  
+a) This environment variable configures communication with the agent service.  To get the name of your service use:  
 ```  
 kubectl get svc -o custom-columns="SERVICE NAME":.metadata.name| grep agent  
 ```  
 - ENV DD_AGENT_HOST="<agent_service_name>"  
-# correlation tags  
-ENV DD_SERVICE="<name_of_service_to_be_traced>"  
-ENV DD_VERSION="<version_of_service_to_be_traced>"  
-ENV DD_ENV="<env_of_service_to_be_traced>"  
+b) correlation tags  
+- ENV DD_SERVICE="<name_of_service_to_be_traced>"  
+- ENV DD_VERSION="<version_of_service_to_be_traced>"  
+- ENV DD_ENV="<env_of_service_to_be_traced>"  
   
 Once the options are configured, build and push:  
 ```  
