@@ -32,7 +32,6 @@ spec:
     metadata:
       labels:
         app: mongo
-        app.kubernetes.io/name: "knote"
     spec:
       containers:
         - name: mongo
