@@ -11,6 +11,6 @@ jobs:
         env:
           DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
         run: |
-          docker login -u jenksgibbon -p ${{secrets.DOCKER_PASSWORD}}
+          #docker login -u jenksgibbon -p ${{secrets.DOCKER_PASSWORD}}
           docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
         shell: bash

@@ -1,5 +1,9 @@
 name: deploy_test
-on: [push]
+#on: push
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '00 10 * * 1'
 jobs:
   build:
     environment: datadog
