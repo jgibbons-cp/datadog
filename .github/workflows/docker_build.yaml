@@ -1,0 +1,16 @@
+name: docker_build
+on: [push]
+jobs:
+  build:
+    environment: datadog
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: install libraries
+        env:
+          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+        run: |
+          docker login -u jenksgibbon -p ${{secrets.DOCKER_PASSWORD}}
+          docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
+        shell: bash
