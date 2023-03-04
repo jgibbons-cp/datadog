@@ -12,6 +12,7 @@ jobs:
           DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
         run: |
           pushd kubernetes/nodejs_tracing/dockerfile_configuration/
-          echo $DOCKER_PASSWORD > docker.txt | docker login --username jenksgibbons --password-stdin
+          echo $DOCKER_PASSWORD > docker.txt
+          cat docker.txt | docker login --username jenksgibbons --password-stdin
           docker build -t jenksgibbons/knote .
         shell: bash
