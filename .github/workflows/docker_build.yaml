@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2
-      - name: install libraries
+      - name: build and push image
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
