@@ -14,5 +14,5 @@ jobs:
           pushd kubernetes/nodejs_tracing/dockerfile_configuration/
           echo $DOCKER_PASSWORD > docker.txt
           cat docker.txt | docker login --username jenksgibbons --password-stdin
-          docker build -t jenksgibbons/knote .
+          docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
         shell: bash
