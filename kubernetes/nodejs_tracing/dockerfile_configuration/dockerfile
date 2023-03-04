@@ -13,4 +13,5 @@ ENV DD_ENV="lab"
 ENV DD_PROFILING_ENABLED="true"
 # runtime metrics
 ENV DD_RUNTIME_METRICS_ENABLED="false"
+CMD ["printenv"]
 CMD node --require dd-trace/init index.js
