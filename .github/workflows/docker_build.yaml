@@ -16,5 +16,7 @@ jobs:
           cat docker.txt | docker login --username jenksgibbons --password-stdin
           cp dockerfile app/
           pushd app/
+          cat package.json
+          cat package-lock.json
           docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
         shell: bash
