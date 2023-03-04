@@ -1,5 +1,5 @@
 FROM node:18.0-slim
-ENV "testing"
+ENV TEST="testing"
 CMD ["printenv"]
 COPY . .
 CMD npm install
