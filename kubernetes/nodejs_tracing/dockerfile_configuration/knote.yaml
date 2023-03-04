@@ -15,13 +15,14 @@ spec:
     spec:
       containers:
         - name: app
-          image: <repo>/<image>
+          image: jenksgibbons/knote
+          command: ["printenv"]
           ports:
             - containerPort: 3000
           env:
             - name: MONGO_URL
               value: mongodb://mongo:27017/dev
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -35,4 +36,4 @@ spec:
       targetPort: 3000
   type: LoadBalancer
   loadBalancerSourceRanges:
-    - <ip>/32
+    - 72.212.77.89/32
