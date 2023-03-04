@@ -1,6 +1,4 @@
 FROM node:18.0-slim
-ENV TEST="testing"
-CMD ["printenv"]
 COPY . .
 CMD npm install
 # install tracer
@@ -15,4 +13,5 @@ ENV DD_ENV="lab"
 ENV DD_PROFILING_ENABLED="true"
 # runtime metrics
 ENV DD_RUNTIME_METRICS_ENABLED="false"
-CMD node --require dd-trace/init index.js
+#CMD node --require dd-trace/init index.js
+CMD node index.js
