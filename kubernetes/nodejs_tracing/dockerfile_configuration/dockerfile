@@ -12,5 +12,5 @@ ENV DD_ENV="lab"
 # code profiling
 ENV DD_PROFILING_ENABLED="true"
 # runtime metrics
-ENV DD_RUNTIME_METRICS_ENABLED="true"
+#ENV DD_RUNTIME_METRICS_ENABLED="true"
 CMD exec node --require dd-trace/init index.js
