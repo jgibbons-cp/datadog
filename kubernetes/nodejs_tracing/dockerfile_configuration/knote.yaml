@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: jenksgibbons/knote
-          command: ["printenv"]
+          image: <repo>/<image>
           ports:
             - containerPort: 3000
           env:
@@ -36,4 +35,4 @@ spec:
       targetPort: 3000
   type: LoadBalancer
   loadBalancerSourceRanges:
-    - 72.212.77.89/32
+    - <ip>/32
