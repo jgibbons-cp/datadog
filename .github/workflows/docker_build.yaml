@@ -81,7 +81,7 @@ jobs:
         run: |
           pushd kubernetes/cicd/dev/
           python3 dev.py
-          kubectl --kubeconfig=../../kind/config describe pods
+          kubectl --kubeconfig=../../kind/config get pods
           kubectl --kubeconfig=../../kind/config get secrets
           popd
           sleep 20
