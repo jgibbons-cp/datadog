@@ -12,27 +12,27 @@ metadata:
   namespace: default
 ---
 # Source: datadog/templates/secret-api-key.yaml
-#apiVersion: v1
-#kind: Secret
-#metadata:
-#  name: datadog-agent
-#  namespace: default
-#  labels: {}
-#type: Opaque
-#data:
-#  api-key: PUT_YOUR_BASE64_ENCODED_API_KEY_HERE
-#---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: datadog-agent
+  namespace: default
+  labels: {}
+type: Opaque
+data:
+  api-key: PUT_YOUR_BASE64_ENCODED_API_KEY_HERE
+---
 # Source: datadog/templates/secret-cluster-agent-token.yaml
-#apiVersion: v1
-#kind: Secret
-#metadata:
-#  name: datadog-agent-cluster-agent
-#  namespace: default
-#  labels: {}
-#type: Opaque
-#data:
-#  token: PUT_A_BASE64_ENCODED_RANDOM_STRING_HERE
-#---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: datadog-agent-cluster-agent
+  namespace: default
+  labels: {}
+type: Opaque
+data:
+  token: PUT_A_BASE64_ENCODED_RANDOM_STRING_HERE
+---
 # Source: datadog/templates/install_info-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
