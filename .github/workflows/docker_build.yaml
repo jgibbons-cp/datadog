@@ -64,6 +64,7 @@ jobs:
           sed -i 's/>//g' kubernetes/cicd/dev/config.yaml
           sed -i 's/PORT_FORWARD_TYPE_NAME/deploy\/knote/' kubernetes/cicd/dev/config.yaml
           sed -i 's/BROWSER_TEST_APP_PORT/80/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/BROWSER_TEST_TUNNEL_PORT/33333/' kubernetes/cicd/dev/config.yaml
           cat kubernetes/cicd/dev/config.yaml
           pushd kubernetes/cicd/dev/
       - name: run ci
