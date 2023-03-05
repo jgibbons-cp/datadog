@@ -69,7 +69,6 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
-#python3 dev.py
           popd
           sleep 20
         shell: bash
