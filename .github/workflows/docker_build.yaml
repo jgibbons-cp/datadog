@@ -45,7 +45,7 @@ jobs:
           echo "# kind: Deployment" >> clusterrolebinding.yaml
           popd
           cat kubernetes/daemonset/all_features\/datadog-agent-all-features.yaml
-          sed -i 's/application:/application:\n  - object:\n       manifest: \".\/clusterrole.yaml\"\n  - object:\n       manifest: \".\/serviceaccount.yaml\"\n  - object:\n       manifest: \".\/clusterrolebinding.yaml\"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/application:/application:\n  - object:\n       manifest: \".\/clusterrole.yaml\"\n      namespace: \"\"\n      label_selector: \"\"\n  - object:\n       manifest: \".\/serviceaccount.yaml\"\n      namespace: \"\"\n      label_selector: \"\"\n  - object:\n       manifest: \".\/clusterrolebinding.yaml\"      namespace: \"\"\n      label_selector: \"\"\n/' kubernetes/cicd/dev/config.yaml
           sed -i 's/dd-rum-tokens/datadog-agent-cluster-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<APPLICATION_ID>/dkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
