@@ -67,6 +67,8 @@ jobs:
           sed -i 's/BROWSER_TEST_TUNNEL_PORT/33333/' kubernetes/cicd/dev/config.yaml
           api_key=$(echo -n ${{ secrets.DATADOG_API_KEY }} | base64)
           cluster_token=$(echo -n ${{ secrets.DD_CLUSTER_TOKEN }} | base64)
+          echo $api_key
+          echo $cluster_token
           sed -i 's/PUT_YOUR_BASE64_ENCODED_API_KEY_HERE/$api_key/' kubernetes/daemonset/all_features/datadog-agent-all-features.yaml
           sed -i 's/PUT_A_BASE64_ENCODED_RANDOM_STRING_HERE/$cluster_token/' kubernetes/daemonset/all_features/datadog-agent-all-features.yaml
           cat kubernetes/cicd/dev/config.yaml
@@ -78,8 +80,6 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
-          python3 dev.py
-          kubectl --kubeconfig=../../kind/config get pods
           popd
           sleep 20
         shell: bash
