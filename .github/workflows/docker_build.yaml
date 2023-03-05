@@ -41,7 +41,7 @@ jobs:
           curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/serviceaccount.yaml
           curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrole.yaml
           popd
-          echo "# Deployment" >> kubernetes/daemonset/all_features\/datadog-agent-all-features.yaml
+          echo "# kind: Deployment" >> kubernetes/daemonset/all_features\/datadog-agent-all-features.yaml
           sed -i 's/application:/application:\n  - object:\n       manifest: \".\/clusterrole.yaml\"\n  - object:\n       manifest: \".\/serviceaccount.yaml\"\n  - object:\n       manifest: \".\/clusterrolebinding.yaml\"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/dd-rum-tokens/datadog-agent-cluster-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
