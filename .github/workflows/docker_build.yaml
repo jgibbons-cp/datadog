@@ -70,7 +70,8 @@ jobs:
         run: |
           pushd kubernetes/cicd/dev/
           python3 dev.py
-          kubectl --KUBECONFIG=kubernetes/kind/config get pods
+          popd
+          kubectl --kubeconfig=kubernetes/kind/config get pods
         shell: bash
 
 
