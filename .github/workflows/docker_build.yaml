@@ -44,7 +44,6 @@ jobs:
           echo "# kind: Deployment" >> serviceaccount.yaml
           echo "# kind: Deployment" >> clusterrolebinding.yaml
           popd
-          sed -i 's/application:/application:\n  - object:\n       manifest: \".\/clusterrole.yaml\"\n      namespace: \"\"\n      label_selector: \"\"\n  - object:\n       manifest: \".\/serviceaccount.yaml\"\n      namespace: \"\"\n      label_selector: \"\"\n  - object:\n       manifest: \".\/clusterrolebinding.yaml\"      namespace: \"\"\n      label_selector: \"\"\n/' kubernetes/cicd/dev/config.yaml
           sed -i 's/dd-rum-tokens/datadog-agent-cluster-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<APPLICATION_ID>/dkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
@@ -58,6 +57,7 @@ jobs:
           sed -i 's/<BROWSER_TEST_PUBLIC_ID>/\"476-sd6-bh6\"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/False/True/' kubernetes/cicd/dev/config.yaml
           sed -i 's/kubernetes\/kind/..\/..\/kind/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/application:/application:\n  - object:\n      manifest: \".\/clusterrole.yaml\"\n      namespace: \"\"\n      label_selector: \"\"\n  - object:\n      manifest: \".\/serviceaccount.yaml\"\n      namespace: \"\"\n      label_selector: \"\"\n  - object:\n      manifest: \".\/clusterrolebinding.yaml\"      namespace: \"\"\n      label_selector: \"\"\n/' kubernetes/cicd/dev/config.yaml
           cat kubernetes/cicd/dev/config.yaml
           pushd kubernetes/cicd/dev/
       - name: run ci
