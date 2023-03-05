@@ -46,8 +46,8 @@ jobs:
           popd
           sed -i 's/dd-rum-tokens/datadog-cluster-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<APPLICATION_ID>/dkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/secret_key_1: \"CLIENT_TOKEN\"/  - generic:\n      name: datadog-agent\n      secret_key_1: api-key\n      value_1: ${{ secrets.DATADOG_API_KEY }}/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<APPLICATION_ID>/${{ secrets.DD_CLUSTER_TOKEN }}/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/      secret_key_1: \"CLIENT_TOKEN\"/      - generic:\n      name: datadog-agent\n      secret_key_1: api-key\n      value_1: ${{ secrets.DATADOG_API_KEY }}/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<MANIFEST_1>/\"..\/..\/kubernetes\/daemonset\/all_features\/datadog-agent-all-features.yaml"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<NAMESPACE>/\"default\"/g' kubernetes/cicd/dev/config.yaml
           sed -i 's/<LABEL_SELECTOR_1>/\"app=datadog-agent\"/' kubernetes/cicd/dev/config.yaml
