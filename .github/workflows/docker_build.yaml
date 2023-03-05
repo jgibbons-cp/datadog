@@ -36,7 +36,10 @@ jobs:
         shell: bash
       - name: configure ci
         run: |
-          sed -i 's/application:/application:\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/clusterrole.yaml\"\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/serviceaccount.yaml\"\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/clusterrolebinding.yaml\"/' kubernetes/cicd/dev/config.yaml
+          curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrole.yaml
+          curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/serviceaccount.yaml
+          curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrole.yaml
+          sed -i 's/application:/application:\n  - object:\n       manifest: \"clusterrole.yaml\"\n  - object:\n       manifest: \"serviceaccount.yaml\"\n  - object:\n       manifest: \"clusterrolebinding.yaml\"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/dd-rum-tokens/datadog-agent-cluster-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<APPLICATION_ID>/dkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
