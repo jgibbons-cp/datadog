@@ -76,6 +76,8 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
+          python3 dev.py
+          kubectl --kubeconfig=../../kind/config get pods
           popd
           sleep 20
         shell: bash
