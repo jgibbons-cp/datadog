@@ -71,8 +71,7 @@ jobs:
           pushd kubernetes/cicd/dev/
           python3 dev.py
           popd
-        #kubectl --kubeconfig=kubernetes/kind/config get pods
-          sleep 
+          sleep 20
         shell: bash
 
 
