@@ -22,21 +22,21 @@ jobs:
           pip install gitpython
           pip install python_terraform
 
-      - name: build and push image
-        env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          pushd kubernetes/nodejs_tracing/dockerfile_configuration/
-          echo $DOCKER_PASSWORD > docker.txt
-          cat docker.txt | docker login --username jenksgibbons --password-stdin
-          cp dockerfile app/
-          pushd app/
-          cat package.json
-          docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
+      #- name: build and push image
+        #env:
+        #  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        #run: |
+        #  pushd kubernetes/nodejs_tracing/dockerfile_configuration/
+        #  echo $DOCKER_PASSWORD > docker.txt
+        #  cat docker.txt | docker login --username jenksgibbons --password-stdin
+        #  cp dockerfile app/
+        #  pushd app/
+        #  cat package.json
+        #  docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
         shell: bash
       - name: configure ci
         run: |
-          sed -i 's/application:/application:\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/clusterrole.yaml\"\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/serviceaccount.yaml\"\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/clusterrolebinding.yaml\"/'
+          sed -i 's/application:/application:\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/clusterrole.yaml\"\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/serviceaccount.yaml\"\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/clusterrolebinding.yaml\"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/dd-rum-tokens/datadog-agent-cluster-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<APPLICATION_ID>/dkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
