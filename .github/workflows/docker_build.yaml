@@ -62,6 +62,7 @@ jobs:
           sed -i 's/<ip>/127.0.0.1/' kubernetes/nodejs_tracing/dockerfile_configuration/knote.yaml
           sed -i 's/<//g' kubernetes/cicd/dev/config.yaml
           sed -i 's/>//g' kubernetes/cicd/dev/config.yaml
+          sed -i 's/PORT_FORWARD_TYPE_NAME/deploy\/knote/'
           cat kubernetes/cicd/dev/config.yaml
           pushd kubernetes/cicd/dev/
       - name: run ci
