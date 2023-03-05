@@ -46,7 +46,7 @@ jobs:
           popd
           sed -i 's/dd-rum-tokens/datadog-agent-cluster-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<APPLICATION_ID>/dkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<APPLICATION_ID>/fffdkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<MANIFEST_1>/\"..\/..\/kubernetes\/daemonset\/all_features\/datadog-agent-all-features.yaml"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<NAMESPACE>/\"default\"/g' kubernetes/cicd/dev/config.yaml
           sed -i 's/<LABEL_SELECTOR_1>/\"app=datadog-agent\"/' kubernetes/cicd/dev/config.yaml
@@ -65,6 +65,10 @@ jobs:
           sed -i 's/PORT_FORWARD_TYPE_NAME/deploy\/knote/' kubernetes/cicd/dev/config.yaml
           sed -i 's/BROWSER_TEST_APP_PORT/80/' kubernetes/cicd/dev/config.yaml
           sed -i 's/BROWSER_TEST_TUNNEL_PORT/33333/' kubernetes/cicd/dev/config.yaml
+          api_key=$(echo -n ${{ secrets.DATADOG_API_KEY }} | base64)
+          cluster_token=$(echo -n ${{ secrets.DD_CLUSTER_TOKEN }} | base64)
+          sed -i 's/PUT_YOUR_BASE64_ENCODED_API_KEY_HERE/$api_key/' ../../kubernetes/daemonset/all_features/datadog-agent-all-features.yaml
+          sed -i 's/PUT_A_BASE64_ENCODED_RANDOM_STRING_HERE/$cluster_token/' ../../kubernetes/daemonset/all_features/datadog-agent-all-features.yaml
           cat kubernetes/cicd/dev/config.yaml
           pushd kubernetes/cicd/dev/
       - name: run ci
