@@ -7,6 +7,21 @@ jobs:
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: install dependencies
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+          pip install datadog-api-client
+          pip install pyyaml
+          pip install kubernetes
+          pip install gitpython
+          pip install python_terraform
+
       - name: build and push image
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -19,3 +34,35 @@ jobs:
           cat package.json
           docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
         shell: bash
+      - name: install datadog agent ds pre-requisites
+        run: |
+          kubectl apply -f "https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrole.yaml"
+          kubectl apply -f "https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/serviceaccount.yaml"
+          kubectl apply -f "https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrolebinding.yaml"
+      - name: configure ci
+        run: |
+          sed -i 's/dd-rum-tokens/datadog-agent-cluster-agent/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<APPLICATION_ID>/dkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<MANIFEST_1>/\"..\/..\/kubernetes\/daemonset\/all_features\/datadog-agent-all-features.yaml"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<NAMESPACE>/\"default\"/g' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<LABEL_SELECTOR_1>/\"app=datadog-agent\"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<MANIFEST_2>/\"..\/..\/kubernetes\/nodejs_tracing\/dockerfile_configuration\/knote.yaml\"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<LABEL_SELECTOR_2>/\"app=knote\"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<MANIFEST_3>/\"..\/..\/kubernetes\/nodejs_tracing\/dockerfile_configuration\/mongo.yaml\"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/label_selector: \"\"/label_selector: \"app=mongo\"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<BROWSER_TEST_PUBLIC_ID>/\"476-sd6-bh6\"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/False/True/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/kubernetes\/kind/..\/..\/kind/' kubernetes/cicd/dev/config.yaml
+          pushd kubernetes/cicd/dev/
+      - name: run ci
+        env:
+          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+          DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
+        run: |
+          pushd kubernetes/cicd/dev/
+          python3 dev.py
+        shell: bash
+
+
