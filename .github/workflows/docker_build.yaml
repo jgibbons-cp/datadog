@@ -36,7 +36,7 @@ jobs:
         shell: bash
       - name: configure ci
         run: |
-          pushd kubernetes/cicd/dev
+          pushd kubernetes/kind
           curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrole.yaml
           curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/serviceaccount.yaml
           curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrole.yaml
