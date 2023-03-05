@@ -34,13 +34,9 @@ jobs:
           cat package.json
           docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
         shell: bash
-      - name: install datadog agent ds pre-requisites
-        run: |
-          kubectl apply -f "https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrole.yaml"
-          kubectl apply -f "https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/serviceaccount.yaml"
-          kubectl apply -f "https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrolebinding.yaml"
       - name: configure ci
         run: |
+          sed -i 's/application:/application:\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/clusterrole.yaml\"\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/serviceaccount.yaml\"\n  - object:\n       manifest: \"https:\/\/raw.githubusercontent.com\/DataDog\/datadog-agent\/master\/Dockerfiles\/manifests\/rbac\/clusterrolebinding.yaml\"/'
           sed -i 's/dd-rum-tokens/datadog-agent-cluster-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/token/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<APPLICATION_ID>/dkejsusnemwjskwlqasdnrdfjenslqrd/' kubernetes/cicd/dev/config.yaml
@@ -63,6 +59,7 @@ jobs:
         run: |
           pushd kubernetes/cicd/dev/
           python3 dev.py
+          kubectl --KUBECONFIG=kubernetes/kind/config get pods
         shell: bash
 
 
