@@ -60,6 +60,8 @@ jobs:
           sed -i 's/application:/application:\n  - object:\n      manifest: \".\/clusterrole.yaml\"\n      namespace: \"\"\n      label_selector: \"\"\n  - object:\n      manifest: \".\/serviceaccount.yaml\"\n      namespace: \"\"\n      label_selector: \"\"\n  - object:\n      manifest: \".\/clusterrolebinding.yaml\"\n      namespace: \"\"\n      label_selector: \"\"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<repo>\/<image>/jenksgibbons\/knote/' kubernetes/nodejs_tracing/dockerfile_configuration/knote.yaml
           sed -i 's/<ip>/127.0.0.1/' kubernetes/nodejs_tracing/dockerfile_configuration/knote.yaml
+          sed -i 's/<//g' kubernetes/cicd/dev/config.yaml
+          sed -i 's/>//g' kubernetes/cicd/dev/config.yaml
           cat kubernetes/cicd/dev/config.yaml
           pushd kubernetes/cicd/dev/
       - name: run ci
@@ -69,6 +71,7 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
+          python3 dev.py
           popd
           sleep 20
         shell: bash
