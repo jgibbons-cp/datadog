@@ -49,13 +49,12 @@ jobs:
           popd
           sed -i 's/PUT_A_BASE64_ENCODED_RANDOM_STRING_HERE/a2RrZGtka2RrZGtka2RrZGtka2RrZGtka2RrZGtka2Rr/' kubernetes/daemonset/all_features/datadog-agent-all-features.yaml
           sed -i 's/    runtime_security_config:\n      enabled: true/    runtime_security_config:\n      enabled: false/' kubernetes/daemonset/all_features/datadog-agent-all-features.yaml
-          cat kubernetes/daemonset/all_features/datadog-agent-all-features.yaml
           sed -i 's/dd-rum-tokens/datadog-agent/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/api-key/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<APPLICATION_ID>/${{ secrets.DD_API_KEY }}/' kubernetes/cicd/dev/config.yaml
           sed -i 's/      secret_key_1: \"CLIENT_TOKEN\"/  - generic:\n      name: datadog-agent\n      secret_key_1: api-key\n      value_1: ${{ secrets.DATADOG_API_KEY }}/' kubernetes/cicd/dev/config.yaml
           sed -i 's/value_1: <CLIENT_TOKEN>//' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<MANIFEST_1>/\"..\/..\/kubernetes\/daemonset\/all_features\/datadog-agent-all-features.yaml"/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<MANIFEST_1>/\"..\/..\/kubernetes\/daemonset\/metrics_apm\/datadog-agent-apm.yaml"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<NAMESPACE>/\"default\"/g' kubernetes/cicd/dev/config.yaml
           sed -i 's/<LABEL_SELECTOR_1>/\"app=datadog-agent\"/' kubernetes/cicd/dev/config.yaml
           sed -i 's/<MANIFEST_2>/\"..\/..\/kubernetes\/nodejs_tracing\/dockerfile_configuration\/knote.yaml\"/' kubernetes/cicd/dev/config.yaml
