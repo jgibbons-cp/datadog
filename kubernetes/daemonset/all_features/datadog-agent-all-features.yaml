@@ -81,7 +81,7 @@ data:
     service_monitoring_config:
       enabled: false
     runtime_security_config:
-      enabled: true
+      enabled: false
       debug: false
       socket: /var/run/sysprobe/runtime-security.sock
       policies:
