@@ -6,7 +6,7 @@ COPY . .
 # install tracer - using this command i was able to reproduce
 # Error: Cannot find module 'dd-trace/init' on github actions
 #CMD  ["npm", "install", "dd-trace --save"]
-# using RUN it successfully built and deployed on github actions
+# using RUN it successfully built on github actions and deployed to k8s
 #
 RUN npm install dd-trace --save
 #
