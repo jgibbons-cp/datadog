@@ -82,7 +82,6 @@ jobs:
           DD_CLUSTER_AGENT_AUTH_TOKEN: ${{ secrets.DD_CLUSTER_AGENT_AUTH_TOKEN }}
         run: |
           pushd kubernetes/cicd/dev/
-          python3 dev.py
           kubectl --kubeconfig=../../kind/config get pods
           kubectl --kubeconfig=../../kind/config get secrets
           popd
