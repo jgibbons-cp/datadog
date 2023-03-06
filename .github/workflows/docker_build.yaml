@@ -37,7 +37,7 @@ jobs:
       - name: configure ci
         env:
           DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
-          DD_CLUSTER_AGENT_AUTH_TOKEN: ${{ secrets.DATADOG_API_KEY }}
+          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
         run: |
           pushd kubernetes/kind
           curl -O https://raw.githubusercontent.com/DataDog/datadog-agent/master/Dockerfiles/manifests/rbac/clusterrole.yaml
