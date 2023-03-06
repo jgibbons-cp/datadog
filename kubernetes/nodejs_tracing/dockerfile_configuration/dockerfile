@@ -22,6 +22,6 @@ ENV DD_PROFILING_ENABLED="true"
 # Datadog runtime metrics
 ENV DD_RUNTIME_METRICS_ENABLED="true"
 # without Datadog library
-#CMD node index.js
+CMD node index.js
 # with Datadog library
-CMD node --require dd-trace/init index.js
+#CMD node --require dd-trace/init index.js
