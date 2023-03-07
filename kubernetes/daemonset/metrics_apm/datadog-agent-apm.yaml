@@ -194,6 +194,8 @@ spec:
               name: dogstatsdport
               protocol: UDP
           env:
+            - name: DD_HOSTNAME
+              value: dev-test
             # Needs to be removed when Agent N-2 is built with Golang 1.17
             - name: GODEBUG
               value: x509ignoreCN=0
