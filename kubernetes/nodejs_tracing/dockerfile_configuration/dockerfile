@@ -34,4 +34,5 @@ ENV DD_RUNTIME_METRICS_ENABLED="true"
 #CMD node index.js
 # with Datadog library
 #
+ENV DD_TRACE_DEBUG="true"
 CMD node --require dd-trace/init index.js
