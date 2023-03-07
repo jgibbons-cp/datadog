@@ -51,7 +51,7 @@ jobs:
           sed -i 's/    runtime_security_config:\n      enabled: true/    runtime_security_config:\n      enabled: false/' kubernetes/daemonset/all_features/datadog-agent-all-features.yaml
           sed -i 's/dd-rum-tokens/datadog/' kubernetes/cicd/dev/config.yaml
           sed -i 's/\"APPLICATION_ID\"/api-key/' kubernetes/cicd/dev/config.yaml
-          sed -i 's/<APPLICATION_ID>/${{ secrets.DD_API_KEY }}/' kubernetes/cicd/dev/config.yaml
+          sed -i 's/<APPLICATION_ID>/6555268826230bf2cea6c42d748148e2/' kubernetes/cicd/dev/config.yaml
           sed -i 's/      secret_key_1: \"CLIENT_TOKEN\"/  - generic:\n      name: datadog\n      secret_key_1: api-key\n      value_1: ${{ secrets.DATADOG_API_KEY }}/' kubernetes/cicd/dev/config.yaml
           sed -i 's/value_1: <CLIENT_TOKEN>//' kubernetes/cicd/dev/config.yaml
           sed -i 's/<MANIFEST_1>/\"..\/..\/kubernetes\/daemonset\/metrics_apm\/datadog-agent-apm.yaml"/' kubernetes/cicd/dev/config.yaml
@@ -84,6 +84,7 @@ jobs:
           pushd kubernetes/cicd/dev/
           python3 dev.py
           kubectl --kubeconfig=../../kind/config describe pods
+          kubectl --kubeconfig=../../kind/config get pods
           kubectl --kubeconfig=../../kind/config get secrets
           popd
           sleep 20
