@@ -13,7 +13,8 @@ RUN npm install dd-trace --save
 # talk to local Datadog agent service - this is probably it
 # see readme on how to find it
 #
-ENV DD_AGENT_HOST="datadog-agent.datadog.svc.cluster.local"
+#ENV DD_AGENT_HOST="datadog-agent.datadog.svc.cluster.local"
+ENV DD_AGENT_HOST="datadog-agent"
 #
 # Datadog correlation tags - examples
 # meaningful to you - service instrumented, version for deployment tracking
