@@ -21,7 +21,7 @@ datadog:
   ## * Overall length should not be higher than 80 characters.
   ## Compared to the rules of GKE, dots are allowed whereas they are not allowed on GKE:
   ## https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters#Cluster.FIELDS.name
-  clusterName:
+  clusterName: 
 
   # kubelet configuration
   kubelet:
@@ -79,9 +79,21 @@ datadog:
   ## Enable apm agent and provide custom configs
   apm:
     # datadog.apm.portEnabled -- Enable APM over TCP communication (port 8126 by default)
-
     ## ref: https://docs.datadoghq.com/agent/kubernetes/apm/
     portEnabled: true
+
+  ## OTLP ingest related configuration
+  otlp:
+    receiver:
+      protocols:
+        # datadog.otlp.receiver.protocols.grpc - OTLP/gRPC configuration
+        grpc:
+          # datadog.otlp.receiver.protocols.grpc.enabled -- Enable the OTLP/gRPC endpoint
+          enabled: false
+          # datadog.otlp.receiver.protocols.grpc.endpoint -- OTLP/gRPC endpoint
+          endpoint: "0.0.0.0:4317"
+          # datadog.otlp.receiver.protocols.grpc.useHostPort -- Enable the Host Port for the OTLP/gRPC endpoint
+          useHostPort: true
 
   ## Enable process agent and provide custom configs
   processAgent:
