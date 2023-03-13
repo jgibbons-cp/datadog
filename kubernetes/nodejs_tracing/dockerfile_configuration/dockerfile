@@ -8,7 +8,12 @@ COPY . .
 #CMD  ["npm", "install", "dd-trace --save"]
 # using RUN it successfully built on github actions and deployed to k8s
 #
-RUN npm install dd-trace --save
+# no dd
+RUN npm install
+#
+# with dd
+#
+#RUN npm install dd-trace --save
 #
 # talk to local Datadog agent service - this is probably it
 # see readme on how to find it
@@ -17,27 +22,30 @@ RUN npm install dd-trace --save
 # ENV DD_AGENT_HOST="datadog-agent"
 #
 # fully qualified dns to a names namespace datadog
-ENV DD_AGENT_HOST="datadog-agent.datadog.svc.cluster.local"
+#ENV DD_AGENT_HOST="datadog-agent.datadog.svc.cluster.local"
 #
 # Datadog correlation tags - examples
 # meaningful to you - service instrumented, version for deployment tracking
 # env for grouping dev, prod, dev_description etc.
 #
-ENV DD_SERVICE="knote"
-ENV DD_VERSION="1"
-ENV DD_ENV="lab"
+#ENV DD_SERVICE=""
+#ENV DD_VERSION=""
+#ENV DD_ENV=""
 #
 # Datadog code profiling
-ENV DD_PROFILING_ENABLED="true"
+#ENV DD_PROFILING_ENABLED="true"
 #
 # Datadog runtime metrics
 #
-ENV DD_RUNTIME_METRICS_ENABLED="true"
+#ENV DD_RUNTIME_METRICS_ENABLED="true"
+#
+# debug logs
+#
+#ENV DD_TRACE_DEBUG="true"
+#ENV DD_TRACE_STARTUP_LOGS="true"
 #
 # without Datadog library
-#CMD node index.js
+CMD node index.js
 # with Datadog library
 #
-ENV DD_TRACE_DEBUG="true"
-ENV DD_TRACE_STARTUP_LOGS="true"
-CMD node --require dd-trace/init index.js
+#CMD node --require dd-trace/init index.js
