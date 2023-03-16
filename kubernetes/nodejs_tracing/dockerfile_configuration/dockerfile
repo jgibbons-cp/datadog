@@ -1,6 +1,6 @@
 ## tested in github actions using this
 # https://github.com/jgibbons-cp/datadog/blob/full_cicd_knote/.github/workflows/docker_build.yaml
-FROM node:18.0-slim
+FROM node:lts-slim
 COPY . .
 #
 # install tracer - using this command i was able to reproduce
@@ -11,7 +11,7 @@ COPY . .
 # no dd
 #RUN npm install -g n;n latest
 #RUN npm install -g npm@19.8.1
-RUN npm install -g npm
+RUN npm install
 #
 # with dd
 #
