@@ -1,4 +1,4 @@
-# tested in github actions using this
+## tested in github actions using this
 # https://github.com/jgibbons-cp/datadog/blob/full_cicd_knote/.github/workflows/docker_build.yaml
 FROM node:18.0-slim
 COPY . .
@@ -9,7 +9,9 @@ COPY . .
 # using RUN it successfully built on github actions and deployed to k8s
 #
 # no dd
-RUN npm install
+#RUN npm install -g n;n latest
+#RUN npm install -g npm@19.8.1
+RUN npm install -g npm
 #
 # with dd
 #
