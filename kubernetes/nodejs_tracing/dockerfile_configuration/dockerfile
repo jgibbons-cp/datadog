@@ -1,6 +1,6 @@
 ## tested in github actions using this
 # https://github.com/jgibbons-cp/datadog/blob/full_cicd_knote/.github/workflows/docker_build.yaml
-FROM node:lts-slim
+FROM node
 COPY . .
 #
 # install tracer - using this command i was able to reproduce
