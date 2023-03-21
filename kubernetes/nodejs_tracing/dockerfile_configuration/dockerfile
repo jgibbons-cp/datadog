@@ -8,14 +8,14 @@ RUN npm install dd-trace --save
 #
 # talk to local Datadog agent service
 # see readme to see how to find service name
-ENV DD_AGENT_HOST="datadog-agent.<namespace>.svc.cluster.local"
+ENV DD_AGENT_HOST="datadog-agent.default.svc.cluster.local"
 #
 # Datadog correlation tags - examples
 # meaningful to you - service instrumented, version for deployment tracking
 # env for grouping dev, prod, dev_description etc.
-ENV DD_SERVICE=""
-ENV DD_VERSION=""
-ENV DD_ENV=""
+ENV DD_SERVICE="knote"
+ENV DD_VERSION="1"
+ENV DD_ENV="lab"
 #
 # Datadog code profiling
 ENV DD_PROFILING_ENABLED="true"
