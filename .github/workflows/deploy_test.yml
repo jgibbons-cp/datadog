@@ -1,6 +1,6 @@
 name: deploy_test
 on: 
-  push
+  push:
     branches-ignore:    
       - 'main'
 jobs:

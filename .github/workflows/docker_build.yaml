@@ -1,6 +1,6 @@
 name: docker_build
 on: 
-  push
+  push:
     branches-ignore:    
       - 'main'
 jobs:
