@@ -7,8 +7,8 @@ Files
 --
 
 1) dockerfile - container configuration and noted options  
-a) This environment variable configures communication with the agent service.  To get the name of your service see [services](https://app.datadoghq.com/orchestration/overview/service)  NOTE: requires Kubernetes v1.22+ as uses ```internalTrafficPolicy: Local``` so the pod always talks to the agent pod on the same node to ensure infrastructure tags are accurate.  
-- ENV DD_AGENT_HOST="<agent_service_name>"  
+a) The environment variable ```DD_AGENT_HOST``` configures communication with the agent service.  To get the name of your service see [services](https://app.datadoghq.com/orchestration/overview/service)  NOTE: requires Kubernetes v1.22+ as uses ```internalTrafficPolicy: Local``` so the pod always talks to the agent pod on the same node to ensure infrastructure tags are accurate.  Replace <namespace> with 
+the namespace of the Datadog agent.  
 b) correlation tags  
 - ENV DD_SERVICE="<name_of_service_to_be_traced>"  
 - ENV DD_VERSION="<version_of_service_to_be_traced>"  
