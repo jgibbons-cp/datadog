@@ -1,4 +1,4 @@
-apiVersion: appsv1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -58,7 +58,7 @@ spec:
           value: ""
         ports:
         - containerPort: 8080
-          hostPort: 8080
+          hostPort: 443
           name: "http"
         - containerPort: 9012
           hostPort: 9012
