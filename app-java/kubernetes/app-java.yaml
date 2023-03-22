@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployme
+apiVersion: appsv1
+kind: Deployment
 metadata:
   labels:
     run: app-java
