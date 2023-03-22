@@ -2,7 +2,10 @@ name: docker_build
 on: 
   push:
     branches-ignore:    
-      - 'main'
+      - main
+      - '*app-java*'
+    branches:
+      - main
 jobs:
   build:
     environment: datadog
