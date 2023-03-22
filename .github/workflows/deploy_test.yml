@@ -9,7 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: '*app-java*'
       - name: setup python
         uses: actions/setup-python@v2
         with:
