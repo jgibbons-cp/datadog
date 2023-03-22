@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployme
 metadata:
   labels:
     run: app-java
@@ -57,7 +57,7 @@ spec:
         - name: DB
           value: ""
         ports:
-        - containerPort: 808
+        - containerPort: 8080
           hostPort: 8080
           name: "http"
         - containerPort: 9012
