@@ -275,7 +275,7 @@ def wait_for_running_pods(namespace, label_selector, service):
                         pass
                     else:
                         send_log(f"""ERROR Run failed: \
-{container_status.state.waiting.message}""", label_selector)
+{container_status.state.waiting.message}""", service)
                         watcher.stop()
                         sys.exit(1)
             except TypeError:
