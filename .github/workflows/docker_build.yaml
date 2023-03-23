@@ -3,7 +3,7 @@ on:
   push:
     branches-ignore:    
       - main
-      - '*app-java*'
+      - app-java-test
     branches:
       - main
 jobs:
