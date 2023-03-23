@@ -27,7 +27,7 @@ spec:
         ad.datadoghq.com/app-java.logs: '[{"source":"tomcat","service":"tomcat","log_processing_rules":[{"type":"multi_line","name":"log_start_with_date","pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]}]'
     spec:
       containers:
-      - image: jenksgibbons/app-java
+      - image: jenksgibbons/app-java-test
         name: app-java
         imagePullPolicy: IfNotPresent
         env:
@@ -57,8 +57,8 @@ spec:
         - name: DB
           value: ""
         ports:
-        - containerPort: 443
-          hostPort: 443
+        - containerPort: 8080
+          hostPort: 8080
           name: "http"
         - containerPort: 9012
           hostPort: 9012
