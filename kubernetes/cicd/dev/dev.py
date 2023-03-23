@@ -114,7 +114,7 @@ def main():
         # wait for results
         namespace = config_data["application"][iterator]["object"]["namespace"]
         label_selector = config_data["application"][iterator]["object"]["label_selector"]
-        wait_for_running_pods(namespace, label_selector)
+        wait_for_running_pods(namespace, label_selector, service)
 
         iterator += 1
 

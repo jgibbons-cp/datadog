@@ -251,11 +251,12 @@ def configure_load_balancer_for_traffic(service_manifest):
             file_pointer.close()
 
 
-def wait_for_running_pods(namespace, label_selector):
+def wait_for_running_pods(namespace, label_selector, service):
     '''
        Wait for pods to deploy or error
        Parameter 1: pod namespace
        Parameter 2: pod label selector
+       Parameter 3: Datadog service tag
     '''
     watcher = watch.Watch()
     core_v1 = client.CoreV1Api()
