@@ -4,8 +4,6 @@ on:
     branches-ignore:    
       - main
       - app-java-test
-    branches:
-      - main
 jobs:
   build:
     environment: datadog
