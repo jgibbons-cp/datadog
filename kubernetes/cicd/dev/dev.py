@@ -31,6 +31,15 @@ def is_supported_object(manifest):
                 "Only K8 deployments/services have been tested... Exiting..."
             )
 
+
+def delete_kind_cluster(kind_dir):
+    '''
+        Delete the local cluster
+        Parameter 1: configuration data to get path to kind directory
+    '''
+    os.spawnlp(os.P_WAIT, "bash", "bash",
+               f"{kind_dir}/delete_kind.sh")
+
 def main():
     '''
        Create a kind cluster, deploy kubernetes objects, test deploy using
@@ -52,9 +61,11 @@ def main():
 
     # move to kind directory, create cluster and set context
     # path of kind repo set in config
-    os.chdir(config_data["kind"]["repo_path"])
-
+    proc_dir = os.getcwd()
+    kind_dir = f'{proc_dir}/{config_data["kind"]["repo_path"]}'
+    
     # create cluster and wait for it to come up or exit
+    os.chdir(kind_dir)
     ret_val = os.spawnlp(os.P_WAIT, "bash", "bash", "create_kind.sh")
     if ret_val != 0:
         sys.exit(1)
@@ -62,6 +73,7 @@ def main():
     # load kubeconfig
     kubeconfig = config_data["kind"]["cluster_kubeconfig"]
     config.load_kube_config(config_file=kubeconfig)
+    os.chdir(proc_dir)
 
     try:
         # iterate through all secrets for all applications
@@ -95,11 +107,11 @@ def main():
 
     # deploy k8 objects (e.g. deploy)
     iterator = 0
+
     while iterator < len(config_data["application"]):
         # deploy manifest
         try:
             manifest = config_data["application"][iterator]["object"]["manifest"]
-            is_supported_object(manifest)
             deploy_k8_object(k8s_api_client, manifest, service)
         except AttributeError as error:
             # if error in manifest
@@ -114,7 +126,9 @@ def main():
         # wait for results
         namespace = config_data["application"][iterator]["object"]["namespace"]
         label_selector = config_data["application"][iterator]["object"]["label_selector"]
-        wait_for_running_pods(namespace, label_selector, service)
+        if not wait_for_running_pods(namespace, label_selector, service):
+            delete_kind_cluster(kind_dir)
+            sys.exit(1)
 
         iterator += 1
 
@@ -145,10 +159,12 @@ def main():
         if not output_stream:
             output_stream = kubectl_pid.stderr.read()
             send_log(f"ERROR: {output_stream}", service)
+            delete_kind_cluster(kind_dir)
             sys.exit(1)
     except TypeError:
         output_stream = kubectl_pid.stderr.read()
         send_log(f"ERROR: {output_stream}", service)
+        delete_kind_cluster(kind_dir)
         sys.exit(1)
 
     # skip browser test
@@ -179,8 +195,7 @@ of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
         os.system(f"kill -9 {kubectl_pid.pid}")
     else:
         send_log("Success", service)
-    os.spawnlp(os.P_WAIT, "bash", "bash",
-               f"{config_data['kind']['repo_path']}/delete_kind.sh")
+    delete_kind_cluster(kind_dir)
     local_module = config_data["modules"]["cicd"]
     os.remove(f"{script_directory}/{local_module}")
 
