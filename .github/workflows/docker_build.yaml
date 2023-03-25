@@ -3,7 +3,7 @@ on:
   push:
     branches-ignore:    
       - main
-      - app-java-test
+      - dev-app-java
 jobs:
   build:
     environment: datadog
