@@ -4,16 +4,18 @@ on:
     branches-ignore:    
       - 'main'
 jobs:
-  build:
-    environment: datadog
+  merge:
     runs-on: ubuntu-latest
     steps:
-      - name: merge
-        uses: actions/checkout@main
+      - uses: actions/checkout@main
+      - name: Merge feature -> main
+        uses: dev-app-java
         with:
           type: now
-          from_branch: dev-app-java
           target_branch: main
+  build:
+    environment: datadog
+    #runs-on: ubuntu-latest
       - name: checkout feature branch
         uses: actions/checkout@v3
         with:
