@@ -14,8 +14,7 @@ jobs:
           type: now
           from_branch: dev-app-java
           target_branch: main
-        shell: bash
-      - name: checkout repo content
+      - name: checkout feature branch
         uses: actions/checkout@v3
         with:
           ref: dev-app-java
