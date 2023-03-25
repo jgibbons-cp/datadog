@@ -258,6 +258,8 @@ def wait_for_running_pods(namespace, label_selector, service):
        Parameter 2: pod label selector
        Parameter 3: Datadog service tag
     '''
+    ret_val = 0
+
     watcher = watch.Watch()
     core_v1 = client.CoreV1Api()
     for event in watcher.stream(func=core_v1.list_namespaced_pod,
@@ -277,10 +279,11 @@ def wait_for_running_pods(namespace, label_selector, service):
                         send_log(f"""ERROR Run failed: \
 {container_status.state.waiting.message}""", service)
                         watcher.stop()
-                        sys.exit(1)
+                        ret_val = 1
             except TypeError:
                 continue
 
+    return ret_val
 
 def get_browser_test_result(public_id):
     '''

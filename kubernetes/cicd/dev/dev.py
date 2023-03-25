@@ -107,6 +107,7 @@ def main():
 
     # deploy k8 objects (e.g. deploy)
     iterator = 0
+    ret_val = 0
 
     while iterator < len(config_data["application"]):
         # deploy manifest
@@ -119,14 +120,14 @@ def main():
             # log sent to datadog
             send_log(f"ERROR Object deployment failed: {error}", service)
             # delete cluster
-            os.spawnlp(os.P_WAIT, "bash", "bash",
-                       f"{config_data['kind']['repo_path']}/delete_kind.sh")
+            delete_kind_cluster(kind_dir)
             sys.exit(1)
 
         # wait for results
         namespace = config_data["application"][iterator]["object"]["namespace"]
         label_selector = config_data["application"][iterator]["object"]["label_selector"]
-        if not wait_for_running_pods(namespace, label_selector, service):
+        ret_val = wait_for_running_pods(namespace, label_selector, service)
+        if ret_val != 0:
             delete_kind_cluster(kind_dir)
             sys.exit(1)
 
@@ -140,7 +141,7 @@ def main():
     #os.getenv("KUBECONFIG")
 
     # command to forward port for test
-    cmd = f'kubectl port-forward --kubeconfig {kubeconfig} {config_data["port_forward"]["type_name"]} \
+    cmd = f'kubectl port-forward --kubeconfig {kind_dir}/{kubeconfig} {config_data["port_forward"]["type_name"]} \
 {config_data["browser_test"]["tunnel_port"]}\
 :{config_data["browser_test"]["app_port"]}'
 
@@ -189,6 +190,7 @@ def main():
     Error occurred after step \
 {result["results"][0]["result"]["step_count_completed"]} \
 of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
+            delete_kind_cluster(kind_dir)
             send_log(message, service)
 
         # clean up
