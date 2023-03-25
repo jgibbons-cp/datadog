@@ -8,6 +8,13 @@ jobs:
     environment: datadog
     runs-on: ubuntu-latest
     steps:
+      - name: merge
+        uses: actions/checkout@main
+        with:
+          type: now
+          from_branch: dev-app-java
+          target_branch: main
+        shell: bash
       - name: checkout repo content
         uses: actions/checkout@v3
         with:
@@ -55,9 +62,4 @@ jobs:
           pushd kubernetes/cicd/dev/
           python3 dev.py
         shell: bash
-      - name: merge
-        run: |
-          git checkout main
-          git merge dev-app-java
-          git push
-        shell: bash
+
