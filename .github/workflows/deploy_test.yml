@@ -61,10 +61,11 @@ jobs:
         run: |
           pushd kubernetes/cicd/dev/
           #python3 dev.py
-      - name: merge
+      - name: checkout main
         uses: actions/checkout@v3
         with:
           ref: main
+      - name: merge
         run: |
           git config --global user.email "jenks.gibbons@datadoghq.com"
           git config --global user.name "Jenks"
