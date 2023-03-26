@@ -4,12 +4,12 @@ on:
     branches-ignore:    
       - 'main'
 jobs:
-  #merge-branch:
-  runs-on: ubuntu-latest
-  steps:
+  merge-branch:
+    runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@main
     - name: Merge feature -> main
-        run: |
+      run: |
         #uses: merge-branch@main
         #with:
         #  type: now
