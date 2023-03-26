@@ -4,18 +4,18 @@ on:
     branches-ignore:    
       - 'main'
 jobs:
-  merge-branch:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@main
-      - name: Merge feature -> main
+  #merge-branch:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@main
+    - name: Merge feature -> main
         run: |
         #uses: merge-branch@main
         #with:
         #  type: now
         #  target_branch: main
-          git merge dev-app-java
-          git push
+        git merge dev-app-java
+        git push
   build:
     environment: datadog
     runs-on: ubuntu-latest
