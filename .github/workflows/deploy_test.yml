@@ -3,6 +3,8 @@ on:
   push:
     branches-ignore:    
       - 'main'
+    branches:
+      - 'dev/*'
 jobs:
   ci:
     environment: datadog
@@ -22,7 +24,7 @@ jobs:
       - name: checkout feature branch
         uses: actions/checkout@v3
         with:
-          ref: dev-app-java  
+          ref: dev/*
       - name: configure ci
         run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -62,7 +64,7 @@ jobs:
         run: |
           git config --global user.email "jenks.gibbons@datadoghq.com"
           git config --global user.name "Jenks"
-          git merge --allow-unrelated-histories origin/dev-app-java
+          git merge --allow-unrelated-histories origin/dev/*
           git push
         shell: bash
 
