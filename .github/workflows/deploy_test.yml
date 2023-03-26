@@ -4,21 +4,21 @@ on:
     branches-ignore:    
       - 'main'
 jobs:
-  merge-branch:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout feature branch
-      uses: actions/checkout@v3
-      with:
-        ref: dev-app-java
-  build:
-    environment: datadog
+  checkout-feature-branch:
     runs-on: ubuntu-latest
     steps:
       - name: checkout feature branch
         uses: actions/checkout@v3
         with:
           ref: dev-app-java
+  build:
+    environment: datadog
+    runs-on: ubuntu-latest
+    steps:
+      #- name: checkout feature branch
+      #  uses: actions/checkout@v3
+      #  with:
+      #    ref: dev-app-java
       - name: setup python
         uses: actions/setup-python@v2
         with:
