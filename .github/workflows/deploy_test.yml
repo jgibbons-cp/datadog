@@ -57,7 +57,7 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
-          #python3 dev.py
+          python3 dev.py
       #- name: checkout main
       #  uses: actions/checkout@v3
       #  with:
