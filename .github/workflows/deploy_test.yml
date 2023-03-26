@@ -7,13 +7,10 @@ jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@main
+    #- uses: actions/checkout@main
     - name: Merge feature -> main
       run: |
-        #uses: merge-branch@main
-        #with:
-        #  type: now
-        #  target_branch: main
+        git checkout main
         git merge dev-app-java
         git push
   build:
