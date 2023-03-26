@@ -19,6 +19,10 @@ jobs:
           pip install kubernetes
           pip install gitpython
           pip install python_terraform
+      - name: checkout main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main  
       - name: checkout feature branch
         uses: actions/checkout@v3
         with:
@@ -54,15 +58,16 @@ jobs:
         run: |
           pushd kubernetes/cicd/dev/
           #python3 dev.py
-      - name: checkout main
-        uses: actions/checkout@v3
-        with:
-          ref: main
+      #- name: checkout main
+      #  uses: actions/checkout@v3
+      #  with:
+      #    ref: main
       - name: merge
         run: |
           git config --global user.email "jenks.gibbons@datadoghq.com"
           git config --global user.name "Jenks"
-          git merge --allow-unrelated-histories origin/dev-app-java
+          git checkout main
+          git merge origin/dev-app-java
           git push
         shell: bash
 
