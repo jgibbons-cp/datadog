@@ -7,12 +7,17 @@ jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
+    - name: checkout feature branch
     - uses: actions/checkout@v3
       with:
-        ref: main, dev-app-java
+        ref: dev-app-java
+    - name: checkout main
+    - uses: actions/checkout@v3
+      with:
+        ref: main
+
     - name: Merge feature -> main
       run: |
-        git checkout main
         git merge dev-app-java
         git push
   build:
