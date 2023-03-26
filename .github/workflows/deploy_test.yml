@@ -18,7 +18,7 @@ jobs:
 
     - name: Merge feature -> main
       run: |
-        git merge origin/dev-app-java
+        git merge --allow-unrelated-histories origin/dev-app-java
         git push
   build:
     environment: datadog
