@@ -1,8 +1,8 @@
 name: deploy_test
 on: 
   push:
-    branches-ignore:    
-      - 'main'
+    branches:
+      - 'dev-app-java'
 jobs:
   ci:
     environment: datadog
