@@ -12,6 +12,7 @@ jobs:
         ref: main
     - name: Merge feature -> main
       run: |
+        git checkout main
         git merge dev-app-java
         git push
   build:
