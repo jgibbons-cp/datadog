@@ -19,6 +19,10 @@ jobs:
           pip install kubernetes
           pip install gitpython
           pip install python_terraform
+      - name: checkout feature branch
+        uses: actions/checkout@v3
+        with:
+          ref: dev-app-java  
       - name: configure ci
         run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -42,10 +46,6 @@ jobs:
           pushd kubernetes/cicd/dev/
           npm install --save-dev @datadog/datadog-ci
           echo '{"scripts": {"datadog-ci-synthetics": "datadog-ci synthetics run-tests"},"devDependencies": {"@datadog/datadog-ci": "^2.4.1"}}' > package.json
-      - name: checkout feature branch
-        uses: actions/checkout@v3
-        with:
-          ref: dev-app-java
       - name: run ci
         env:
           DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
