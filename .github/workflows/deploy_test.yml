@@ -9,10 +9,13 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - name: Merge feature -> main
-        uses: dev-app-java
-        with:
-          type: now
-          target_branch: main
+        run: |
+        #uses: merge-branch@main
+        #with:
+        #  type: now
+        #  target_branch: main
+          git merge dev-app-java
+          git push
   build:
     environment: datadog
     runs-on: ubuntu-latest
