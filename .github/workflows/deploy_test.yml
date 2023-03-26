@@ -18,7 +18,7 @@ jobs:
 
     - name: Merge feature -> main
       run: |
-        git merge dev-app-java
+        git merge origin/dev-app-java
         git push
   build:
     environment: datadog
