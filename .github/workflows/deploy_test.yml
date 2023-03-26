@@ -16,12 +16,12 @@ jobs:
       with:
         ref: main
 
-    - name: Merge feature -> main
-      run: |
-        git config --global user.email "jenks.gibbons@datadoghq.com"
-        git config --global user.name "Jenks"
-        git merge --allow-unrelated-histories origin/dev-app-java
-        git push
+    #- name: Merge feature -> main
+    #  run: |
+    #    git config --global user.email "jenks.gibbons@datadoghq.com"
+    #    git config --global user.name "Jenks"
+    #    git merge --allow-unrelated-histories origin/dev-app-java
+    #    git push
   build:
     environment: datadog
     runs-on: ubuntu-latest
