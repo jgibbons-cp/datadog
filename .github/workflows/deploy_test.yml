@@ -4,21 +4,10 @@ on:
     branches-ignore:    
       - 'main'
 jobs:
-  checkout-feature-branch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout feature branch
-        uses: actions/checkout@v3
-        with:
-          ref: dev-app-java
-  build:
+  ci:
     environment: datadog
     runs-on: ubuntu-latest
     steps:
-      #- name: checkout feature branch
-      #  uses: actions/checkout@v3
-      #  with:
-      #    ref: dev-app-java
       - name: setup python
         uses: actions/setup-python@v2
         with:
@@ -53,6 +42,10 @@ jobs:
           pushd kubernetes/cicd/dev/
           npm install --save-dev @datadog/datadog-ci
           echo '{"scripts": {"datadog-ci-synthetics": "datadog-ci synthetics run-tests"},"devDependencies": {"@datadog/datadog-ci": "^2.4.1"}}' > package.json
+      - name: checkout feature branch
+        uses: actions/checkout@v3
+        with:
+          ref: dev-app-java
       - name: run ci
         env:
           DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
