@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        ref: maim
+        ref: main
     - name: Merge feature -> main
       run: |
         git merge dev-app-java
