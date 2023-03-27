@@ -64,11 +64,12 @@ jobs:
       #    ref: main
       - name: merge
         run: |
-          git config --global user.email "jenks.gibbons@datadoghq.com"
-          git config --global user.name "Jenks"
-          git fetch --unshallow
-          git checkout main
-          git merge --no-ff --allow-unrelated-histories origin/dev-app-java
-          git push
-        shell: bash
+          import os
+          from local_cicd_functions import send_log
+          os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
+          os.system('git config --global user.name "Jenks"')
+          os.system("git fetch --unshallow")
+          msg = os.system("git checkout main && git merge --no-ff --allow-unrelated-histories origin/dev-app-java && git push")
+          send_log(msg, "app-java")
+        shell: python
 
