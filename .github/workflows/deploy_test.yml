@@ -65,6 +65,7 @@ jobs:
       - name: merge
         run: |
           import os
+          os.chdir("kubernetes/cicd/dev")
           from local_cicd_functions import send_log
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
           os.system('git config --global user.name "Jenks"')
