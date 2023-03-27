@@ -66,8 +66,8 @@ jobs:
         run: |
           import os
           os.chdir("kubernetes/cicd/")
-          #os.system("pwd")
-          #os.system("ls")
+          os.system("pwd")
+          os.system("ls")
           #import setup
           #setup.import_cicd_functions()
           from cicd_functions import send_log
