@@ -57,7 +57,7 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
-          python3 dev.py
+      #python3 dev.py
       #- name: checkout main
       #  uses: actions/checkout@v3
       #  with:
@@ -66,6 +66,8 @@ jobs:
         run: |
           import os
           os.chdir("kubernetes/cicd/dev")
+          os.system("pwd")
+          os.system("ls")
           from local_cicd_functions import send_log
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
           os.system('git config --global user.name "Jenks"')
