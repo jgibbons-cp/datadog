@@ -65,12 +65,12 @@ jobs:
       - name: merge
         run: |
           import os
-          #os.chdir("kubernetes/cicd/dev")
+          os.chdir("kubernetes/cicd/")
           #os.system("pwd")
           #os.system("ls")
-          import setup
-          setup.import_cicd_functions()
-          from local_cicd_functions import send_log
+          #import setup
+          #setup.import_cicd_functions()
+          from cicd_functions import send_log
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
           os.system('git config --global user.name "Jenks"')
           os.system("git fetch --unshallow")
