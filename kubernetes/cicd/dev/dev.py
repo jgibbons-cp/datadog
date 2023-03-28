@@ -198,7 +198,6 @@ of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
     else:
         send_log("Success", service)
     delete_kind_cluster(kind_dir)
-    send_log(cmd_output, service)
     local_module = config_data["modules"]["cicd"]
     os.remove(f"{script_directory}/{local_module}")
 

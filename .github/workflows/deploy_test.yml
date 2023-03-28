@@ -57,7 +57,7 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
-          #python3 dev.py
+          python3 dev.py
       - name: merge
         env:
           DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}    
@@ -69,15 +69,17 @@ jobs:
           mod_path = os.getcwd()
           sys.path.append(mod_path)
           from cicd_functions import send_log
-          #os.chdir("dev/")
-          #mod_path = os.getcwd()
           sys.path.append(f"{mod_path}/dev")
           from setup import get_config
+          
           # get configuration data
           os.chdir("dev/")
           config_data = get_config()
+          
           # get service being tested
-          service = config_data["service"]["name"]      
+          service = config_data["service"]["name"] 
+          
+          # merge to main
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
           os.system('git config --global user.name "Jenks"')
           os.system("git fetch --unshallow")
