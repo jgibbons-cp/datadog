@@ -202,7 +202,7 @@ of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
     os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
     os.system('git config --global user.name "Jenks"')
     os.system("git fetch --unshallow")
-    msg = os.system("git checkout main && git merge --no-ff --allow-unrelated-histories origin/dev-app-java && git push")
+    msg = subprocess.check_output("git checkout main && git merge --no-ff --allow-unrelated-histories origin/dev-app-java && git push", shell=True)
     send_log(msg, "app-java")
     
     local_module = config_data["modules"]["cicd"]
