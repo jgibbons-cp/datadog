@@ -66,6 +66,7 @@ jobs:
         run: |
           import os
           import sys
+          import subprocess
           os.chdir("kubernetes/cicd/")
           #os.system("pwd")
           #os.system("ls")
@@ -77,7 +78,10 @@ jobs:
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
           os.system('git config --global user.name "Jenks"')
           os.system("git fetch --unshallow")
-          msg = os.system("git checkout main && git merge --no-ff --allow-unrelated-histories origin/dev-app-java && git push")
-          send_log(msg, "app-java")
+          cmd_output = subprocess.check_output("git checkout main && git merge \
+                                        --no-ff --allow-unrelated-histories \
+                                        origin/dev-app-java && git push", \
+                                        shell=True, text=True)
+          send_log(cmd_output, "app-java")
         shell: python
 
