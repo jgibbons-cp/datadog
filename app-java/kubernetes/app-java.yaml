@@ -27,12 +27,12 @@ spec:
         ad.datadoghq.com/app-java.logs: '[{"source":"tomcat","service":"tomcat","log_processing_rules":[{"type":"multi_line","name":"log_start_with_date","pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]}]'
     spec:
       containers:
-      - image: jenksgibbons/app-java
+      - image: jenksgibbons/app-javaa
         name: app-java
         imagePullPolicy: IfNotPresent
         env:
         - name: JAVA_OPTS
-          # #test msg# note: in ecs and here   -Djava.rmi.server.hostname=127.0.0.1 -Djava.rmi.server.hostname=$(POD_IP) causes connection refused
+          # note: in ecs and here   -Djava.rmi.server.hostname=127.0.0.1 -Djava.rmi.server.hostname=$(POD_IP) causes connection refused
           value: "-javaagent:/usr/local/tomcat/lib/dd-java-tracer.jar -Ddd.service=java-app -Ddd.version=1 -Ddd.env=lab -Ddd.logs.injection=true -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256 -Xms256m -Xmx6144m -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.port=9012 -Dcom.sun.management.jmxremote.rmi.port=9012"
         - name: DD_AGENT_HOST
           valueFrom:
