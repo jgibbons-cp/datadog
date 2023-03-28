@@ -65,7 +65,7 @@ jobs:
       - name: merge
         run: |
           import os
-          #os.chdir("kubernetes/cicd/")
+          ##os.chdir("kubernetes/cicd/")
           #os.system("pwd")
           #os.system("ls")
           #import setup
