@@ -72,10 +72,14 @@ jobs:
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
           os.system('git config --global user.name "Jenks"')
           os.system("git fetch --unshallow")
-          cmd_output = subprocess.check_output("git checkout main && git merge \
-                                        --no-ff --allow-unrelated-histories \
-                                        origin/dev-app-java && git push", \
-                                        shell=True, text=True)
-          send_log(cmd_output, "app-java")
+          try:
+            cmd_output = subprocess.check_output("git checkout main && git merge \
+                                          --no-ff --allow-unrelated-histories \
+                                          origin/dev-app-java && git push", \
+                                          shell=True, text=True)
+            send_log(f"INFO {cmd_output}", "app-java")
+          except subprocess.CalledProcessError as error:
+            cmd_output = str(error)
+            send_log(f"ERROR {cmd_output}", "app-java")
         shell: python
 
