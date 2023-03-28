@@ -57,24 +57,26 @@ jobs:
           DATADOG_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         run: |
           pushd kubernetes/cicd/dev/
-          python3 dev.py
+          #python3 dev.py
       #- name: checkout main
       #  uses: actions/checkout@v3
       #  with:
       #    ref: main
-      #- name: merge
-      #  run: |
-      #    import os
-      #    os.chdir("kubernetes/cicd/")
-      #    os.system("pwd")
-      #    os.system("ls")
+      - name: merge
+        run: |
+          import os
+          #os.chdir("kubernetes/cicd/")
+          #os.system("pwd")
+          #os.system("ls")
           #import setup
           #setup.import_cicd_functions()
-      #    from cicd_functions import send_log
-      #    os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
-      #    os.system('git config --global user.name "Jenks"')
-      #    os.system("git fetch --unshallow")
-      #    msg = os.system("git checkout main && git merge --no-ff --allow-unrelated-histories origin/dev-app-java && git push")
-      #    send_log(msg, "app-java")
-      #  shell: python
+          mod_path = os.path.dirname(os.path.realpath(cicd_functions.py))
+          os.chdir(mod_path)
+          from cicd_functions import send_log
+          os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
+          os.system('git config --global user.name "Jenks"')
+          os.system("git fetch --unshallow")
+          msg = os.system("git checkout main && git merge --no-ff --allow-unrelated-histories origin/dev-app-java && git push")
+          send_log(msg, "app-java")
+        shell: python
 
