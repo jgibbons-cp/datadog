@@ -198,23 +198,7 @@ of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
     else:
         send_log("Success", service)
     delete_kind_cluster(kind_dir)
-
-    cmd_output = ""
-    os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
-    os.system('git config --global user.name "Jenks"')
-    os.system("git fetch --unshallow")
-    try:
-        cmd_output = subprocess.check_output("git checkout main && git merge --no-ff \
-                                    --allow-unrelated-histories \
-                                    origin/dev-app-java && git push", \
-                                    shell=True, text=True)
-        cmd_output = f"INFO {cmd_output}"
-    except subprocess.CalledProcessError as error:
-        cmd_output = str(error)
-        cmd_output = f"ERROR {cmd_output}"
-
     send_log(cmd_output, service)
-    
     local_module = config_data["modules"]["cicd"]
     os.remove(f"{script_directory}/{local_module}")
 
