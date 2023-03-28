@@ -198,6 +198,13 @@ of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
     else:
         send_log("Success", service)
     delete_kind_cluster(kind_dir)
+
+    os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
+    os.system('git config --global user.name "Jenks"')
+    os.system("git fetch --unshallow")
+    msg = os.system("git checkout main && git merge --no-ff --allow-unrelated-histories origin/dev-app-java && git push")
+    send_log(msg, "app-java")
+    
     local_module = config_data["modules"]["cicd"]
     os.remove(f"{script_directory}/{local_module}")
 
