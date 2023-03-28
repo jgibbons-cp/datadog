@@ -58,20 +58,14 @@ jobs:
         run: |
           pushd kubernetes/cicd/dev/
           #python3 dev.py
-      #- name: checkout main
-      #  uses: actions/checkout@v3
-      #  with:
-      #    ref: main
       - name: merge
+        env:
+          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}    
         run: |
           import os
           import sys
           import subprocess
           os.chdir("kubernetes/cicd/")
-          #os.system("pwd")
-          #os.system("ls")
-          #import setup
-          #setup.import_cicd_functions()
           mod_path = os.getcwd()
           sys.path.append(mod_path)
           from cicd_functions import send_log
