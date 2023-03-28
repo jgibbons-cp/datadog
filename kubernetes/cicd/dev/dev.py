@@ -208,10 +208,10 @@ of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
                                     --allow-unrelated-histories \
                                     origin/dev-app-java && git push", \
                                     shell=True, text=True)
-        cmd_output = f"INFO {return_string}"
+        cmd_output = f"INFO {cmd_output}"
     except subprocess.CalledProcessError as error:
         cmd_output = str(error)
-        cmd_output = f"ERROR {return_string}"
+        cmd_output = f"ERROR {cmd_output}"
 
     send_log(cmd_output, service)
     
