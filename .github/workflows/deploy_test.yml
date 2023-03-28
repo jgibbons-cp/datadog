@@ -62,13 +62,19 @@ jobs:
       #  uses: actions/checkout@v3
       #  with:
       #    ref: main
-      - name: merge
-        run: |
-          git config --global user.email "jenks.gibbons@datadoghq.com"
-          git config --global user.name "Jenks"
-          git fetch --unshallow
-          git checkout main
-          git merge --no-ff --allow-unrelated-histories origin/dev-app-java
-          git push
-        shell: bash
+      #- name: merge
+      #  run: |
+      #    import os
+      #    os.chdir("kubernetes/cicd/")
+      #    os.system("pwd")
+      #    os.system("ls")
+          #import setup
+          #setup.import_cicd_functions()
+      #    from cicd_functions import send_log
+      #    os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
+      #    os.system('git config --global user.name "Jenks"')
+      #    os.system("git fetch --unshallow")
+      #    msg = os.system("git checkout main && git merge --no-ff --allow-unrelated-histories origin/dev-app-java && git push")
+      #    send_log(msg, "app-java")
+      #  shell: python
 
