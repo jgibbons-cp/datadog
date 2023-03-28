@@ -69,12 +69,12 @@ jobs:
           mod_path = os.getcwd()
           sys.path.append(mod_path)
           from cicd_functions import send_log
-          os.chdir("dev/")
-          mod_path = os.getcwd()
-          sys.path.append(mod_path)
+          #os.chdir("dev/")
+          #mod_path = os.getcwd()
+          sys.path.append(f"{mod_path}/dev")
           from setup import get_config
           # get configuration data
-          config_data = setup.get_config()
+          config_data = get_config()
           # get service being tested
           service = config_data["service"]["name"]      
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
