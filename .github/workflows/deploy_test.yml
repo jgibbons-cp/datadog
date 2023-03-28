@@ -70,7 +70,7 @@ jobs:
           #os.system("ls")
           #import setup
           #setup.import_cicd_functions()
-          mod_path = os.path.dirname(os.path.realpath(cicd_functions.py))
+          mod_path = os.path.dirname(os.path.realpath(kubernetes/cicd/cicd_functions.py))
           os.chdir(mod_path)
           from cicd_functions import send_log
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
