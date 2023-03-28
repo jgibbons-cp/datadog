@@ -65,13 +65,14 @@ jobs:
       - name: merge
         run: |
           import os
-          #os.chdir("kubernetes/cicd/")
+          import sys
+          os.chdir("kubernetes/cicd/")
           #os.system("pwd")
           #os.system("ls")
           #import setup
           #setup.import_cicd_functions()
-          mod_path = os.path.dirname(os.path.realpath(cicd_functions.py))
-          os.chdir(mod_path)
+          mod_path = os.getcwd()
+          sys.path.append(mod_path)
           from cicd_functions import send_log
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
           os.system('git config --global user.name "Jenks"')
