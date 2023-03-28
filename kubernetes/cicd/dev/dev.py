@@ -209,7 +209,7 @@ of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
                                     origin/dev-app-java && git push", \
                                     shell=True, text=True)
         cmd_output = f"INFO {return_string}"
-    except CalledProcessError as error:
+    except subprocess.CalledProcessError as error:
         cmd_output = str(error)
         cmd_output = f"ERROR {return_string}"
 
