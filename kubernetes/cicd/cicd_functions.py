@@ -74,7 +74,7 @@ def send_log(message, service):
     hostname = socket.gethostname()
 
     body = [{
-                "ddsource": "integration_testing",
+                "ddsource": "dev_testing",
                 "ddtags": "env:dev",
                 "hostname": hostname,
                 "message": message,
