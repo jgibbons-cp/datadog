@@ -69,7 +69,7 @@ jobs:
           mod_path = os.getcwd()
           sys.path.append(mod_path)
           from cicd_functions import send_log
-          os.chdir("dev/")
+          #os.chdir("dev/")
           #mod_path = os.getcwd()
           sys.path.append(f"{mod_path}/dev")
           from setup import get_config
