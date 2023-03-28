@@ -68,6 +68,7 @@ jobs:
           os.chdir("kubernetes/cicd/")
           mod_path = os.getcwd()
           sys.path.append(mod_path)
+          sys.path.append(f"../{mod_path}")
           from cicd_functions import send_log
           from setup import get_config
           # get configuration data
