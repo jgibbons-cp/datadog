@@ -17,3 +17,5 @@ spec:
   selector:
     run: app-java
   type: LoadBalancer
+  loadBalancerSourceRanges:
+    - <your_external_ip>/32
