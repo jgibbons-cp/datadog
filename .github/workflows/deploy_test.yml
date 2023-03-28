@@ -69,6 +69,11 @@ jobs:
           mod_path = os.getcwd()
           sys.path.append(mod_path)
           from cicd_functions import send_log
+          from setup import get_config
+          # get configuration data
+          config_data = setup.get_config()
+          # get service being tested
+          service = config_data["service"]["name"]      
           os.system('git config --global user.email "jenks.gibbons@datadoghq.com"')
           os.system('git config --global user.name "Jenks"')
           os.system("git fetch --unshallow")
@@ -80,6 +85,6 @@ jobs:
             send_log(f"INFO {cmd_output}", "app-java")
           except subprocess.CalledProcessError as error:
             cmd_output = str(error)
-            send_log(f"ERROR {cmd_output}", "app-java")
+            send_log(f"ERROR {cmd_output}", service)
         shell: python
 
