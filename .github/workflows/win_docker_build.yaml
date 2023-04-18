@@ -1,34 +1,25 @@
 name: docker_build
-on:
+on: 
   push:
-    branches:
+    branches-ignore:    
       - main
+      - dev-app-java
 jobs:
   build:
+    environment: datadog
     runs-on: windows-latest
     steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
       - name: build and push image
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          cat <<EOT >> dockerfile
-          FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
-          WORKDIR /app
-          EXPOSE 80
-          EXPOSE 443
-
-          FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-          FROM base AS final
-
-          ARG DD_TRACER_VERSION=2.29.0
-          ENV DD_TRACER_VERSION=$DD_TRACER_VERSION
-          
-          ENV CORECLR_ENABLE_PROFILING=1
-          ENV CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
-          ENV CORECLR_PROFILER_PATH=/datadog/Datadog.Trace.ClrProfiler.Native.dll
-          ENV DD_DOTNET_TRACER_HOME=/datadog
-          ENV DD_INTEGRATIONS=/datadog/integrations.json
-
-          ENTRYPOINT ["dotnet", "DatadogContainerExample.dll"]
-          EOT
-          docker build -t jenksgibbons/win_test .
-          docker ps
+          pushd docker/aspnet48_mvc_app/aspnet48_mvc_win_server_core_ltsc_2019_app/
+          echo $DOCKER_PASSWORD > docker.txt
+          cat docker.txt | docker login --username jenksgibbons --password-stdin
+          cp dockerfile app/
+          pushd app/
+          cat package.json
+          docker build -t jenksgibbons/win_dotnetcore .;docker push jenksgibbons/win_dotnetcore
         shell: bash
