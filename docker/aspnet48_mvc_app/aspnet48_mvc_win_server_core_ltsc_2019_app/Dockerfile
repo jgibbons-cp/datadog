@@ -17,7 +17,7 @@ FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019 AS
 WORKDIR /inetpub/wwwroot
 EXPOSE 80
 
-ARG TRACER_VERSION=1.29.0
+ARG TRACER_VERSION=2.29.0
 ENV DD_TRACER_VERSION=$TRACER_VERSION
 
 # We recommend always using the latest release and regularly updating: https://github.com/DataDog/dd-trace-dotnet/releases/latest

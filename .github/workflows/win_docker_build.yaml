@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     environment: datadog
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2
