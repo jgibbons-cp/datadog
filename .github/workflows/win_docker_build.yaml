@@ -5,14 +5,9 @@ on:
       - main
 jobs:
   build:
-    #environment: datadog
     runs-on: windows-latest
     steps:
-    #  - name: checkout repo content
-    #    uses: actions/checkout@v2
       - name: build and push image
-    #    env:
-    #      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           cat <<EOT >> dockerfile
           FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
@@ -21,19 +16,14 @@ jobs:
           EXPOSE 443
 
           FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-
-
           FROM base AS final
 
-
-        # Install the latest version of the tracer
           ARG DD_TRACER_VERSION=2.29.0
           ENV DD_TRACER_VERSION=$DD_TRACER_VERSION
           RUN curl -Lo datadog-dotnet-apm.zip https://github.com/DataDog/dd-trace-dotnet/releases/download/v%DD_TRACER_VERSION%/windows-tracer-home.zip \
             && tar.exe -xf datadog-dotnet-apm.zip \
             && del datadog-dotnet-apm.zip
 
-        # Enable the tracer
           ENV CORECLR_ENABLE_PROFILING=1
           ENV CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
           ENV CORECLR_PROFILER_PATH=/datadog/Datadog.Trace.ClrProfiler.Native.dll
