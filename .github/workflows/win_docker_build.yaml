@@ -22,19 +22,9 @@ jobs:
 
           FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 
-        #WORKDIR /src
-        #COPY ["DatadogContainerExample/DatadogContainerExample.csproj", "DatadogContainerExample/"]
-        #RUN dotnet restore "DatadogContainerExample/DatadogContainerExample.csproj"
-        #COPY . .
-        #WORKDIR "/src/DatadogContainerExample"
-        #RUN dotnet build "DatadogContainerExample.csproj" -c Release -o /app/build
-
-        #FROM build AS publish
-        #RUN dotnet publish "DatadogContainerExample.csproj" -c Release -o /app/publish
 
           FROM base AS final
 
-        #WORKDIR /datadog
 
         # Install the latest version of the tracer
           ARG DD_TRACER_VERSION=2.29.0
@@ -50,8 +40,6 @@ jobs:
           ENV DD_DOTNET_TRACER_HOME=/datadog
           ENV DD_INTEGRATIONS=/datadog/integrations.json
 
-          #WORKDIR /app
-        #COPY --from=publish /app/publish .
           ENTRYPOINT ["dotnet", "DatadogContainerExample.dll"]
           EOT
           docker build -t jenksgibbons/win_test .
