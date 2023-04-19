@@ -17,5 +17,5 @@ jobs:
           pushd docker/aspnet48_mvc_app/aspnet48_mvc_win_server_core_ltsc_2019_app/
           echo $DOCKER_PASSWORD > docker.txt
           cat docker.txt | docker login --username jenksgibbons --password-stdin
-          docker build -t jenksgibbons/win_dotnetcore -f Dockerfile.ecs;docker push jenksgibbons/win_dotnetcore
+          docker build -t jenksgibbons/win_dotnetcore -f Dockerfile.ecs .;docker push jenksgibbons/win_dotnetcore
         shell: bash
