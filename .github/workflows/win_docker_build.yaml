@@ -12,10 +12,10 @@ jobs:
         uses: actions/checkout@v2
       - name: build and push image
         env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           pushd docker/aspnet48_mvc_app/aspnet48_mvc_win_server_core_ltsc_2019_app/
           echo $DOCKER_PASSWORD > docker.txt
-          cat docker.txt | docker login --username jenksgibbons --password-stdin
-          docker build -t jenksgibbons/win_dotnetcore -f Dockerfile.ecs .;docker push jenksgibbons/win_dotnetcore
+          cat docker.txt | docker login --username daniellee19900407 --password-stdin
+          docker build -t daniellee19900407/win_dotnetcore -f Dockerfile.ecs .;docker push daniellee19900407/win_dotnetcore
         shell: bash
