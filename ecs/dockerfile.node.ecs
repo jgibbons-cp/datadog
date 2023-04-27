@@ -1,0 +1,22 @@
+FROM node:latest
+COPY . .
+#
+# install the Datadog tracer
+RUN npm install dd-trace --save
+#
+# Datadog correlation tags - examples
+# meaningful to you - service instrumented, version for deployment tracking
+# env for grouping dev, prod, dev_description etc.
+ENV DD_SERVICE=""
+ENV DD_VERSION=""
+ENV DD_ENV=""
+#
+# Datadog code profiling
+ENV DD_PROFILING_ENABLED="true"
+#
+# Datadog runtime metrics
+ENV DD_RUNTIME_METRICS_ENABLED="true"
+#
+# instrument with Datadog library
+# ecs tracing
+ENTRYPOINT ["sh", "-c", "export DD_AGENT_HOST=$(curl http://169.254.169.254/latest/meta-data/local-ipv4);node --require dd-trace/init index.js"]
