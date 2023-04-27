@@ -2,7 +2,7 @@
 #For more information, please see https://aka.ms/containercompat 
 
 #FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8.1-20230214-windowsservercore-ltsc2022
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8.1-20230214-windowsservercore-ltsc2022 AS build
 WORKDIR /app
 
 COPY *.sln .
