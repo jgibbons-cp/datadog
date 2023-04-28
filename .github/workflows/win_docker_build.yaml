@@ -3,7 +3,6 @@ on:
   push:
     branches:    
       - main
-      - no_dot_net_tracer
 jobs:
   build:
     environment: datadog
