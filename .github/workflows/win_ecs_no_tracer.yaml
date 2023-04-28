@@ -1,13 +1,12 @@
 name: docker_build
 on: 
   push:
-    branches-ignore:    
-      - dev-app-java
+    branches:    
       - no_dot_net_tracer
 jobs:
   build:
     environment: datadog
-    runs-on: ubuntu-latest
+    runs-on: windows-2019 #windows-latest #windows-2019
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2
@@ -15,11 +14,8 @@ jobs:
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          pushd kubernetes/nodejs_tracing/dockerfile_configuration/
+          pushd docker/aspnet48_mvc_app/aspnet48_mvc_win_server_core_ltsc_2019_app/
           echo $DOCKER_PASSWORD > docker.txt
           cat docker.txt | docker login --username jenksgibbons --password-stdin
-          cp dockerfile app/
-          pushd app/
-          cat package.json
-          docker build -t jenksgibbons/knote .;docker push jenksgibbons/knote
+          docker build -t jenksgibbons/win_dotnetcore:win_2019_no_tracer -f Dockerfile.ecs.no_tracer .;docker push jenksgibbons/win_dotnetcore:win_2019_no_tracer
         shell: bash
