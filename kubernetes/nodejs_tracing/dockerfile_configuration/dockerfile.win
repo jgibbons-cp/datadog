@@ -1,0 +1,12 @@
+FROM  mcr.microsoft.com/windows/servercore:ltsc2019
+
+# install node
+RUN powershell -Command "wget -Uri https://nodejs.org/dist/v18.16.0/node-v18.16.0-x64.msi -OutFile iojs.msi -UseBasicParsing"
+RUN msiexec.exe /q /i iojs.msi
+
+ADD app C:/app/
+WORKDIR /app
+
+RUN npm install express mongodb multer marked pug
+
+CMD [ "node", "index.js" ]
