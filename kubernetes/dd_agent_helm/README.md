@@ -39,26 +39,26 @@ Install the Datadog Agent with Helm
     ```  
 11. Take out features that won't work on Mac and/or Windows  
     ```
-      networkMonitoring:
+    networkMonitoring:
     # datadog.networkMonitoring.enabled -- Enable network performance monitoring
-    enabled: false
-
-  # Enable security agent and provide custom configs
-  securityAgent:
-    compliance:
-      # datadog.securityAgent.compliance.enabled -- Set to true to enable Cloud Security Posture Management (CSPM)
       enabled: false
 
-    runtime:
-      # datadog.securityAgent.runtime.enabled -- Set to true to enable Cloud Workload Security (CWS)
-      enabled: false
-
-      # datadog.securityAgent.runtime.fimEnabled -- Set to true to enable Cloud Workload Security (CWS) File Integrity Monitoring
-      fimEnabled: false
-
-      network:
-        # datadog.securityAgent.runtime.network.enabled -- Set to true to enable the collection of CWS network events
+    # Enable security agent and provide custom configs
+    securityAgent:
+      compliance:
+        # datadog.securityAgent.compliance.enabled -- Set to true to enable Cloud Security Posture Management (CSPM)
         enabled: false
+
+        runtime:
+        # datadog.securityAgent.runtime.enabled -- Set to true to enable Cloud Workload Security (CWS)
+        enabled: false
+
+        # datadog.securityAgent.runtime.fimEnabled -- Set to true to enable Cloud Workload Security (CWS) File Integrity Monitoring
+        fimEnabled: false
+
+        network:
+            # datadog.securityAgent.runtime.network.enabled -- Set to true to enable the collection of CWS network events
+            enabled: false
     ```  
 12. Update the agent  
     ```  
