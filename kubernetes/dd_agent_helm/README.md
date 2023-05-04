@@ -43,7 +43,7 @@ Install the Datadog Agent with Helm
     # datadog.networkMonitoring.enabled -- Enable network performance monitoring
     enabled: false
 
-  ## Enable security agent and provide custom configs
+  # Enable security agent and provide custom configs
   securityAgent:
     compliance:
       # datadog.securityAgent.compliance.enabled -- Set to true to enable Cloud Security Posture Management (CSPM)
