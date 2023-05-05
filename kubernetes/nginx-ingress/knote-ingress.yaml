@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: knote
+  annotations:
+    # don't redirect HTTP to HTTPS
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  # example: jenks.westus3.cloudapp.azure.com
+  #- host: <FQDN>
+  - host: jenks.westus3.cloudapp.azure.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: knote
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
