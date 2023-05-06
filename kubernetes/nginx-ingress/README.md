@@ -66,9 +66,11 @@ The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
   
 - Deploy the application  
   ```  
+  pushd ../../app-java/kubernetes/  
   kubectl create -f app-java.yaml  
   kubectl create -f app_java_clusterip_svc.yaml  
   kubectl create -f mysql_ja.yaml  
+  popd  
   ```  
   
 - NOTE: you could hit this as well using a port-forward, it listens on 8080.  You could also use a load balancer.  If you used 
