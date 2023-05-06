@@ -8,8 +8,8 @@ The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
 - Knote application used in example - [knote](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/nodejs_tracing/dockerfile_configuration) or relative to this repo ```../../kubernetes/nodejs_tracing/dockerfile_configuration/```  
   - Deploy:  
     ```  
-    pushd ../../kubernetes/nodejs_tracing/dockerfile_configuration/  
-    # get your external [IP address](https://whatismyipaddress.com/) and change ```<ip>``` to your external IP  
+    pushd ../../kubernetes/nodejs_tracing/dockerfile_configuration/   
+    # change image from ```<repo>/<image>:<tag>``` to jenksgibbons/knote:no_tracer  
     kubectl create -f knote.yaml  
     kubectl create -f knote_clusterip_svc.yaml  
     kubectl create -f mongo.yaml  
