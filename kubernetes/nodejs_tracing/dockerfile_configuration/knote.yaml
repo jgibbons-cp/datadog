@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: <repo>/<image>
+          image: jenksgibbons/knote
           ports:
             - containerPort: 3000
           env:
