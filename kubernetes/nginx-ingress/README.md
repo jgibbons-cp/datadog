@@ -4,13 +4,16 @@ Nginx Ingress Controller
 The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) is "an implementation of a Kubernetes Ingress Controller for NGINX and NGINX Plus..... The Ingress is a Kubernetes resource that lets you configure an HTTP load balancer for applications running on Kubernetes, represented by one or more Services. Such a load balancer is necessary to deliver those applications to clients outside of the Kubernetes cluster."  
   
 - [Instructions](https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#basic-configuration)  
-- Managed k8s used - AKS NOTE, these instrutions were tested with Azure AKS  
+- Managed k8s used - AKS; NOTE, these instrutions were tested with Azure AKS  
 - Knote application used in example - [knote](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/nodejs_tracing/dockerfile_configuration) or relative to this repo ```../../kubernetes/nodejs_tracing/dockerfile_configuration/```  
   - Deploy:  
     ```  
+    pushd ../../kubernetes/nodejs_tracing/dockerfile_configuration/  
+    # get your external [IP address](https://whatismyipaddress.com/) and change ```<ip>``` to your external IP  
     kubectl create -f knote.yaml  
     kubectl create -f knote_clusterip_svc.yaml  
     kubectl create -f mongo.yaml  
+    popd  
     ```  
     The service is a ClusterIP service so it is only reachable from inside the cluster.  NOTE: we could use a load balancer to 
     reach the application externally as well rather than an ingress.  To confirm the application is running:  
