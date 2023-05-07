@@ -43,8 +43,7 @@ The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
     
 - Add a DNS address to the pubic IP of the load balancer.  Go to the Azure portal and search for your IP address.  Go to the public IP address option, configuration and add a 'DNS name label (optional)'  
   
-- Deploy an Ingress  
-  In application_ingress.yaml update <FQDN> to your DNS name.  
+- Deploy an Ingress. NOTE: In application_ingress.yaml update <FQDN> to your DNS name.  
   
   ```  
   kubectl create -f application_ingress.yaml  
