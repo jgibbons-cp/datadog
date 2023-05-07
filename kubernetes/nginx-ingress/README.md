@@ -58,7 +58,7 @@ The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
 - Create another application, from [here](https://github.com/jgibbons-cp/datadog/tree/main/app-java/kubernetes) or relative 
   to this repo ```../../app-java/kubernetes/```.  
   
-- Create a secret for the application  
+- Create a secret for the application. NOTE: get the values from a Datadog RUM application or put fake data just to test.  
   ```  
   kubectl create secret generic dd-rum-tokens --from-literal CLIENT_TOKEN=TOKEN --from-literal APPLICATION_ID=APPID  
   ```  
