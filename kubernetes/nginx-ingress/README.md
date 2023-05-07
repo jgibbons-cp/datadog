@@ -24,16 +24,16 @@ The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
     ```
     http://localhost:8080  
     ```  
-- Deploy Nginx ingress with [helm](https://helm.sh/):  
+- Deploy Nginx ingress with [helm](https://helm.sh/)  
+  IMPORTANT ```--set controller.service.loadBalancerSourceRanges="{YOUR_EXTERNAL_IP/32}"``` restricts access to the public  
+  IP of the load balancer from just your IP.  Do not leave it open to 0.0.0.0:  
   ```  
   NAMESPACE=ingress-nginx  
   
   helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx  
   helm repo update  
   
-  # IMPORTANT ```--set controller.service.loadBalancerSourceRanges="{<YOUR_EXTERNAL_IP/32>}"``` restricts access to the public 
-  # IP of the load balancer from just your IP.  Do not leave it open to 0.0.0.0
-  helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace $NAMESPACE --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz  --set controller.service.loadBalancerSourceRanges="{<YOUR_EXTERNAL_IP/32>}"
+  helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace $NAMESPACE --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz  --set controller.service.loadBalancerSourceRanges="{YOUR_EXTERNAL_IP/32}"
   ```  
 
 - Get the external IP of the load balancer  
@@ -95,3 +95,5 @@ The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
         path: /
         pathType: Prefix
   ```  
+    
+  - Hit the other app at ```http://<FQDN>/app-java-0.0.1-SNAPSHOT/```
