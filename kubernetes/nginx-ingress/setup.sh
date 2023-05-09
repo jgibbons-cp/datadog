@@ -2,11 +2,13 @@
 
 SUCCESS=0
 MAX_TRIES=5
+MAX=4
 counter=0
 INCREMENT=1
 
+# create the ingress
 cmd() {
-    ls -l "/tmp/test/my dir" &>/dev/null
+    kubectl create -f application_ingress.yaml &>/dev/null
 }
 
 # make sure you can reach cluster
@@ -15,7 +17,7 @@ if ! kubectl get pods &> /dev/null; then
     exit 1
 fi
 
-# deploy knote app
+# deploy knote node.js app
 pushd ../../kubernetes/nodejs_tracing/dockerfile_configuration/
 sed -i .bak 's/<repo>\/<image>:<tag>/jenksgibbons\/knote:no_tracer/' knote.yaml 
 kubectl create -f knote.yaml
@@ -31,7 +33,7 @@ public_ip=$(curl api.ipify.org)
 
 # get / update charts
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
+helm repo update ingress-nginx
 
 # install ingress controller
 helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace $NAMESPACE \
@@ -42,7 +44,7 @@ helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --name
 principal_username=$(az ad signed-in-user show --query "userPrincipalName" | tr -d '"' | tr -d "." | sed 's/@.*//')
 kubectl annotate svc -n ingress-nginx ingress-nginx-controller service.beta.kubernetes.io/azure-dns-label-name=$principal_username
 
-# get public dns
+# set public dns for lb
 azure_region=$(kubectl get nodes --show-labels --no-headers | grep -v aks-default | sed -e 's/.*region\(.*\),.*/\1/' | tr -d '=' | tr -d '\n')
 rest_fqdn=".cloudapp.azure.com"
 fqdn=$principal_username.$azure_region$rest_fqdn
@@ -53,17 +55,13 @@ sed -i .bak "s/<FQDN>/$fqdn/" application_ingress.yaml
 # install ingress - 4 retries
 cmd
 while [ "$?" != $SUCCESS ] && [ "$counter" -lt $MAX_TRIES ]; do
-  #echo fail
   counter=$((counter + $INCREMENT))
-  #echo $counter
-  sleep 2
   cmd
-done
 
-echo $?
-echo 
-echo exit
-exit 0
+  if [ "$?" != $SUCCESS ] && [ "$counter" == $MAX ]; then
+    echo "Ingress failed to create... run 'kubectl create -f application_ingress.yaml' again or teardown.sh.\n"
+  fi
+done
 
 # create secret so app will run, don't need rum here so just keep with fake data
 kubectl create secret generic dd-rum-tokens --from-literal CLIENT_TOKEN=TOKEN --from-literal APPLICATION_ID=APPID
@@ -74,6 +72,8 @@ kubectl create -f app-java.yaml
 kubectl create -f app_java_clusterip_svc.yaml 
 kubectl create -f mysql_ja.yaml
 popd
+
+echo "NOTE: the apps may take a short time to become available, but should not error out.\n"
 
 # hit the node app
 echo "\nThe node app is now available at http://$fqdn\n"
