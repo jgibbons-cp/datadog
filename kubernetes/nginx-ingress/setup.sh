@@ -56,4 +56,4 @@ popd
 echo "The node app is now available at http://$fqdn\n"
 
 # hit the java app
-echo "The java app is now available at http://$fqdn/app-java-0.0.1-SNAPSHOT/
+echo "The java app is now available at http://$fqdn/app-java-0.0.1-SNAPSHOT/"
