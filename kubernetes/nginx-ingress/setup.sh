@@ -1,5 +1,14 @@
 #!/bin/bash
 
+SUCCESS=0
+MAX_TRIES=5
+counter=0
+INCREMENT=1
+
+cmd() {
+    ls -l "/tmp/test/my dir" &>/dev/null
+}
+
 # make sure you can reach cluster
 if ! kubectl get pods &> /dev/null; then
     echo "No cluster configured... exiting...\n"
@@ -40,7 +49,21 @@ fqdn=$principal_username.$azure_region$rest_fqdn
 
 # update ingress with dns
 sed -i .bak "s/<FQDN>/$fqdn/" application_ingress.yaml
-kubectl create -f application_ingress.yaml
+
+# install ingress - 4 retries
+cmd
+while [ "$?" != $SUCCESS ] && [ "$counter" -lt $MAX_TRIES ]; do
+  #echo fail
+  counter=$((counter + $INCREMENT))
+  #echo $counter
+  sleep 2
+  cmd
+done
+
+echo $?
+echo 
+echo exit
+exit 0
 
 # create secret so app will run, don't need rum here so just keep with fake data
 kubectl create secret generic dd-rum-tokens --from-literal CLIENT_TOKEN=TOKEN --from-literal APPLICATION_ID=APPID
@@ -53,7 +76,7 @@ kubectl create -f mysql_ja.yaml
 popd
 
 # hit the node app
-echo "The node app is now available at http://$fqdn\n"
+echo "\nThe node app is now available at http://$fqdn\n"
 
 # hit the java app
 echo "The java app is now available at http://$fqdn/app-java-0.0.1-SNAPSHOT/"
