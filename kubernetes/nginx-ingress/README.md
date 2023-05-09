@@ -32,7 +32,7 @@ The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
   NAMESPACE=ingress-nginx  
   
   helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx  
-  helm repo update  
+  helm repo update ingress-nginx 
   
   helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace $NAMESPACE --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz  --set controller.service.loadBalancerSourceRanges="{YOUR_EXTERNAL_IP/32}"
   ```  
