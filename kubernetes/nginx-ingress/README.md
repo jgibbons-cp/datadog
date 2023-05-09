@@ -5,6 +5,7 @@ The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
   
 - [Instructions](https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#basic-configuration)  
 - Managed k8s used - AKS which is where these instrutions were tested  
+- NOTE: this is automated in ```setup.sh``` and ```teardown.sh```, however these steps will help you to understand what we are doing.  
 - Knote application used in example - [knote](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/nodejs_tracing/dockerfile_configuration) or relative to this repo ```../../kubernetes/nodejs_tracing/dockerfile_configuration/```  
   - Deploy NOTE - change image from ```<repo>/<image>:<tag>``` to jenksgibbons/knote:no_tracer  
     ```  

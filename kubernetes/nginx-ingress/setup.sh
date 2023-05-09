@@ -73,7 +73,7 @@ kubectl create -f app_java_clusterip_svc.yaml
 kubectl create -f mysql_ja.yaml
 popd
 
-echo "NOTE: the apps may take a short time to become available, but should not error out.\n"
+echo "\nNOTE: the apps may take a short time to become available, but should not error out.\n"
 
 # hit the node app
 echo "\nThe node app is now available at http://$fqdn\n"
