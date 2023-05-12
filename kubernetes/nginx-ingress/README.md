@@ -7,7 +7,6 @@ Testing
 -
 - Azure (AKS) Specific  
   - [Instructions](https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#basic-configuration)  
-  - Managed k8s used - AKS which is where these instrutions were tested  
   - NOTE: this is automated in ```setup.sh``` and ```teardown.sh```, however these steps will help you to understand what we are    doing.  
 - AWS (EKS) Specific  
   - The instructions work as expected, however persistent volumes don't work the same on EKS.  Rather than provide instructions for that at this time, just use the ```app-java``` application and not knote.  Then everything should work other than the path ```/``` which I can fix when I have time.  I can also adjust the automation which is AKS specific right now.  
