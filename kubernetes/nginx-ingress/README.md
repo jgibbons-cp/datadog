@@ -48,7 +48,7 @@ Testing
   ```  
   The external IP will be under EXTERNAL-IP for the ingress-nginx-controller.  
     
-- Add a DNS address to the pubic IP of the load balancer.  Go to the Azure portal and search for your IP address.  Go to the public IP address option, configuration and add a 'DNS name label (optional)'  
+- **AKS only** - Add a DNS address to the pubic IP of the load balancer.  Go to the Azure portal and search for your IP address.  Go to the public IP address option, configuration and add a 'DNS name label (optional)'  
   
 - Deploy an Ingress. NOTE: In application_ingress.yaml update <FQDN> to your DNS name.  
   
