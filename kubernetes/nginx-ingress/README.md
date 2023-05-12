@@ -3,10 +3,16 @@ Nginx Ingress Controller
 
 The [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) is "an implementation of a Kubernetes Ingress Controller for NGINX and NGINX Plus..... The Ingress is a Kubernetes resource that lets you configure an HTTP load balancer for applications running on Kubernetes, represented by one or more Services. Such a load balancer is necessary to deliver those applications to clients outside of the Kubernetes cluster."  
   
-- [Instructions](https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#basic-configuration)  
-- Managed k8s used - AKS which is where these instrutions were tested  
+Testing
+-
+- Azure (AKS) Specific  
+  - [Instructions](https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#basic-configuration)  
+  - Managed k8s used - AKS which is where these instrutions were tested  
+  - NOTE: this is automated in ```setup.sh``` and ```teardown.sh```, however these steps will help you to understand what we are    doing.  
+- AWS (EKS) Specific  
+  - The instructions work as expected, however persistent volumes don't work the same on EKS.  Rather than provide instructions for that at this time, just use the ```app-java``` application and not knote.  Then everything should work other than the path ```/``` which I can fix when I have time.  I can also adjust the automation which is AKS specific right now.  
 - Shell used to test is bash on a Mac  
-- NOTE: this is automated in ```setup.sh``` and ```teardown.sh```, however these steps will help you to understand what we are doing.  
+
 - Knote application used in example - [knote](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/nodejs_tracing/dockerfile_configuration) or relative to this repo ```../../kubernetes/nodejs_tracing/dockerfile_configuration/```  
   - Deploy NOTE - change image from ```<repo>/<image>:<tag>``` to jenksgibbons/knote:no_tracer  
     ```  
