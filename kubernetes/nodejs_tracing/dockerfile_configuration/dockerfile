@@ -1,5 +1,27 @@
 # tested in github actions using this
 # https://github.com/jgibbons-cp/datadog/blob/full_cicd_knote/.github/workflows/docker_build.yaml
-FROM stefanscherer/node-windows
+FROM node:latest
 COPY . .
-CMD node index.js
+#
+# install the Datadog tracer
+RUN npm install dd-trace --save
+#
+# talk to local Datadog agent service
+# see readme to see how to find service name
+ENV DD_AGENT_HOST="datadog-agent.<namespace>.svc.cluster.local"
+#
+# Datadog correlation tags - examples
+# meaningful to you - service instrumented, version for deployment tracking
+# env for grouping dev, prod, dev_description etc.
+ENV DD_SERVICE="<name_of_service_to_be_traced>"
+ENV DD_VERSION="version_of_service_to_be_traced"
+ENV DD_ENV="env_of_service_to_be_traced"
+#
+# Datadog code profiling
+ENV DD_PROFILING_ENABLED="true"
+#
+# Datadog runtime metrics
+ENV DD_RUNTIME_METRICS_ENABLED="true"
+#
+# instrument with Datadog library
+CMD node --require dd-trace/init index.js
