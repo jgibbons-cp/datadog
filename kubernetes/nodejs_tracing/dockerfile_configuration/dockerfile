@@ -4,7 +4,7 @@ FROM node:latest
 COPY . .
 #
 # install the Datadog tracer
-RUN npm install dd-trace --save
+RUN npm install dd-trace mongodb
 #
 # talk to local Datadog agent service
 # see readme to see how to find service name
