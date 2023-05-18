@@ -33,6 +33,8 @@ spec:
       labels:
         app: mongo
     spec:
+      nodeSelector:
+        kubernetes.io/os: linux
       containers:
         - name: mongo
           image: mongo:6.0.2-focal
@@ -45,3 +47,5 @@ spec:
         - name: storage
           persistentVolumeClaim:
             claimName: mongo-pvc
+      nodeSelector:
+        kubernetes.io/os: linux
