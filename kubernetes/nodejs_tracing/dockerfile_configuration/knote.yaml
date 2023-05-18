@@ -13,6 +13,8 @@ spec:
       labels:
         app: knote
     spec:
+      nodeSelector:
+        kubernetes.io/os: linux
       containers:
         - name: app
           image: <repo>/<image>:<tag>
