@@ -4,10 +4,15 @@ Create an Multi OS EKS Cluster, Deploy Datadog, Deploy IIS, Get Traces
 The following steps from [here](https://eksctl.io/usage/windows-worker-nodes/) will guide you on how to create a multi-OS 
 EKS Cluster.  It will also guide you in how to deploy the Datadog K8 agent using helm on the master node as well as the 
 Linux and Windows worker nodes.  
+
+Pre-Requisites
+--
+
+1) [Get](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html) eksctl
     
 1) Create the cluster (change the values for nodes etc. if you want):  
   
-```kubectl create -f cluster.yaml```  
+```eksctl create -f cluster.yaml```  
 
 2) The following values files can be used. 
 [Linux](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/aks_with_windows/values_win.yaml) 
@@ -112,5 +117,5 @@ Have fun!
 When you are done.... delete the cluster.  
   
 ```  
-kubectl delete -f cluster.yaml  
+eksctl delete -f cluster.yaml  
 ```  
