@@ -12,7 +12,7 @@ Pre-Requisites
     
 1) Create the cluster (change the values for nodes etc. if you want):  
   
-```eksctl create -f cluster.yaml```  
+```eksctl create cluster -f cluster.yaml```  
 
 2) The following values files can be used. 
 [Linux](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/aks_with_windows/values_win.yaml) 
@@ -117,5 +117,5 @@ Have fun!
 When you are done.... delete the cluster.  
   
 ```  
-eksctl delete -f cluster.yaml  
+eksctl delete cluster -f cluster.yaml  
 ```  
