@@ -5,7 +5,7 @@ The following steps from [here](https://eksctl.io/usage/windows-worker-nodes/) w
 EKS Cluster.  It will also guide you in how to deploy the Datadog K8 agent using helm on the master node as well as the 
 Linux and Windows worker nodes.  
     
-1) Create the cluster:  
+1) Create the cluster (change the values for nodes etc. if you want):  
   
 ```kubectl create -f cluster.yaml```  
 
