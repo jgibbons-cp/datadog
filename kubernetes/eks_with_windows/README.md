@@ -15,8 +15,8 @@ Pre-Requisites
 ```eksctl create cluster -f cluster.yaml```  
 
 2) The following values files can be used. 
-[Linux](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/aks_with_windows/values_win.yaml) 
-[Windows](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/aks_with_windows/values.yaml)  
+[Linux](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/aks_with_windows/values.yaml) 
+[Windows](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/aks_with_windows/values_win.yaml)  
    
 3)  Create your [app](https://app.datadoghq.com/organization-settings/application-keys) and 
 [api](https://app.datadoghq.com/organization-settings/api-keys) key secrets:  
