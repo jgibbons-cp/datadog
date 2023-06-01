@@ -59,10 +59,13 @@ tlsVerify: true
 ## dogstatsd configuration - how to configure since no hostPort?  need to look into
 ## need to remove network
 ## need to move metricsProvider I think
-existingClusterAgent:  
-  # existingClusterAgent.join -- set this to true if you want the agents deployed by this chart to  
-  # connect to a Cluster Agent deployed independently  
-  join: true  
+### FOR TRACING ON WINDOWS EKS ONLY - no hostPort support so need to use service ###
+### add this to the bottom of the values_win.yaml
+agents:
+    # agents.localService.forceLocalServiceEnabled -- Force the creation of the internal traffic policy service to target the agent running on the local node.
+    # By default, the internal traffic service is created only on Kubernetes 1.22+ where the feature became beta and enabled by default.
+    # This option allows to force the creation of the internal traffic service on kubernetes 1.21 where the feature was alpha and required a feature gate to be explicitly enabled.
+    forceLocalServiceEnabled: true
 ```  
 
 ```  
@@ -81,7 +84,7 @@ dd-agent-win-datadog-6qcnj                        3/3     Running   0          8
   
 OK, Datadog deployed.  
   
-Might as well look at a quick Windows deploy.  
+Might as well look at a quick Windows deploy - or go to step 10 for a tracing example.  
   
 9) Deploy IIS  
   
@@ -94,13 +97,39 @@ kubectl create -f iis.yaml
 NOTE: to schedule it on the/a windows node you will need to note the toleration
 and nodeSelector in the yaml.  
   
-10) Expose the deployment with a port-forward.  
+10) Use [this](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/aspnet48_mvc_app/asp_dotnet_sample.yaml) 
+as a base manifest.  
+
+Change:  
+```  
+          - name: DD_AGENT_HOST  
+            valueFrom:  
+                fieldRef:  
+                  fieldPath: status.hostIP  
+ ```  
+   
+to  
+  
+```  
+          - name: DD_AGENT_HOST  
+            # <windows_datadog_agent_service_name>.<namespace>.svc.cluster.local  
+            value: dd-agent-win-datadog.<namespace>.svc.cluster.local  
+```  
+    
+Set <env>, <service>, and <env>  
+  
+Deploy  
+```  
+kubectl create -f sample.yaml  
+```  
+  
+11) Expose the deployment with a port-forward.  
   
 ```  
 kubectl port-forward deploy/iis 33333:80  
 ```  
   
-12) Hit the app  
+13) Hit the app  
   
 ```  
 http://localhost:33333  
