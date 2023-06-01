@@ -126,7 +126,7 @@ kubectl create -f sample.yaml
 11) Expose the deployment with a port-forward.  
   
 ```  
-kubectl port-forward deploy/iis 33333:80  
+kubectl port-forward deploy/<iis or sample> 33333:80 # depending on your step above  
 ```  
   
 13) Hit the app  
