@@ -1,4 +1,4 @@
-Create an Multi OS EKS Cluster, Deploy Datadog, Deploy IIS
+Create an Multi OS EKS Cluster, Deploy Datadog, Deploy IIS or ASP Application, Trace Windows Application (Optional)
 --
 
 The following steps from [here](https://eksctl.io/usage/windows-worker-nodes/) will guide you on how to create a multi-OS 
