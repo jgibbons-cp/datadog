@@ -1,4 +1,4 @@
-Create an Multi OS EKS Cluster, Deploy Datadog, Deploy IIS, Get Traces
+Create an Multi OS EKS Cluster, Deploy Datadog, Deploy IIS
 --
 
 The following steps from [here](https://eksctl.io/usage/windows-worker-nodes/) will guide you on how to create a multi-OS 
@@ -44,22 +44,14 @@ helm install dd-agent -f <values_yaml> datadog/datadog
 You should see something like this:  
 
 ```
-kubectl get all | grep dd
-pod/dd-agent-datadog-9ptvx                            5/5     Running   0          70s
-pod/dd-agent-datadog-bldvh                            5/5     Running   0          70s
-pod/dd-agent-datadog-cluster-agent-5b6ccc89c4-sqlhg   1/1     Running   0          70s
-pod/dd-agent-kube-state-metrics-7f4f4f4dd5-dbpvz      1/1     Running   0          70s
-service/dd-agent-datadog-cluster-agent   ClusterIP   x.x.x.x    <none>        5005/TCP   70s
-service/dd-agent-kube-state-metrics      ClusterIP   x.x.x.x   <none>        8080/TCP   70s
-daemonset.apps/dd-agent-datadog   2         2         2       2            2           kubernetes.io/os=linux   71s
-deployment.apps/dd-agent-datadog-cluster-agent   1/1     1            1           71s
-deployment.apps/dd-agent-kube-state-metrics      1/1     1            1           71s
-replicaset.apps/dd-agent-datadog-cluster-agent-5b6ccc89c4   1         1         1       71s
-replicaset.apps/dd-agent-kube-state-metrics-7f4f4f4dd5      1         1         1       71s
+NAME                                              READY   STATUS    RESTARTS   AGE  
+dd-agent-datadog-67ktq                            5/5     Running   0          66s  
+dd-agent-datadog-cluster-agent-69859cfd98-x8b8m   1/1     Running   0          66s  
+dd-agent-datadog-nptd5                            5/5     Running   0          66s  
 ```  
-
+  
 b) Next for Windows:  
-
+  
 Set your cluster name in the values file:  
 ```  
 clusterName:  <cluster_name>  
@@ -74,15 +66,17 @@ existingClusterAgent:
 ```  
 
 ```  
-helm install dd-agent -f <values_file> datadog/datadog  
+helm install dd-agent-win -f <values_file> datadog/datadog  
 ```
 
 You should see something like this:  
 
 ```
-kubectl get all | grep win  
-pod/dd-agent-win-datadog-kcfgx                        3/3     Running   0          81s  
-daemonset.apps/dd-agent-win-datadog   1         1         1       1            1           kubernetes.io/os=windows   82s  
+NAME                                              READY   STATUS    RESTARTS   AGE
+dd-agent-datadog-67ktq                            5/5     Running   0          3m36s
+dd-agent-datadog-cluster-agent-69859cfd98-x8b8m   1/1     Running   0          3m36s
+dd-agent-datadog-nptd5                            5/5     Running   0          3m36s
+dd-agent-win-datadog-6qcnj                        3/3     Running   0          88s
 ```  
   
 OK, Datadog deployed.  
