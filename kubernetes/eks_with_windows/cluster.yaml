@@ -1,0 +1,22 @@
+# cluster.yaml from https://eksctl.io/usage/windows-worker-nodes/
+# An example of ClusterConfig containing Windows and Linux node groups to support Windows workloads
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-cluster
+  region: us-west-2
+
+nodeGroups:
+  - name: windows-ng
+    amiFamily: WindowsServer2019FullContainer
+    minSize: 1
+    maxSize: 1
+
+managedNodeGroups:
+  - name: linux-ng
+    instanceType: t2.large
+    minSize: 2
+    maxSize: 2
+
