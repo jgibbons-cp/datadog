@@ -64,7 +64,7 @@ in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```
 - Install Tomcat ```sudo apt-get -y install tomcat9```    
 - Build the war file (need to pull this repo to cd)  
   - ```    
-       cd datadog/app-java  
+       cd <path_to_repo>/datadog/app-java  
        mvn clean && mvn compile && mvn package  
     ```  
 - Deploy the war file to Tomcat ```sudo cp <path_to_repo>/datadog/app-java/target/app-java-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/```
