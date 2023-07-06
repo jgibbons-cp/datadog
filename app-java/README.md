@@ -59,7 +59,7 @@ in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```
 - Deploy mysql ```sh deploy_mysql.sh```  
 - Deploy the app ```sh deploy_app_java.sh```  
 
-2b.  Local VM Tomcat with mysql in Docker  
+2b.  Local VM Tomcat with mysql in Docker - only app and tracing setup  
   
 - Install Tomcat ```sudo apt-get -y install tomcat9```    
 - Build the war file (need to pull this repo to cd)  
@@ -70,6 +70,7 @@ in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```
 - Deploy the war file to Tomcat ```sudo cp <path_to_repo>/datadog/app-java/target/app-java-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/```
 - Ensure mysql is not running on the host ```sudo service mysql stop```  
 - Deploy mysql ```docker run --detach --name=mysql-test --publish 3306:3306 jenksgibbons/mysql_ja```  
+- Install the Datadog agent  
 - Set the db host to localhost.  
   ```  
      echo "export DB_HOST=localhost" > setenv.sh  
@@ -86,7 +87,6 @@ in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```
   ```
      
 - Restart tomcat ```sudo service tomcat9 restart```  
-- Install the Datadog agent  
 - Open up 8080 to your IP address  
 - Navigate to the app: 'http://<host>:8080/app-java-0.0.1-SNAPSHOT/'
 
