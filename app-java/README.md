@@ -74,12 +74,14 @@ in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```
 
      ## The next line is optional for Datadog trace library injection
      echo "export DD_CONFIG_SOURCES=BASIC" >> setenv.sh  
-     
+
      sudo mv setenv.sh /usr/share/tomcat9/bin/setenv.sh       
   ```  
 - Optional - for Java Host Trace Library injection  
   ```
      sudo apt-get install datadog-apm-inject datadog-apm-library-java
+     dd-host-install  
+  ```
      
 - Restart tomcat ```sudo service tomcat9 restart```  
 - Install the Datadog agent  
