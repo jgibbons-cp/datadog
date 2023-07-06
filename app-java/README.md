@@ -3,6 +3,7 @@ End-to-End Monitoring with Java and Datadog
 
 1. Pre-Requisites
 
+- Instructions for Ubuntu  
 - RUM is setup in [Datadog](https://docs.datadoghq.com/real_user_monitoring/browser/)
  This uses CDN Async  
 - Update packages ```sudo apt-get update```  
@@ -14,6 +15,7 @@ End-to-End Monitoring with Java and Datadog
        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg  
        sudo chmod a+r /etc/apt/keyrings/docker.gpg  
   
+       sudo apt-get update  
        echo \  
        "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \  
        "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \  
