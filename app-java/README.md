@@ -82,6 +82,7 @@ in 'Edit Application' with ```export APPLICATION_ID=<APPLICATION_ID>```
   ```  
 - Optional - for Java Host Trace Library injection  
   ```
+     sudo apt-get update  
      sudo apt-get install datadog-apm-inject datadog-apm-library-java
      dd-host-install  
   ```
