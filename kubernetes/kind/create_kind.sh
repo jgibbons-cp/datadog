@@ -18,7 +18,8 @@ then
   fi
 
   #create
-  if ! kind create cluster --name "$CLUSTER_NAME" --kubeconfig config --config config.yaml;
+  if ! kind create cluster --name "$CLUSTER_NAME" --kubeconfig config --config config.yaml && \
+       export KUBECONFIG=$(pwd)/config;
   then
     echo "Cluster failed to start... cleaning up and exiting..."
     #seems to fail when start again even though no containers created
