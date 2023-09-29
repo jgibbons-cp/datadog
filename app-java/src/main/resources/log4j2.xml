@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
- <Appenders>
-   <Console name="LogInJSON" target="SYSTEM_OUT">
-     <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true"/>
-   </Console>
- </Appenders>
- <Loggers>
-  <Root level="INFO">
-    <AppenderRef ref="LogInJSON" />
-  </Root>
- </Loggers>
+	<Properties>
+		<Property name="basePath">/var/log/app_java</Property>
+	</Properties>
+  <Appenders>
+    <!--Console name="LogInJSON" target="SYSTEM_OUT">
+      <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true"/>
+    </Console-->
+		<RollingFile name="fileLogger"
+			fileName="${basePath}/app.log"
+			filePattern="${basePath}/app-%d{yyyy-MM-dd}.log">
+      <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true"/>
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10">
+				<Delete basePath="${basePathr}" maxDepth="10">
+					<IfLastModified age="30d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+  </Appenders>
+  <Loggers>
+    <!--Root level="INFO">
+      <AppenderRef ref="LogInJSON" />
+    </Root-->
+    <Root level="info" additivity="false">
+			<appender-ref ref="fileLogger" />
+		</Root>
+  </Loggers>
 </Configuration>
