@@ -81,16 +81,16 @@ mvn clean && mvn compile && mvn package
 
 #if want otel tracing
 OTEL=0
-DD_TRACER=1
+DD_TRACER=0
 
 if [ "$OTEL" = 1 ]; then
   wget -O otel-java-tracer.jar https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
-  docker build -t jenksgibbons/app-java -f docker/Dockerfile.tomcat --build-arg TRACER=otel-java-tracer.jar .
+  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:otel_tracer -f docker/Dockerfile.tomcat --build-arg TRACER=otel-java-tracer.jar .
 elif [ "$DD_TRACER" = 1 ]; then
   wget -O dd-java-tracer.jar https://dtdg.co/latest-java-tracer
-  docker build -t jenksgibbons/app-java -f docker/Dockerfile.tomcat --build-arg TRACER=dd-java-tracer.jar .
+  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:dd_tracer -f docker/Dockerfile.tomcat --build-arg TRACER=dd-java-tracer.jar .
 else
-  docker build -t jenksgibbons/app-java -f docker/Dockerfile.tomcat --build-arg TRACER= .
+  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:no_tracer -f docker/Dockerfile.tomcat --build-arg TRACER= .
 fi
 
 if [ ! -d "initdb" ]
@@ -171,7 +171,7 @@ GRANT EXECUTE ON PROCEDURE datadog.enable_events_statements_consumers TO datadog
 EOF
 
   #build mysql container with db
-  docker build -t jenksgibbons/mysql_ja -f docker/Dockerfile.mysql .
+  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/mysql_ja -f docker/Dockerfile.mysql .
 else
   echo "mysql employees scripts already here.... not building mysql container...\n"
 fi
