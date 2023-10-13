@@ -5,3 +5,4 @@ ARG TRACER
 ENV env_TRACER $TRACER
 ADD  ./$TRACER /usr/local/tomcat/lib/
 EXPOSE 8080
+CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
