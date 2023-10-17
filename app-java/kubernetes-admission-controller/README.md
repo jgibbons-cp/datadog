@@ -35,3 +35,25 @@ to see if the init container ran and terminated.
 ```kubectl create -f ../kubernetes/app_java_service.yaml```  
   
 4) Hit it at ```http://LoadBalancer:8080/app-java-0.0.1-SNAPSHOT/``` and look at traces.  
+  
+Logs  (log4j2 only)
+--  
+  
+1) By default, the app logs to STDOUT and correlates traceid/logs  
+  
+2) To use a file and raw format  
+  
+a) app-java.yaml  
+  
+  - comment block after ```# log to stdout```  
+  - uncomment block after ```log to file rather than stdout```  
+  - uncomment volumes and volumeMounts  
+  - add the volumes and volumeMounts to the agent  
+  
+b) log4j2.xml  
+  
+  - comment ```<!-- Uncomment for logging to stdout-->```  
+  - uncomment ```<!-- uncomment to use file raw format-->```  
+  - comment ```<!-- Uncomment for logging to stdout-->``` in ```<Loggers>```  
+  - uncomment ```<!-- Uncomment for logging to file-->``` in ```<Loggers>```  
+

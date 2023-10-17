@@ -25,17 +25,48 @@ spec:
         ad.datadoghq.com/app-java.check_names: '["jmx"]'
         ad.datadoghq.com/app-java.init_configs: '[{"is_jmx": true, "collect_default_metrics": true}]'
         ad.datadoghq.com/app-java.instances: '[{"host": "%%host%%","port":"9012"}]'
-        ad.datadoghq.com/app-java.logs: '[{"source":"tomcat","service":"tomcat","log_processing_rules":[{"type":"multi_line","name":"log_start_with_date","pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]}]'
-        admission.datadoghq.com/java-lib.version: "v1.10.1"
+
+        # log to stdout
+        
+        ad.datadoghq.com/app-java.logs: |
+          [{
+            "source":"java",
+            "service":"app-java",
+            "log_processing_rules":[{"type":"multi_line",
+            "name":"log_start_with_date","pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
+          }]
+
+        # log to file rather than stdout
+        # requires volume host mounts in app and agent
+        # and -Ddd.logs.injection=true
+
+        #ad.datadoghq.com/app-java.logs: |
+        #  [{
+        #    "type": "file", 
+        #    "path": "/var/log/app_java/app.log", 
+        #    "source":"java",
+        #    "service":"app-java",
+        #    "log_processing_rules":[{"type":"multi_line","name":"log_start_with_date",
+        #    "pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
+        #  }]
+        admission.datadoghq.com/java-lib.version: "v1.21.0"
     spec:
       containers:
       - image: jenksgibbons/app-java:no_tracer
         name: app-java
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: JAVA_OPTS
-          #note: in ecs and here   -Djava.rmi.server.hostname=127.0.0.1 -Djava.rmi.server.hostname=$(POD_IP) causes connection refused
-          value: "-Ddd.logs.injection=true -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256 -Xms256m -Xmx6144m -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.port=9012 -Dcom.sun.management.jmxremote.rmi.port=9012"
+          #note: in ecs and here   -Djava.rmi.server.hostname=127.0.0.1 
+          # -Djava.rmi.server.hostname=$(POD_IP) causes connection refused
+          value: "-Ddd.logs.injection=true -Ddd.profiling.enabled=true 
+                  -XX:FlightRecorderOptions=stackdepth=256 -Xms256m 
+                  -Xmx6144m -Dcom.sun.management.jmxremote 
+                  -Dcom.sun.management.jmxremote.authenticate=false 
+                  -Dcom.sun.management.jmxremote.ssl=false 
+                  -Dcom.sun.management.jmxremote.local.only=false 
+                  -Dcom.sun.management.jmxremote.port=9012 
+                  -Dcom.sun.management.jmxremote.rmi.port=9012"
         - name: CLIENT_TOKEN
           valueFrom:
             secretKeyRef:
@@ -59,5 +90,25 @@ spec:
         - containerPort: 9012
           hostPort: 9012
           name: "jmx"
+        
+        # for logging to a file
+      
+        #volumeMounts:
+        #- mountPath: /var/log/app_java
+        #  name: logs
+        #- mountPath: /var/log/app_java/app.log
+        #  name: log-file
+      #volumes:
+      
+      # for logging to a file
+      
+      #- name: logs
+      #  hostPath:
+      #    path: /var/log/app_java
+      #    type: DirectoryOrCreate
+      #- name: log-file
+      #  hostPath:
+      #    path: /var/log/app_java/app.log
+      #    type: FileOrCreate
       nodeSelector:
         kubernetes.io/os: linux
