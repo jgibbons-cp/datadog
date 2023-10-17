@@ -24,25 +24,25 @@ spec:
         ad.datadoghq.com/app-java.check_names: '["jmx"]'
         ad.datadoghq.com/app-java.init_configs: '[{"is_jmx": true, "collect_default_metrics": true}]'
         ad.datadoghq.com/app-java.instances: '[{"host": "%%host%%","port":"9012"}]'
-        #ad.datadoghq.com/app-java.logs: |
-        #  [{
-        #    "source":"tomcat",
-        #    "service":"tomcat",
-        #    "log_processing_rules":[{"type":"multi_line",
-        #    "name":"log_start_with_date","pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
-        #  }]
         ad.datadoghq.com/app-java.logs: |
           [{
-            "type": "file", 
-            "path": "/var/log/app_java", 
-            "source":"tomcat",
+            "source":"java",
             "service":"tomcat",
-            "log_processing_rules":[{"type":"multi_line","name":"log_start_with_date",
-            "pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
+            "log_processing_rules":[{"type":"multi_line",
+            "name":"log_start_with_date","pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
           }]
+        #ad.datadoghq.com/app-java.logs: |
+        #  [{
+        #    "type": "file", 
+        #    "path": "/var/log/app_java", 
+        #    "source":"java",
+        #    "service":"tomcat",
+        #    "log_processing_rules":[{"type":"multi_line","name":"log_start_with_date",
+        #    "pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
+        #  }]
     spec:
       containers:
-      - image: jenksgibbons/app-java
+      - image: jenksgibbons/app-java:dd_tracer
         name: app-java
         imagePullPolicy: Always
         env:
@@ -78,19 +78,19 @@ spec:
         - containerPort: 9012
           hostPort: 9012
           name: "jmx"
-        volumeMounts:
-        - mountPath: /var/log/app_java
-          name: logs
-        - mountPath: /var/log/app_java/app.log
-          name: log-file
-      volumes:
-      - name: logs
-        hostPath:
-          path: /var/log/app_java
-          type: DirectoryOrCreate
-      - name: log-file
-        hostPath:
-          path: /var/log/app_java/app.log
-          type: FileOrCreate
+        #volumeMounts:
+        #- mountPath: /var/log/app_java
+        #  name: logs
+        #- mountPath: /var/log/app_java/app.log
+        #  name: log-file
+      #volumes:
+      #- name: logs
+      #  hostPath:
+      #    path: /var/log/app_java
+      #    type: DirectoryOrCreate
+      #- name: log-file
+      #  hostPath:
+      #    path: /var/log/app_java/app.log
+      #    type: FileOrCreate
       nodeSelector:
         kubernetes.io/os: linux
