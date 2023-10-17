@@ -15,6 +15,7 @@
     <Root level="INFO">
       <AppenderRef ref="LogInJSON" />
     </Root>
+    <!-- Uncomment for logging to file-->
     <!--Root level="INFO">
       <AppenderRef ref="FILE"/>
     </Root-->
