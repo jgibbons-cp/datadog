@@ -4,7 +4,9 @@ FROM python:3.11.6-slim
 
 WORKDIR /app
 
+RUN apt update && apt upgrade -y && apt install -y build-essential
 RUN pip3 install ddtrace json_log_formatter
+RUN apt remove -y build-essential
 
 COPY trace_id_injection.py /app
 
