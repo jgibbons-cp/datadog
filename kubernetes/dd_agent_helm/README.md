@@ -24,7 +24,7 @@ Install the Datadog Agent with Helm
    ```  
 6. Install it  
    ```
-   helm install dd-agent -f values.yaml datadog/datadog
+   helm install dd-agent -f values.yaml datadog/datadog -n datadog
    ```
 7. To watch the pods while the are deploying  
    ```  
@@ -35,7 +35,7 @@ Install the Datadog Agent with Helm
 10. Create a secret  
     ```
     # scaling based on metrics requires app key
-    kubectl create secret generic datadog-agent --from-literal api-key=<key> --from-literal app-key=<key>
+    kubectl create secret generic datadog-agent --from-literal api-key=<key> --from-literal app-key=<key> -n datadog
     ```  
 11. Take out features that won't work on Mac and/or Windows  
     ```
