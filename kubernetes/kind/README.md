@@ -19,3 +19,8 @@ and worker node)
 3) config.yaml - cluster configuration.  For more configuration options
 see the
 [documentation](https://kind.sigs.k8s.io/docs/user/quick-start/#configuring-your-kind-cluster).  
+
+Startup with KUBECONFIG Set
+--
+  
+source ./set_kubeconfig.sh && sh create_kind.sh  
