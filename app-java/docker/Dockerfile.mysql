@@ -1,4 +1,4 @@
-FROM mysql:latest as builder
+FROM mysql:8-oraclelinux8 as builder
 LABEL maintainer=”jenks.gibbons@datadoghq.com”
 RUN ["sed", "-i", "s/exec \"$@\"/echo \"not running $@\"/", "/usr/local/bin/docker-entrypoint.sh"]
 ENV MYSQL_ROOT_PASSWORD=lab
