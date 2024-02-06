@@ -49,7 +49,7 @@ spec:
         #    "log_processing_rules":[{"type":"multi_line","name":"log_start_with_date",
         #    "pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
         #  }]
-        admission.datadoghq.com/java-lib.version: "v1.21.0"
+        admission.datadoghq.com/java-lib.version: "v1.29.0"
     spec:
       containers:
       - image: jenksgibbons/app-java:no_tracer
