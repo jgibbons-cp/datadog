@@ -18,7 +18,7 @@ Pre-Installation
 Files
 --
   
-1) create_cluster.sh - installs the control plan and currently one worker node  
+1) create_cluster.sh - installs the control plane and, currently, one worker node  
 2) install_control_plane.sh - code to install control plane and create the worker node config  
   
 Usage
@@ -27,3 +27,8 @@ Usage
 ```  
 sh create_cluster.sh <ip_of_control_plane> <ip_of_worker_node>  
 ```  
+  
+Notes
+--
+    
+By default it uses containerd for the container runtime and weave-net for the pod networking.  I will document more options later.  
