@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# default containerd, set to dockerd for dockerd runtime
 cri=""
 node="control_plane"
 pod_network="weaveworks"
@@ -71,8 +72,8 @@ install_docker_engine () {
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
   sudo apt-get update && \
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && \
-  wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.9/cri-dockerd_0.3.9.3-0.ubuntu-jammy_amd64.deb && \
-  sudo dpkg -i cri-dockerd_0.3.9.3-0.ubuntu-jammy_amd64.deb
+  wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.10/cri-dockerd_0.3.10.3-0.ubuntu-jammy_amd64.deb
+  sudo dpkg -i cri-dockerd_0.3.10.3-0.ubuntu-jammy_amd64.deb
 }
 
 sudo apt-get update
@@ -157,7 +158,7 @@ sudo apt-get update
 
 # set socket if cri is dockerd
 if [ "$cri" = "dockerd" ]; then
-  cri_socket="--cri-socket=///var/run/cri-dockerd.sock"
+  cri_socket="--cri-socket=unix:///var/run/cri-dockerd.sock"
   install_docker_engine
 else
   install_containerd
