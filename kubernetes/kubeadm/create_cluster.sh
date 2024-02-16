@@ -7,10 +7,10 @@ if [ -z ${control_plane} ]; then echo "control_plane ip is not set... exiting...
 if [ -z ${worker_node_1} ]; then echo "worker_node_1 ip is not set... exiting...\n"; fi
 
 echo "pushing control plane install code up to node....\n" && \
-scp install_cluster.sh ubuntu@$control_plane:~/ && \
+scp install_control_plane.sh ubuntu@$control_plane:~/ && \
 
 echo "installing control plane...\n"
-ssh ubuntu@$control_plane "sh ~/install_cluster.sh" && \
+ssh ubuntu@$control_plane "sh ~/install_control_plane.sh" && \
 
 echo "pulling worker node code...\n"
 scp ubuntu@$control_plane:~/install_cluster_worker_node.sh . && \

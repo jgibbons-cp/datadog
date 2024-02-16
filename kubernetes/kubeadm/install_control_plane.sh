@@ -190,7 +190,7 @@ if [ "$node" = "control_plane" ]; then
     kubectl apply -f weave_ds.yaml
   fi
   # create worker node install / cluster join
-  cp -f install_cluster.sh install_cluster_worker_node.sh
+  cp -f install_control_plane.sh install_cluster_worker_node.sh
   sed -i '0,/node=\"control_plane\"/{s//node=\"\"/}' install_cluster_worker_node.sh
   echo "" >> install_cluster_worker_node.sh
   grep -A1 "kubeadm join" install_cluster.log >> install_cluster_worker_node.sh
