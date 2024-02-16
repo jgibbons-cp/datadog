@@ -171,7 +171,6 @@ if [ "$node" = "control_plane" ]; then
   # set socket if cri is dockerd
   if [ "$cri" = "dockerd" ]; then
     cri_socket="--cri-socket=///var/run/cri-dockerd.sock"
-    echo $cri_socket
   fi
 
   sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=$ip_address $cri_socket >> install_cluster.log
