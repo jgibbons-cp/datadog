@@ -23,4 +23,6 @@ ssh ubuntu@$worker_node_1 "sudo sh ~/install_cluster_worker_node.sh"
 
 echo "\nUsage: ssh ubuntu@$control_plane to use kubectl...\n"
 
+# clean up repo
+rm -f install_cluster_worker_node.sh
 exit 0

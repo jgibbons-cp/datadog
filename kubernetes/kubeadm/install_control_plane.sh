@@ -155,8 +155,13 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 
 sudo apt-get update
 
-# install cri
-install_containerd
+# set socket if cri is dockerd
+if [ "$cri" = "dockerd" ]; then
+  cri_socket="--cri-socket=///var/run/cri-dockerd.sock"
+  install_docker_engine
+else
+  install_containerd
+fi
 
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
@@ -167,11 +172,6 @@ if [ "$node" = "control_plane" ]; then
 
   # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#initializing-your-control-plane-node
   ip_address=$(ifconfig eth0 | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
-
-  # set socket if cri is dockerd
-  if [ "$cri" = "dockerd" ]; then
-    cri_socket="--cri-socket=///var/run/cri-dockerd.sock"
-  fi
 
   sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=$ip_address $cri_socket >> install_cluster.log
 
@@ -193,4 +193,5 @@ if [ "$node" = "control_plane" ]; then
   sed -i '0,/node=\"control_plane\"/{s//node=\"\"/}' install_cluster_worker_node.sh
   echo "" >> install_cluster_worker_node.sh
   grep -A1 "kubeadm join" install_cluster.log >> install_cluster_worker_node.sh
+  sed -i 's/--discovery-token-ca-cert-hash/$cri_socket --discovery-token-ca-cert-hash/' install_cluster_worker_node.sh
 fi
