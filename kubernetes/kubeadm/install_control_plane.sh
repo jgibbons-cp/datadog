@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# default containerd, set to dockerd for dockerd runtime
-cri=""
+# default containerd, set to dockerd for dockerd runtime, cri_o for cri-o
+cri="dockerd"
 node="control_plane"
 pod_network="weaveworks"
 
@@ -34,25 +34,27 @@ install_containerd () {
 
 # this is not working yet
 install_cri_o () {
-  #target os
-  export OS=xUbuntu_22.04
-  export VERSION=1.24
+  sudo apt-get install -y software-properties-common curl
 
-  #echo 'deb http://deb.debian.org/debian buster-backports main' | sudo tee -a /etc/apt/sources.list.d/backports.list && \
-  #sudo apt update && \
-  #sudo apt install -y -t buster-backports libseccomp2 || sudo apt update -y -t buster-backports libseccomp2 && \
+  KUBERNETES_VERSION=v1.29
+  PROJECT_PATH=prerelease:/main
 
-  echo "deb [signed-by=/usr/share/keyrings/libcontainers-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/ /" | sudo tee -a /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list && \
-  echo "deb [signed-by=/usr/share/keyrings/libcontainers-crio-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.24:/1.24.6/$OS/ /" | sudo tee -a /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.list && \
+  curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key |
+    sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-  sudo mkdir -p /usr/share/keyrings && \
-  curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/Release.key | sudo gpg --dearmor -o /usr/share/keyrings/libcontainers-archive-keyring.gpg && \
-  #curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$VERSION/Release.key | sudo gpg --dearmor -o /usr/share/keyrings/libcontainers-crio-archive-keyring.gpg && \
-  curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.24:/1.24.6/xUbuntu_22.04//Release.key | sudo gpg --dearmor -o /usr/share/keyrings/libcontainers-crio-archive-keyring.gpg && \
-  sudo apt-get update && \
-  sudo apt-get install cri-o cri-o-runc && \
+  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/ /" |
+    sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-  sudo apt-get install containernetworking-plugins
+  curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/$PROJECT_PATH/deb/Release.key |
+    sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+
+  echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/$PROJECT_PATH/deb/ /" |
+    sudo tee /etc/apt/sources.list.d/cri-o.list
+
+  sudo apt-get update
+  sudo apt-get install -y cri-o kubelet kubeadm kubectl
+
+  sudo systemctl start crio.service
 }
 
 install_docker_engine () {
@@ -160,6 +162,8 @@ sudo apt-get update
 if [ "$cri" = "dockerd" ]; then
   cri_socket="--cri-socket=unix:///var/run/cri-dockerd.sock"
   install_docker_engine
+elif [ "$cri" = "cri_o" ]; then
+  install_cri_o
 else
   install_containerd
 fi
