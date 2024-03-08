@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: py-test
+  name: py-test-no-tracer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: py-test
+  template:
+    metadata:
+      labels:
+        app: py-test
+    spec:
+      containers:
+      - image: jenksgibbons/pyflask_hello_world
+        name: pyflask-hello-world

@@ -1,0 +1,41 @@
+apiVersion: datadoghq.com/v2alpha1
+kind: DatadogAgent
+metadata:
+  name: datadog
+  namespace: default
+spec:
+  features:
+    apm:
+      # for single step instrumentation - as of this repo in release candidate
+      #instrumentation:
+      enabled: true
+        # single step
+        #libVersions: 
+          #dotnet: v2.46.0
+          #python: v1.20.6
+          #java: v1.22.0
+          #js: v4.17.0
+          #ruby: v1.15.0
+    admissionController:
+      mutateUnlabelled: true
+    liveContainerCollection:
+      enabled: true
+    liveProcessCollection:
+      enabled: true
+    logCollection:
+      containerCollectAll: true
+      enabled: true
+    orchestratorExplorer:
+      enabled: true
+  global:
+    credentials:
+      apiSecret:
+        secretName: datadog-agent
+        keyName: api-key
+      appSecret:
+        secretName: datadog-agent
+        keyName: app-key
+    kubelet:
+      tlsVerify: false
+    clusterName: python-trace-test
+

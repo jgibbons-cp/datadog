@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: py-test
+    tags.datadoghq.com/env: "dev"
+    tags.datadoghq.com/service: "pyflask_hello_world"
+    tags.datadoghq.com/version: "1"
+  name: py-test-tracer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: py-test
+  template:
+    metadata:
+      labels:
+        app: py-test
+        tags.datadoghq.com/env: "dev"
+        tags.datadoghq.com/service: "pyflask_hello_world"
+        tags.datadoghq.com/version: "1"
+        admission.datadoghq.com/enabled: "true"
+      annotations:
+        admission.datadoghq.com/python-lib.version: "v2.5.5"
+    spec:
+      containers:
+      - image: jenksgibbons/pyflask_hello_world
+        name: pyflask-hello-world
