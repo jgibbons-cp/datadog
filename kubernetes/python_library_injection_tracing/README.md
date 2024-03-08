@@ -48,7 +48,7 @@ the application by adding some labels and an annotation.
   
 You can see the differences here:  
   
-![alt text](https://github.com/jgibbons-cp/python_library_injection_tracing/blob/main/instrumentation_changes.png?raw=true)  
+![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/instrumentation_changes.png?raw=true)  
   
 5) Either instrument the non-istrumented or use the instrumented and deploy.  
   
@@ -69,7 +69,7 @@ kubectl port-forward deployment.apps/py-test-tracer 33333:8000
   
 6) Look at [traces](https://app.datadoghq.com/apm/traces)  
   
-![alt text](https://github.com/jgibbons-cp/python_library_injection_tracing/blob/main/trace.png?raw=true)  
+![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/trace.png?raw=true)  
   
 Have fun.  
 
