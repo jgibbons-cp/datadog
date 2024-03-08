@@ -1,8 +1,8 @@
 Python Tracing - Datadog Library Injection
 --
 
-This will show a simple example of tracing a python application in Kubernetes using Datadog's
-Library Injection.  
+This will show a simple example of tracing a python [application](https://github.com/docker/awesome-compose/tree/master/flask) 
+in Kubernetes using Datadog's Library Injection.  
   
 1) Install the [Operator](https://docs.datadoghq.com/getting_started/containers/datadog_operator/)
 using the provided datadog-agent.yaml  
