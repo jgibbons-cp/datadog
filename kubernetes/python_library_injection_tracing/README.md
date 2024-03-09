@@ -74,7 +74,7 @@ The init container can also be seen in the live pods [view](https://app.datadogh
 ![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/live_containers_view.png?raw=true)  
 
 
-In a browser hit ```http://localhost:44444``` and when done kill the ```port-foward``` command.  
+In a browser hit ```http://localhost:44444``` a few times to get some requests and when done kill the ```port-foward``` command.  
     
 6) Look at [traces](https://app.datadoghq.com/apm/traces)  
   
