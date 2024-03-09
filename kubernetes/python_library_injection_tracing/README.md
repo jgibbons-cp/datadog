@@ -31,7 +31,7 @@ datadog-cluster-agent-7f679d78d4-zdgfr          1/1     Running   0          4m3
 dd-operator-datadog-operator-5f49c8c597-vzfg8   1/1     Running   0          6m44s  
 ```  
   
-2) Run the non-instrumented application  
+2) Run the non-instrumented application (optional, but you get the point)  
   
 ```  
 # deploy  
@@ -39,6 +39,8 @@ kubectl apply -f py_no_injection.yaml
   
 # setup access to hit localhost:33333  
 kubectl port-forward deployment.apps/py-test-no-tracer 33333:8000  
+  
+kubectl delete -f py_no_injection.yaml  
 ```  
   
 In a browser hit ```http://localhost:33333``` and when done kill the ```port-foward``` command.  
@@ -65,8 +67,8 @@ py-test-tracer-7b59bb747c-57dx6                 0/1     Init:0/1   0          5s
 kubectl get po | grep py-test-tracer  
 py-test-tracer-7b59bb747c-57dx6                 1/1     Running   0          83s  
   
-# setup access to hit localhost:44444  
-kubectl port-forward deployment.apps/py-test-tracer 44444:8000  
+# setup access to hit localhost:33333  
+kubectl port-forward deployment.apps/py-test-tracer 33333:8000  
 ```  
   
 The init container can also be seen in the live pods [view](https://app.datadoghq.com/orchestration/overview/pod):  
@@ -74,7 +76,7 @@ The init container can also be seen in the live pods [view](https://app.datadogh
 ![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/live_containers_view.png?raw=true)  
 
 
-In a browser hit ```http://localhost:44444``` a few times to get some requests and when done kill the ```port-foward``` command.  
+In a browser hit ```http://localhost:33333``` a few times to get some requests and when done kill the ```port-foward``` command.  
     
 6) Look at [traces](https://app.datadoghq.com/apm/traces)  
   
