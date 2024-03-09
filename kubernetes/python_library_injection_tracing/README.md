@@ -82,6 +82,8 @@ In a browser hit ```http://localhost:33333``` a few times to get some requests a
   
 ![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/trace.png?raw=true)  
   
+Delete the instrumented deployment - ```kubectl delete -f py_auto_injection.yaml```  
+  
 Have fun.  
 
 
