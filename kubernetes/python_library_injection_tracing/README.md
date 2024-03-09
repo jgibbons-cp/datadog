@@ -41,7 +41,7 @@ kubectl apply -f py_no_injection.yaml
 kubectl port-forward deployment.apps/py-test-no-tracer 33333:8000  
 ```  
   
-In a browser hit ```http://localhost:33333``` and when done kill the ```port-foward``` command.  
+In a browser hit ```http://localhost:33333``` and when done kill the ```port-forward``` command.  
   
 Delete the non-instrumented deployment - ```kubectl delete -f py_no_injection.yaml```  
   
