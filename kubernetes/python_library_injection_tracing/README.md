@@ -69,10 +69,9 @@ py-test-tracer-7b59bb747c-57dx6                 1/1     Running   0          83s
 kubectl port-forward deployment.apps/py-test-tracer 44444:8000  
 ```  
   
-In a browser hit ```http://localhost:44444``` and when done kill the ```port-foward``` command.  
-  
-  
 The init container can also be seen in the live pods [view](https://app.datadoghq.com/orchestration/overview/pod):  
+  
+In a browser hit ```http://localhost:44444``` and when done kill the ```port-foward``` command.  
   
 ![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/live_containers_view.png?raw=true)  
   
