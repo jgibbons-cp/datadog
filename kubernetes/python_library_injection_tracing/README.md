@@ -67,6 +67,10 @@ py-test-tracer-7b59bb747c-57dx6                 1/1     Running   0          83s
 kubectl port-forward deployment.apps/py-test-tracer 33333:8000  
 ```  
   
+This can also be seen in the live pods [view](https://app.datadoghq.com/orchestration/overview/pod):  
+  
+![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/live_containers_view.png?raw=true)  
+  
 6) Look at [traces](https://app.datadoghq.com/apm/traces)  
   
 ![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/trace.png?raw=true)  
