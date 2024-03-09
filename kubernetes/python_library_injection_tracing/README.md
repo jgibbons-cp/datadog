@@ -41,6 +41,8 @@ kubectl apply -f py_no_injection.yaml
 kubectl port-forward deployment.apps/py-test-no-tracer 33333:8000  
 ```  
   
+In a browser hit ```http://localhost:33333``` and when done kill the ```port-foward``` command.  
+  
 3) Go look at [traces](https://app.datadoghq.com/apm/traces) -> no instrumentation -> no traces  
   
 4) [Instrument](https://docs.datadoghq.com/tracing/trace_collection/library_injection_local/?tab=kubernetes) 
@@ -63,11 +65,14 @@ py-test-tracer-7b59bb747c-57dx6                 0/1     Init:0/1   0          5s
 kubectl get po | grep py-test-tracer  
 py-test-tracer-7b59bb747c-57dx6                 1/1     Running   0          83s  
   
-# setup access to hit localhost:33333  
-kubectl port-forward deployment.apps/py-test-tracer 33333:8000  
+# setup access to hit localhost:44444  
+kubectl port-forward deployment.apps/py-test-tracer 44444:8000  
 ```  
   
-This can also be seen in the live pods [view](https://app.datadoghq.com/orchestration/overview/pod):  
+In a browser hit ```http://localhost:44444``` and when done kill the ```port-foward``` command.  
+  
+  
+The init container can also be seen in the live pods [view](https://app.datadoghq.com/orchestration/overview/pod):  
   
 ![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/live_containers_view.png?raw=true)  
   
