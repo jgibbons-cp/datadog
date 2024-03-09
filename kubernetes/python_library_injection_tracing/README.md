@@ -71,10 +71,11 @@ kubectl port-forward deployment.apps/py-test-tracer 44444:8000
   
 The init container can also be seen in the live pods [view](https://app.datadoghq.com/orchestration/overview/pod):  
   
-In a browser hit ```http://localhost:44444``` and when done kill the ```port-foward``` command.  
-  
 ![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/live_containers_view.png?raw=true)  
-  
+
+
+In a browser hit ```http://localhost:44444``` and when done kill the ```port-foward``` command.  
+    
 6) Look at [traces](https://app.datadoghq.com/apm/traces)  
   
 ![alt text](https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/python_library_injection_tracing/trace.png?raw=true)  
