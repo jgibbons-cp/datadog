@@ -39,11 +39,11 @@ kubectl apply -f py_no_injection.yaml
   
 # setup access to hit localhost:33333  
 kubectl port-forward deployment.apps/py-test-no-tracer 33333:8000  
-  
-kubectl delete -f py_no_injection.yaml  
 ```  
   
 In a browser hit ```http://localhost:33333``` and when done kill the ```port-foward``` command.  
+  
+Delete the non-instrumented deployment - ```kubectl delete -f py_no_injection.yaml```  
   
 3) Go look at [traces](https://app.datadoghq.com/apm/traces) -> no instrumentation -> no traces  
   
