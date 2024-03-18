@@ -85,12 +85,21 @@ DD_TRACER=0
 
 if [ "$OTEL" = 1 ]; then
   wget -O otel-java-tracer.jar https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
-  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:otel_tracer -f docker/Dockerfile.tomcat --build-arg TRACER=otel-java-tracer.jar .
+  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:otel_tracer \
+    --build-arg DD_GIT_REPOSITORY_URL="github.com/jgibbons-cp/datadog" \
+    --build-arg DD_GIT_COMMIT_SHA=$(git rev-parse HEAD) \
+    -f docker/Dockerfile.tomcat --build-arg TRACER=otel-java-tracer.jar .
 elif [ "$DD_TRACER" = 1 ]; then
   wget -O dd-java-tracer.jar https://dtdg.co/latest-java-tracer
-  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:dd_tracer -f docker/Dockerfile.tomcat --build-arg TRACER=dd-java-tracer.jar .
+  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:dd_tracer \
+    --build-arg DD_GIT_REPOSITORY_URL="github.com/jgibbons-cp/datadog" \
+    --build-arg DD_GIT_COMMIT_SHA=$(git rev-parse HEAD) \
+    -f docker/Dockerfile.tomcat --build-arg TRACER=dd-java-tracer.jar .
 else
-  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:no_tracer -f docker/Dockerfile.tomcat --build-arg TRACER= .
+  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/app-java:no_tracer \
+    --build-arg DD_GIT_REPOSITORY_URL="github.com/jgibbons-cp/datadog" \
+    --build-arg DD_GIT_COMMIT_SHA=$(git rev-parse HEAD) \
+    -f docker/Dockerfile.tomcat --build-arg TRACER= .
 fi
 
 if [ ! -d "initdb" ]
