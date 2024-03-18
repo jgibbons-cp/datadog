@@ -28,5 +28,8 @@ public class TomcatServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        else{
+            Integer error = 100/0;
+        }
     }
 }
