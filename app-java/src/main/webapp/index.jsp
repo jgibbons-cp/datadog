@@ -60,6 +60,9 @@
       </br>
       <button type="button" onclick="call(window.location.origin+'${pageContext.request.contextPath}/query?', 'POST', 'jdbc_query')">Query DB</button></br>
       <pre id="response"></pre>
+      </br>
+      <br>
+      <button type="button" onclick="call(window.location.origin+'${pageContext.request.contextPath}/query?', 'POST', '')">Throw Uncaught Exception</button></br>
       </form>
   </body>
 </html>
