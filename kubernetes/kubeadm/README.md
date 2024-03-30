@@ -62,4 +62,4 @@ Automated up:
   
 Automated down:  
   
-1) destroy.sh  
+1) ```sh destroy.sh```  
