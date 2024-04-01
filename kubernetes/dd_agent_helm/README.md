@@ -31,13 +31,13 @@ Install the Datadog Agent with Helm
    watch kubectl get pods  
    ```  
 8. All the pods will go into an error state, why and how can we tell?
-9. 
-10. Create a secret  
+   
+9. Create a secret  
     ```
     # scaling based on metrics requires app key
     kubectl create secret generic datadog-agent --from-literal api-key=<key> --from-literal app-key=<key> -n datadog
     ```  
-11. Take out features that won't work on Mac and/or Windows  
+10. Take out features that won't work on Mac and/or Windows  
     ```
     networkMonitoring:
     # datadog.networkMonitoring.enabled -- Enable network performance monitoring
@@ -60,23 +60,23 @@ Install the Datadog Agent with Helm
             # datadog.securityAgent.runtime.network.enabled -- Set to true to enable the collection of CWS network events
             enabled: false
     ```  
-12. Update the agent  
+11. Update the agent  
     ```  
     helm upgrade dd-agent -f values.yaml datadog/datadog  
     ```  
-13. Watch redeploy  
+12. Watch redeploy  
     ```  
     watch kubectl get pods  
     ```  
-14. Check status of agents  
+13. Check status of agents  
     ```  
     kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
   
     kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
     ```  
-15. Do you see any issues in either agent status?  If not, go to the [container orchestrator](https://app.datadoghq.com/orchestration/overview/pod).  Do you see any pods etcetera?  Why not?  
+14. Do you see any issues in either agent status?  If not, go to the [container orchestrator](https://app.datadoghq.com/orchestration/overview/pod).  Do you see any pods etcetera?  Why not?  
   
-16. What got installed  
+15. What got installed  
     ```  
     kubectl get all  
     kubectl get secrets  
