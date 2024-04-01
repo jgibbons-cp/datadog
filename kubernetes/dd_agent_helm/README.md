@@ -74,7 +74,9 @@ Install the Datadog Agent with Helm
   
     kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
     ```  
-15. What got installed  
+15. Do you see any issues in either agent status?  If not, go to the [container orchestrator](https://app.datadoghq.com/orchestration/overview/pod).  Do you see any pods etcetera?  Why not?  
+  
+16. What got installed  
     ```  
     kubectl get all  
     kubectl get secrets  
