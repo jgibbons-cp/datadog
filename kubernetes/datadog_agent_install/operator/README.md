@@ -77,3 +77,11 @@ with
     ```  
     kubectl get pods  
     ```  
+- Uninstall the operator  
+  ```
+  helm uninstall dd-operator  
+  ```
+- Get pods  
+  ```
+  kubectl get po  
+  ```
