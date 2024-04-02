@@ -12,9 +12,9 @@ The process is described [here](https://medium.com/@jenksgibbons/simplifying-com
 Steps:  
   
 - Get a values file to configure the agent.  
-   ```
-   wget https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/aks_with_windows/values.yaml  
-   ```  
+  ```
+  wget https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/aks_with_windows/values.yaml  
+  ```  
 - Configure the agent using the values file  
 ```  
 networkMonitoring:  
