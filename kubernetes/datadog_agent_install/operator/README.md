@@ -5,9 +5,13 @@ The agent can also be installed using the Datadog [operator](https://docs.datado
 do so:  
   
 - Install the Datadog operator  
-  ```helm install dd-operator datadog/datadog-operator```  
+  ```
+  helm install dd-operator datadog/datadog-operator
+  ```  
 - Get a manifest with logs, APM, process, and metrics collection enabled.  
-  ```wget https://raw.githubusercontent.com/DataDog/datadog-operator/main/examples/datadogagent/v2alpha1/datadog-agent-all.yaml```  
+  ```
+  wget https://raw.githubusercontent.com/DataDog/datadog-operator/main/examples/datadogagent/v2alpha1/datadog-agent-all.yaml
+  ```  
 - Replace:  
   ```  
   global:  
@@ -28,17 +32,19 @@ with
         keyName: app-key  
   ```  
 - Apply the manifest  
-  ```kubectl apply -f /path/to/datadog-agent-all.yaml```  
+  ```
+  kubectl apply -f /path/to/datadog-agent-all.yaml
+  ```  
 - Watch the startup of the agents  
-    ```  
-    watch kubectl get pods  
-    ```  
+  ```  
+  watch kubectl get pods  
+  ```  
 - Check status of agents  
-    ```  
-    kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
+  ```  
+  kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
   
-    kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
-    ```  
+  kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
+  ```  
 - Do you see any issues in either agent status?  If not, go to the [container orchestrator](https://app.datadoghq.com/orchestration/overview/pod).  Do you see any pods etcetera?  Why not?  
   
 - What got installed  

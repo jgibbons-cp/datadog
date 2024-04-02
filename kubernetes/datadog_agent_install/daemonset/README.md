@@ -11,7 +11,7 @@ The process is described [here](https://medium.com/@jenksgibbons/simplifying-com
   
 Steps:  
   
-- Get a values file to configure the agent.  
+- Get a values file to configure the agent or use the one you used for the helm install.  
   ```
   wget https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/aks_with_windows/values.yaml  
   ```  
@@ -38,7 +38,7 @@ securityAgent:
         # datadog.securityAgent.runtime.network.enabled -- Set to true to enable the collection of CWS network events  
         enabled: false  
 ```  
-- Set the clustername tag  
+- Set the clustername tag in the values file  
   ```  
   clusterName: <tag>  
   ```  
@@ -59,9 +59,7 @@ securityAgent:
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
   
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
-  ```  
-- Do you see any issues in either agent status?  If not, go to the [container orchestrator](https://app.datadoghq.com/orchestration/overview/pod).  Do you see any pods etcetera?  Why not?  
-  
+  ```    
 - What got installed  
   ```  
   kubectl get all  
@@ -79,8 +77,4 @@ securityAgent:
 - No pods  
   ```  
   kubectl get pods  
-  ```  
-- Switch back to default namespace and delete datadog ns
-  ```  
-  kubectl config set-context --current --namespace=default && kubectl delete ns datadog
   ```  

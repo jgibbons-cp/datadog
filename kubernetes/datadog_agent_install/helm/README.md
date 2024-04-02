@@ -45,9 +45,7 @@ Install the Datadog Agent with Helm
     kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
   
     kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
-    ```  
-- Do you see any issues in either agent status?  If not, go to the [container orchestrator](https://app.datadoghq.com/orchestration/overview/pod).  Do you see any pods etcetera?  Why not?  
-  
+    ```    
 - What got installed  
     ```  
     kubectl get all  
@@ -65,8 +63,4 @@ Install the Datadog Agent with Helm
 - No pods  
     ```  
     kubectl get pods  
-    ```  
-- Switch back to default namespace and delete datadog ns
-    ```  
-    kubectl config set-context --current --namespace=default && kubectl delete ns datadog
     ```  
