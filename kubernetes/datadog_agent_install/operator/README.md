@@ -31,6 +31,20 @@ with
         secretName: datadog-agent  
         keyName: app-key  
   ```  
+- Unless you are using a cluster other than minikube or kind change the following to false
+  ```
+  ebpfCheck
+  cspm
+  cws
+  npm
+  usm
+  ```
+- Unless you are using a cluster other than minikube or kind add in the global section  
+  ```
+  global:  
+    kubelet:  
+      tlsVerify: false  
+  ```
 - Apply the manifest  
   ```
   kubectl apply -f /path/to/datadog-agent-all.yaml
@@ -45,8 +59,6 @@ with
   
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
   ```  
-- Do you see any issues in either agent status?  If not, go to the [container orchestrator](https://app.datadoghq.com/orchestration/overview/pod).  Do you see any pods etcetera?  Why not?  
-  
 - What got installed  
     ```  
     kubectl get all  
@@ -64,8 +76,4 @@ with
 - No pods  
     ```  
     kubectl get pods  
-    ```  
-- Switch back to default namespace and delete datadog ns
-    ```  
-    kubectl config set-context --current --namespace=default && kubectl delete ns datadog
     ```  
