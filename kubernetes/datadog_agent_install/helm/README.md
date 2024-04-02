@@ -1,20 +1,11 @@
 Install the Datadog Agent with Helm
 --
-
-- Get a Linux values file  
+- Do the common items at the root of this repo.  
+- Get a values file to configure the agent  or use the one you used for the ds install. 
    ```  
    wget https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/aks_with_windows/values.yaml
    ```  
-- Install the agent  
-   ```
-   helm install dd-agent -f values.yaml datadog/datadog -n datadog
-   ```
-- To watch the pods while the are deploying  
-   ```  
-   watch kubectl get pods  
-   ```  
-- All the pods will go into an error state, why and how can we tell?
-- Take out features that won't work on Mac and/or Windows  
+- Take out features that won't work on Mac and/or Windows or use the values file you did with the ds.  
     ```
     networkMonitoring:
     # datadog.networkMonitoring.enabled -- Enable network performance monitoring
@@ -37,14 +28,18 @@ Install the Datadog Agent with Helm
             # datadog.securityAgent.runtime.network.enabled -- Set to true to enable the collection of CWS network events
             enabled: false
     ```  
-- Update the agent  
-    ```  
-    helm upgrade dd-agent -f values.yaml datadog/datadog  
-    ```  
-- Watch redeploy  
-    ```  
-    watch kubectl get pods  
-    ```  
+- Set the clustername tag if the values file is new  
+  ```  
+  clusterName: <tag>  
+  ```  
+- Install the agent  
+   ```
+   helm install dd-agent -f values.yaml datadog/datadog
+   ```
+- Watch the pods while they are deploying  
+   ```  
+   watch kubectl get pods  
+   ```  
 - Check status of agents  
     ```  
     kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
