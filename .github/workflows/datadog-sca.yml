@@ -15,6 +15,7 @@ jobs:
       with:
         dd_api_key: ${{ secrets.DATADOG_API_KEY }}
         dd_app_key: ${{ secrets.DATADOG_APP_KEY }}
+        dd_app_key: ${{ secrets.DD_APP_KEY }}
         dd_service: app-java
         dd_env: ci
         dd_site: datadoghq.com
