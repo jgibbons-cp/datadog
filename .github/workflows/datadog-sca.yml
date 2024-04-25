@@ -4,6 +4,7 @@ name: Datadog Software Composition Analysis
 
 jobs:
   software-composition-analysis:
+    environment: datadog
     runs-on: ubuntu-latest
     name: Datadog SBOM Generation and Upload
     steps:
@@ -15,7 +16,6 @@ jobs:
       with:
         dd_api_key: ${{ secrets.DATADOG_API_KEY }}
         dd_app_key: ${{ secrets.DATADOG_APP_KEY }}
-        DD_APP_KEY: ${{ secrets.DATADOG_APP_KEY }}
         dd_service: app-java
         dd_env: ci
         dd_site: datadoghq.com
