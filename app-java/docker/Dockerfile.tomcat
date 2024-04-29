@@ -1,6 +1,10 @@
 FROM tomcat:9.0-jdk8-corretto-al2
 LABEL maintainer=”jenks.gibbons@datadoghq.com”
 ADD /target/app-java-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/
+ARG DD_GIT_REPOSITORY_URL
+ARG DD_GIT_COMMIT_SHA
+ENV DD_GIT_REPOSITORY_URL=${DD_GIT_REPOSITORY_URL} 
+ENV DD_GIT_COMMIT_SHA=${DD_GIT_COMMIT_SHA}
 ARG TRACER
 ENV env_TRACER $TRACER
 ADD  ./$TRACER /usr/local/tomcat/lib/
