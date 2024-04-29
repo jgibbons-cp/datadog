@@ -68,7 +68,8 @@
     <dependency>
       <groupId>com.mysql</groupId>
       <artifactId>mysql-connector-j</artifactId>
-      <version>8.1.0</version>
+      <!--version>8.1.0</version-->
+      <version>5.1.11</version>
     </dependency>
     <!-->don't want both likely but easier for lab-->
     <dependency>
