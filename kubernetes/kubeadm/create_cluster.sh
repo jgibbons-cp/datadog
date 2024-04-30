@@ -49,7 +49,8 @@ do
   ssh "ubuntu@${var}" "sudo sh ~/install_cluster_worker_node.sh"
 done
 
-echo "\nUsage: ssh ubuntu@$control_plane to use kubectl...\n"
+echo "\nUsage: 'ssh ubuntu@$control_plane' to use kubectl. If the control plane \
+has a public IP then 'scp ubuntu@$control_plane:~/.kube/config . && export KUBECONFIG=$(pwd)/config'\n"
 
 # clean up repo
 rm -f install_cluster_worker_node.sh
