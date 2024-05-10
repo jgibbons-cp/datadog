@@ -1,4 +1,4 @@
-Integration Testing app_java K8 Manifests
+Integration Testing K8 WebApp Deployments
 --  
 
 Requirements  
@@ -8,6 +8,7 @@ Requirements
 2) pip - kubernetes  
 3) pip - python-terraform  
 4) pip - datadog-api-client  
+5) npm
 
 Files  
 -  
