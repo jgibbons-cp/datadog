@@ -64,11 +64,12 @@ def get_state_info(local_base_repo, k8_repo):
 
     return tfstate
 
-def send_log(message, service):
+def send_log(message, service, status):
     '''
        Send log to datadog
        Parameter 1 (string): message to send to logs
        Parameter 2 (string): service (in Datadog terms) being tested
+       Parameter 3 (string): log status
     '''
 
     hostname = socket.gethostname()
@@ -78,8 +79,10 @@ def send_log(message, service):
                 "ddtags": "env:dev",
                 "hostname": hostname,
                 "message": message,
-                "service": service
+                "service": service,
+                "status": status
             }]
+    
     configuration = Configuration()
     with ApiClient(configuration) as api_client:
         api_instance = LogsApi(api_client)
