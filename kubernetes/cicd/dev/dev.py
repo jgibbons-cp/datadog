@@ -53,8 +53,17 @@ def main():
     # can't do this without npm
     error = setup.npm_installed()
     if error:
-        send_log(error, service)
+        send_log(error, service, "Error")
         sys.exit(1)
+
+    # sbom check for vulns in pom
+    # address security first and fail if does not pass
+    try:
+        subprocess.check_output(["node_modules/.bin/datadog-ci", "gate", "evaluate"])
+    except subprocess.CalledProcessError as e:
+        output = e.output.decode()
+        send_log(output, service, "Error")
+        sys.exit(-1)
 
     # get working directory
     script_directory = os.getcwd()
@@ -118,7 +127,7 @@ def main():
             # if error in manifest
             error = str(error)
             # log sent to datadog
-            send_log(f"ERROR Object deployment failed: {error}", service)
+            send_log(f"Object deployment failed: {error}", service, "Error")
             # delete cluster
             delete_kind_cluster(kind_dir)
             sys.exit(1)
@@ -159,12 +168,12 @@ def main():
         output_stream = kubectl_pid.stdout.read()
         if not output_stream:
             output_stream = kubectl_pid.stderr.read()
-            send_log(f"ERROR: {output_stream}", service)
+            send_log(f"{output_stream}", service, "Error")
             delete_kind_cluster(kind_dir)
             sys.exit(1)
     except TypeError:
         output_stream = kubectl_pid.stderr.read()
-        send_log(f"ERROR: {output_stream}", service)
+        send_log(f"{output_stream}", service, "Error")
         delete_kind_cluster(kind_dir)
         sys.exit(1)
 
@@ -183,7 +192,7 @@ def main():
             output = output.decode()
             output = output.split("=== REPORT ===\n", 1)[1]
             output = "".join(output)
-            send_log(f"info {output}", service)
+            send_log(f"{output}", service, "Info")
         except subprocess.CalledProcessError:
             result = get_browser_test_result(config_data["browser_test"]["public_id"])
             message = f"""ERROR {result["results"][0]["result"]["errorMessage"]} \
@@ -191,12 +200,12 @@ def main():
 {result["results"][0]["result"]["step_count_completed"]} \
 of {result["results"][0]["result"]["step_count_total"]} steps. Exiting..."""
             delete_kind_cluster(kind_dir)
-            send_log(message, service)
+            send_log(message, service, "Info")
 
         # clean up
         os.system(f"kill -9 {kubectl_pid.pid}")
     else:
-        send_log("Success", service)
+        send_log("Success", service, "Info")
     delete_kind_cluster(kind_dir)
     local_module = config_data["modules"]["cicd"]
     os.remove(f"{script_directory}/{local_module}")
