@@ -5,7 +5,7 @@ ENV MYSQL_ROOT_PASSWORD=lab
 ADD /initdb/ /docker-entrypoint-initdb.d/
 RUN ["/usr/local/bin/docker-entrypoint.sh", "mysqld", "--max_digest_length=4096", "--performance_schema_max_digest_length=4096", "--performance_schema_max_sql_text_length=4096", "--datadir", "/initialized-db"]
 
-FROM mysql:latest
+FROM mysql:8.4.0-oraclelinux9
 
 COPY --from=builder /initialized-db /var/lib/mysql
 
