@@ -178,11 +178,10 @@ END $$
 DELIMITER ;
 GRANT EXECUTE ON PROCEDURE datadog.enable_events_statements_consumers TO datadog@'%';
 EOF
-
-  #build mysql container with db
-  docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/mysql_ja -f docker/Dockerfile.mysql .
-else
-  echo "mysql employees scripts already here.... not building mysql container...\n"
 fi
+
+#build mysql container with db
+tag="8-oraclelinux8"
+docker buildx build --platform linux/amd64,linux/arm64 --push -t jenksgibbons/mysql_ja:$tag -f docker/Dockerfile.mysql .
 
 cd -
