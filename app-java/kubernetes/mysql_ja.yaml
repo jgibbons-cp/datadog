@@ -29,12 +29,14 @@ spec:
         name: mysql
     spec:
       containers:
-      - image: jenksgibbons/mysql_ja
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: lab
+        image: jenksgibbons/mysql_ja:8-oraclelinux8
         name: mysql
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3306
-          hostPort: 3306
           name: mysqld
       nodeSelector:
         kubernetes.io/os: linux
