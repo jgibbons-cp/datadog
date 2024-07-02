@@ -8,18 +8,10 @@ do so:
   ```
   helm install dd-operator datadog/datadog-operator
   ```  
-- Get a manifest with logs, APM, process, and metrics collection enabled.  
-  ```
-  wget https://raw.githubusercontent.com/DataDog/datadog-operator/main/examples/datadogagent/v2alpha1/datadog-agent-all.yaml
-  ```  
-- Replace:  
-  ```  
-  global:  
-    credentials:  
-      apiKey: <DATADOG_API_KEY>  
-      appKey: <DATADOG_APP_KEY>  
-  ```  
-with  
+- There is a sample manifest provided here for your use.  You can further configure it using the documentation 
+[here](https://github.com/DataDog/datadog-operator/blob/main/docs/configuration.v2alpha1.md#manifest-templates).  
+  
+This uses a secret (created from an earlier step using the name datadog-agent):    
   ```  
   global:  
     clusterName: <cluster_name_tag>  
@@ -39,7 +31,7 @@ with
   npm
   usm
   ```
-- Unless you are using a cluster other than minikube or kind add in the global section  
+- Unless you are using a cluster other than minikube, kind, AKS or kubeadm add in the global section  
   ```
   global:  
     kubelet:  
