@@ -41,6 +41,8 @@ Replace
         keyName: app-key  
   ```  
     
+Change <cluster_name_tag> to whatever you want your tag to be.  
+  
 - Unless you are using minikube or kind change the following to false
   ```
   ebpfCheck
