@@ -20,10 +20,10 @@ Configure the manifest to use a secret for your application and API key.
 Replace  
   
   ```    
-    clusterName: my-example-cluster  
-    credentials:  
-      apiKey: <DATADOG_API_KEY>  
-      appKey: <DATADOG_APP_KEY>    
+      clusterName: my-example-cluster  
+      credentials:  
+        apiKey: <DATADOG_API_KEY>  
+        appKey: <DATADOG_APP_KEY>    
   ```  
     
   with (watch your indentation especially if you use the click copy on the far right)   
@@ -72,14 +72,15 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   ```  
   watch kubectl get pods  
   ```  
+
+- Why do you see a status of CreateContainerConfigError? How do we investigate? How do we fix? When we do fix what happens/why?  
+
 - Check status of agents  
   ```  
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
   
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
   ```  
-
-- Why do you see a status of CreateContainerConfigError? How do we investigate? How do we fix? When we do fix what happens/why?  
   
 - What got installed  
     ```  
