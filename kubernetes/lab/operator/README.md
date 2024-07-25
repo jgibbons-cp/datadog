@@ -81,7 +81,29 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
   ```  
+
+- In the running pods, what got installed?  
   
+  ```  
+  $ kubectl describe po | grep "Started container"  
+  Normal  Started    3m26s  kubelet            Started container init-volume  
+  Normal  Started    3m26s  kubelet            Started container init-config  
+  Normal  Started    3m25s  kubelet            Started container seccomp-setup  
+  Normal  Started    3m24s  kubelet            Started container agent  
+  Normal  Started    3m24s  kubelet            Started container trace-agent  
+  Normal  Started    3m23s  kubelet            Started container process-agent  
+  Normal  Started    3m23s  kubelet            Started container system-probe  
+  Normal  Started    3m26s  kubelet            Started container init-volume  
+  Normal  Started    3m26s  kubelet            Started container init-config  
+  Normal  Started    3m25s  kubelet            Started container seccomp-setup  
+  Normal  Started    3m24s  kubelet            Started container agent  
+  Normal  Started    3m24s  kubelet            Started container trace-agent  
+  Normal  Started    3m23s  kubelet            Started container process-agent  
+  Normal  Started    3m23s  kubelet            Started container system-probe  
+  Normal  Started    3m27s  kubelet            Started container cluster-agent  
+  Normal  Started    46m   kubelet            Started container datadog-operator  
+  ```  
+    
 - What got installed  
     ```  
     kubectl get all  
