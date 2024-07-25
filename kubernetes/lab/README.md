@@ -30,3 +30,4 @@ Common items:
   ```
   kubectl create secret generic datadog-secret --from-literal api-key=<key> --from-literal app-key=<key>  
   ```  
+- Click into the operator specific [instructions](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/lab/operator)  
