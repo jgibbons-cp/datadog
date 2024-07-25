@@ -19,8 +19,7 @@ Configure the manifest to use a secret for your application and API key.
 
 Replace  
   
-  ```  
-  global:  
+  ```    
     clusterName: my-example-cluster  
     credentials:  
       apiKey: <DATADOG_API_KEY>  
@@ -29,8 +28,7 @@ Replace
     
   with  
     
-  ```
-  global:  
+  ```  
     clusterName: <cluster_name_tag>  
     credentials:  
       apiSecret:  
@@ -43,7 +41,7 @@ Replace
     
 Change <cluster_name_tag> to whatever you want your tag to be.  
   
-- Unless you are using minikube or kind change the following to false
+- If you are using minikube or kind change the following to false
   ```
   ebpfCheck
   cspm
@@ -51,11 +49,20 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   npm
   usm
   ```
-- Unless you are using minikube, kind, AKS or kubeadm add in the global section  
-  ```
-  global:  
+- If are using minikube, kind, AKS or kubeadm add in the global section  
+  ```  
     kubelet:  
-      tlsVerify: false  
+        tlsVerify: false  
+  ```  
+- Add and override section to the spec at the bottom
+  ```
+  override:
+    nodeAgent:
+      env:
+        - name: DD_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName  
   ```
 - Apply the manifest  
   ```
