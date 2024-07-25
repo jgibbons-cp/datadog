@@ -74,7 +74,22 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   ```  
 
 - Why do you see a status of CreateContainerConfigError? How do we investigate? How do we fix? When we do fix what happens/why?  
-
+  
+- That is fixed when you look at the pods do you see anything odd?  
+  
+  ```  
+  k get nodes  
+  k describe nodes | grep -i [taint](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)  
+  ```  
+    
+  What is a taint? Why is it there? How do we deploy to that node if we want to do so?  
+    
+  ```  
+    - key: env
+      operator: Equal
+      value: dev
+      effect: NoSchedule  
+  ```  
 - Check status of agents  
   ```  
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
