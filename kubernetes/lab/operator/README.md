@@ -29,14 +29,14 @@ Replace
   with (watch your indentation especially if you use the click copy on the far right)   
     
   ```  
-    clusterName: <cluster_name_tag>  
-    credentials:  
-      apiSecret:  
-        secretName: datadog-agent  
-        keyName: api-key  
-      appSecret:  
-        secretName: datadog-agent  
-        keyName: app-key  
+      clusterName: <cluster_name_tag>  
+      credentials:  
+        apiSecret:  
+          secretName: datadog-agent  
+          keyName: api-key  
+        appSecret:  
+          secretName: datadog-agent  
+          keyName: app-key  
   ```  
     
 Change <cluster_name_tag> to whatever you want your tag to be.  
@@ -49,12 +49,12 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   npm
   usm
   ```
-- If are using minikube, kind, AKS or kubeadm add in the global section  
+- If are using minikube, kind, AKS or kubeadm add in the global section (why?)  
   ```  
-    kubelet:  
-        tlsVerify: false  
+      kubelet:  
+          tlsVerify: false  
   ```  
-- Add and override section to the spec at the bottom
+- Add and override section to the spec at the bottom (why?)
   ```
   override:
     nodeAgent:
