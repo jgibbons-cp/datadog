@@ -1,9 +1,8 @@
-Datadog Kubernetes Agent Installation
+Datadog Kubernetes Agent Installation - Operator
 --
 
 Common items:  
   
-- Create a cluster with [minikube](https://minikube.sigs.k8s.io/docs/), [kind](https://kind.sigs.k8s.io/) or another method of your choice.  If you use a method other than minikube or kind you can install ebpf supported features too (network performance monitoring and security).  
 - ```  
   kubectl get pods  
   ```  
@@ -31,5 +30,3 @@ Common items:
   ```
   kubectl create secret generic datadog-secret --from-literal api-key=<key> --from-literal app-key=<key>  
   ```  
-  
-Choose your method and have fun :)  
