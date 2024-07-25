@@ -94,6 +94,13 @@ Change <cluster_name_tag> to whatever you want your tag to be.
             value: dev
             effect: NoSchedule  
   ```  
+  
+- How many agents now?  
+  
+  ```  
+  kubectl get po | grep datadog-agent | wc -l  
+  ```  
+  
 - Check status of agents  
   ```  
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
