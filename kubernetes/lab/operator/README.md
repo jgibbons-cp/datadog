@@ -79,10 +79,11 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   
   ```  
   k get nodes  
-  k describe nodes | grep -i [taint](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)  
+  k describe nodes | grep -i taint
   ```  
     
-  What is a taint? Why is it there? How do we deploy to that node if we want to do so?  
+  What is a [taint](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)? 
+  Why is it there? How do we deploy to that node if we want to do so?  
     
   ```  
     - key: env
