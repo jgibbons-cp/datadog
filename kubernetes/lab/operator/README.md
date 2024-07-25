@@ -41,7 +41,7 @@ Replace
     
 Change <cluster_name_tag> to whatever you want your tag to be.  
   
-- If you are using minikube or kind change the following to false
+- If you are using minikube or kind change the following to false (why?)
   ```
   ebpfCheck
   cspm
