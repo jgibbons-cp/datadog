@@ -26,7 +26,7 @@ Replace
       appKey: <DATADOG_APP_KEY>    
   ```  
     
-  with  
+  with (watch your indentation especially if you use the click copy on the far right)   
     
   ```  
     clusterName: <cluster_name_tag>  
@@ -78,6 +78,9 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
   ```  
+
+- Why do you see a status of CreateContainerConfigError? How do we investigate? How do we fix? When we do fix what happens/why?  
+  
 - What got installed  
     ```  
     kubectl get all  
