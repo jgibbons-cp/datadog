@@ -88,11 +88,11 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   Let's add a toleration to the ```spec.override.nodeAgent``` section:  
      
   ```  
-    tolerations:
-      - key: env
-        operator: Equal
-        value: dev
-        effect: NoSchedule  
+      tolerations:
+        - key: env
+          operator: Equal
+          value: dev
+          effect: NoSchedule  
   ```  
 - Check status of agents  
   ```  
