@@ -6,6 +6,7 @@ do so:
   
 - Install the Datadog operator  
   ```
+  helm repo add datadog https://helm.datadoghq.com
   helm install dd-operator datadog/datadog-operator
   ```  
 - Pull a sample manifest with logs, APM, live processes, and metrics enabled.  You can further configure it using the documentation 
@@ -40,6 +41,19 @@ Replace
   ```  
     
 Change <cluster_name_tag> to whatever you want your tag to be.  
+  
+In the logs section, below:  
+  
+```  
+    logCollection:  
+      enabled: true  
+```  
+  
+add  
+  
+```  
+      containerCollectAll: true  
+```  
   
 - If you are using minikube or kind change the following to false (why?)
   ```
@@ -100,7 +114,7 @@ Change <cluster_name_tag> to whatever you want your tag to be.
   ```  
   kubectl get po | grep datadog-agent | wc -l  
   ```  
-  
+
 - Check status of agents  
   ```  
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
@@ -140,6 +154,7 @@ Change <cluster_name_tag> to whatever you want your tag to be.
     kubectl get clusterrole | grep datadog  
     kubectl get clusterrolebinding | grep datadog  
     ```  
+
 - Uninstall agent  
     ```  
     kubectl delete -f /path/to/datadog-agent-all.yaml  
