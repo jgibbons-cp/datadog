@@ -6,7 +6,6 @@ do so:
   
 - Install the Datadog operator  
   ```
-  helm repo add datadog https://helm.datadoghq.com
   helm install dd-operator datadog/datadog-operator
   ```  
 - Pull a sample manifest with logs, APM, live processes, and metrics enabled.  You can further configure it using the documentation 
