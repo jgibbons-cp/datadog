@@ -69,13 +69,13 @@ add
   ```  
 - Add and override section to the spec at the bottom (why?)
   ```
-  override:
-    nodeAgent:
-      env:
-        - name: DD_HOSTNAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName  
+    override:
+      nodeAgent:
+        env:
+          - name: DD_HOSTNAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName  
   ```
 - Apply the manifest  
   ```
