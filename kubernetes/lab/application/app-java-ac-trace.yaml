@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: app-java
+    tags.datadoghq.com/env: "lab"
+    tags.datadoghq.com/service: "java-app"
+    tags.datadoghq.com/version: "1"
+  name: app-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: app-java
+  template:
+    metadata:
+      labels:
+        run: app-java
+        tags.datadoghq.com/env: "lab"
+        tags.datadoghq.com/service: "java-app"
+        tags.datadoghq.com/version: "1"
+        admission.datadoghq.com/enabled: "true"
+      annotations:
+        name: app-java
+        ad.datadoghq.com/app-java.check_names: '["jmx"]'
+        ad.datadoghq.com/app-java.init_configs: '[{"is_jmx": true, "collect_default_metrics": true}]'
+        ad.datadoghq.com/app-java.instances: '[{"host": "%%host%%","port":"9012"}]'
+        ad.datadoghq.com/app-java.logs: |
+          [{
+            "source":"java",
+            "service":"tomcat",
+            "log_processing_rules":[{"type":"multi_line",
+            "name":"log_start_with_date","pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
+          }]
+        admission.datadoghq.com/java-lib.version: "v1.37.1"
+        #ad.datadoghq.com/app-java.logs: |
+        #  [{
+        #    "type": "file", 
+        #    "path": "/var/log/app_java", 
+        #    "source":"java",
+        #    "service":"tomcat",
+        #    "log_processing_rules":[{"type":"multi_line","name":"log_start_with_date",
+        #    "pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
+        #  }]
+        #ad.datadoghq.com/app-java.logs: |
+        #  [{
+        #    "type": "file",
+        #    "path": "/var/log/app_*/*.log",
+        #    "source": "java",
+        #    "service": "tomcat-yoda",
+        #    "log_processing_rules":[{"type":"multi_line","name":"log_start_with_date",
+        #    "pattern":"\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]
+        #   }] 
+    spec:
+      containers:
+      - image: jenksgibbons/app-java:no_tracer
+        name: app-java
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: JAVA_OPTS
+          # note: in ecs and here   -Djava.rmi.server.hostname=127.0.0.1 -Djava.rmi.server.hostname=$(POD_IP) causes connection refused
+          value: "-Ddd.service=java-app -Ddd.version=1 -Ddd.env=lab -Ddd.logs.injection=true -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256 -Xms256m -Xmx6144m -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.port=9012 -Dcom.sun.management.jmxremote.rmi.port=9012"
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: DD_TRACE_AGENT_PORT
+          value: "8126"
+        - name: CLIENT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: dd-rum-tokens
+              key: CLIENT_TOKEN
+        - name: APPLICATION_ID
+          valueFrom:
+            secretKeyRef:
+              name: dd-rum-tokens
+              key: APPLICATION_ID
+        - name: DD_APPSEC_ENABLED
+          value: "true"
+        - name: DB_HOST
+          value: ""
+        - name: DB
+          value: ""
+        ports:
+        - containerPort: 8080
+          hostPort: 8080
+          name: "http"
+        - containerPort: 9012
+          hostPort: 9012
+          name: "jmx"
+        #volumeMounts:
+        #- mountPath: /var/log/app_java
+        #  name: logs
+        #- mountPath: /var/log/app_java/app.log
+        #  name: log-file
+      #volumes:
+      #- name: logs
+      #  hostPath:
+      #    path: /var/log/app_java
+      #    type: DirectoryOrCreate
+      #- name: log-file
+      #  hostPath:
+      #    path: /var/log/app_java/app.log
+      #    type: FileOrCreate
+      nodeSelector:
+        kubernetes.io/os: linux

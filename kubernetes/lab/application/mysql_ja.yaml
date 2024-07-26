@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: mysql
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: mysql
+  template:
+    metadata:
+      annotations:
+        ad.datadoghq.com/mysql.check_names: '["mysql"]'
+        ad.datadoghq.com/mysql.init_configs: '[{"service": "mysql"}]'
+        ad.datadoghq.com/mysql.instances: |
+          [
+            {
+              "host": "%%host%%",
+              "username": "datadog",
+              "password": "lab",
+              "dbm": true
+            }
+          ]
+      labels:
+        app.kubernetes.io/name: mysql
+        run: mysql
+        name: mysql
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: lab
+        image: jenksgibbons/mysql_ja:8-oraclelinux8
+        name: mysql
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+          name: mysqld
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations:
+      - key: "node.kubernetes.io/disk-pressure"
+        operator: "Equal"
+        effect: "NoSchedule"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: mysql
+  name: mysql-test
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    run: mysql
+  type: ClusterIP
