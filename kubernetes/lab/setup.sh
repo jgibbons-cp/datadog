@@ -1,4 +1,4 @@
 #!/bin/bash
 
-minikube start --nodes 3 &&
-  kubectl taint node minikube-m03 env=dev:NoSchedule
+minikube start --nodes 2 &&
+  kubectl taint node minikube kubernetes.io/hostname=minikube:NoSchedule
