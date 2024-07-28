@@ -3,7 +3,7 @@ Tutorial from kubernetes.io
 
 In this basic [tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/), we will review base Kubernetes functionality.  
   
-1) Create a cluster - pull down this setup script (creates a minikube cluster with a taint).  Create the cluster:
+1) Create a cluster - pull down this setup script (creates a minikube cluster with a [taint](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)).  Create the cluster:
   
 ```  
 wget https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/lab/setup.sh  
