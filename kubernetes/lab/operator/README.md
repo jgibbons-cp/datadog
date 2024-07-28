@@ -134,7 +134,7 @@ add
   ```
 - Apply the manifest  
   ```
-  kubectl apply -f /path/to/datadog-agent-all.yaml
+  kubectl apply -f datadog-agent-all.yaml
   ```  
 - Watch the startup of the agents  
   ```  
