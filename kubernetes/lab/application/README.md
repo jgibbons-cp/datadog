@@ -18,10 +18,10 @@ kubectl create ns application && kubectl config set-context --current --namespac
 kubectl create secret generic dd-rum-tokens --from-literal CLIENT_TOKEN=TOKEN --from-literal APPLICATION_ID=APPID  
 ```  
   
-4) Apply the manifests:  
+- Apply the manifests:  
   
 ```  
-kubectl apply -f https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/application/app-java.yaml \
+kubectl apply -f https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/application/app-java.yaml 
   -f https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/application/mysql_ja.yaml    
 ```  
     
