@@ -2,8 +2,15 @@ Install the Datadog Agent with the Operator
 --
 
 Items common to all installation methods:  
+  
+Get a cluster  
+  
+```  
+wget https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/lab/cluster/setup.sh  
     
 ```  
+  
+```
 kubectl get pods  
 ```  
   
