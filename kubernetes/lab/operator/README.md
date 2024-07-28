@@ -11,7 +11,9 @@ If this does not return anything set your KUBECONFIG to your config.
   
 ```
 export KUBECONFIG=/path/to/config  
-```
+```  
+  
+```  
 helm  
 ```  
   
