@@ -7,6 +7,7 @@ Get a cluster
   
 ```  
 wget https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/cluster/setup.sh  
+sh setup.sh  
 ```  
   
 ```
@@ -159,13 +160,13 @@ add
   What is a [taint](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)? 
   Why is it there? How do we deploy to that node if we want to do so?  
 
-  Let's add a toleration to the ```spec.override.nodeAgent``` section:  
+  Let's add a toleration to the ```spec.override.nodeAgent``` section.  How do you walk the YAML?  
      
   ```  
         tolerations:
-          - key: env
+          - key: envnode kubernetes.io/hostname
             operator: Equal
-            value: dev
+            value: minikube
             effect: NoSchedule  
   ```  
   
