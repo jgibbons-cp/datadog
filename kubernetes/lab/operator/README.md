@@ -170,6 +170,12 @@ add
             effect: NoSchedule  
   ```  
   
+Apply the manifest  
+  
+```  
+k apply -f datadog-agent-all.yaml  
+```  
+  
 - How many agents now?  
   
   ```  
