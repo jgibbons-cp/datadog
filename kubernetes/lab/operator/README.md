@@ -1,13 +1,58 @@
 Install the Datadog Agent with the Operator
 --
+
+Items common to all installation methods:  
+    
+```  
+kubectl get pods  
+```  
+  
+If this does not return anything set your KUBECONFIG to your config.  
+  
+```
+export KUBECONFIG=/path/to/config  
+```
+helm  
+```  
+  
+If this returns that it is not installed install it  
+  
+```
+brew install helm  
+```  
+  
+If you don't have brew, install it then install helm with it.  
+
+- Add and update the Datadog repo  
+  
+```  
+helm repo add datadog https://helm.datadoghq.com  
+helm repo update  
+```  
+  
+- Let's install this in another namespace. Create it and switch to it.  
+  
+```  
+kubectl create ns datadog && kubectl config set-context --current --namespace=datadog
+```  
+  
+- Create a secret  
+  
+```
+kubectl create secret generic datadog-secret --from-literal api-key=<key> --from-literal app-key=<key>  
+```  
+
+- Click into the operator specific [instructions](https://github.com/jgibbons-cp/datadog/tree/main/kubernetes/lab/operator)  
   
 The agent can be installed using the Datadog [operator](https://docs.datadoghq.com/getting_started/containers/datadog_operator/).  To 
 do so:  
   
 - Install the Datadog operator  
+  
   ```
   helm install dd-operator datadog/datadog-operator
   ```  
+  
 - Pull a sample manifest with logs, APM, live processes, and metrics enabled.  You can further configure it using the documentation 
 [here](https://github.com/DataDog/datadog-operator/blob/main/docs/configuration.v2alpha1.md#manifest-templates).  
   
