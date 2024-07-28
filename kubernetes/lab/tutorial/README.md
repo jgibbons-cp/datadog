@@ -2,6 +2,34 @@ Tutorial from kubernetes.io
 --
 
 In this basic [tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/), we will review base Kubernetes functionality.  
+
+Pre-requisites  
+  
+a) Set your editory so when you do a ```kubectl edit``` it will open what you want rather than ```vi```.  
+  
+```  
+echo $EDITOR  
+#options vi, nano or whatever you want to use  
+export EDITOR=  
+```  
+  
+b) Setup aliases  
+
+Add the following to ```~/.bashrc```  
+  
+alias kdelp="kubectl delete pod "  
+alias kdesp="kubectl describe pod "  
+alias kgd="kubectl get deploy "  
+alias kgs="kubectl get svc "  
+alias kgp="kubectl get pod "  
+alias wkgp="watch kubectl get pod "  
+alias kgpw="kubectl get pod -o wide "  
+alias kl="kubectl logs "  
+alias kds="kubectl delete svc "  
+alias ke="kubectl exec -it "  
+alias kpfd="kubectl port-forward deploy "  
+alias k="kubectl "  
+alias kp="kubectl port-forward "  
   
 1) Create a cluster - pull down this setup script (creates a minikube cluster with a [taint](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)).  Create the cluster:
   
@@ -28,7 +56,7 @@ Declarative vs. [imperative](https://kubernetes.io/docs/tasks/manage-kubernetes-
 ```  
 kubectl run nginx --image nginx  
 ```  
-or [declarative](https://kubernetes.io/docs/concepts/workloads/pods/)
+or [declarative](https://kubernetes.io/docs/concepts/workloads/pods/#using-pods)
     
 What are some benefits/drawbacks of each?  
   
