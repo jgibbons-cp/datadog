@@ -3,13 +3,16 @@ Application - Kubernetes
 
 Let’s install an application  
   
-1) We will run a very basic Java application here, but from a different namespace:  
+- We will run a very basic Java application here, but from a different namespace:  
   
 ```
 kubectl create ns application && kubectl config set-context --current --namespace=application  
 ```  
   
-3) It has rum - we won’t set that up now.  This secret will allow us to launch error free, but for rum add a token/appid from your org.  Create the secret:  
+- It has RUM - let's make sure we have RUM setup in Datadog.  
+
+
+- This secret will allow us to launch error free, but for rum add a token/appid from your org.  Create the secret:  
   
 ```  
 kubectl create secret generic dd-rum-tokens --from-literal CLIENT_TOKEN=TOKEN --from-literal APPLICATION_ID=APPID  
