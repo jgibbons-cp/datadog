@@ -27,9 +27,9 @@ Declarative vs. [imperative](https://kubernetes.io/docs/tasks/manage-kubernetes-
 
 ```  
 kubectl run nginx --image nginx  
-# or [declarative](https://kubernetes.io/docs/concepts/workloads/pods/)    
 ```  
-  
+or [declarative](https://kubernetes.io/docs/concepts/workloads/pods/)
+    
 What are some benefits/drawbacks of each?  
   
 Create a [deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) which provides declarative updates for Pods and ReplicaSets:  
