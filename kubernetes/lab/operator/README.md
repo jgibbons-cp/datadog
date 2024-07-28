@@ -164,7 +164,7 @@ add
      
   ```  
         tolerations:
-          - key: envnode kubernetes.io/hostname
+          - key: kubernetes.io/hostname
             operator: Equal
             value: minikube
             effect: NoSchedule  
