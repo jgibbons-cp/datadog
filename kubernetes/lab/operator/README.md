@@ -6,8 +6,7 @@ Items common to all installation methods:
 Get a cluster  
   
 ```  
-wget https://github.com/jgibbons-cp/datadog/blob/main/kubernetes/lab/cluster/setup.sh  
-    
+wget https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/cluster/setup.sh  
 ```  
   
 ```
