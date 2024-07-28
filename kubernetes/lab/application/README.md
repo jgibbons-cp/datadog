@@ -21,7 +21,7 @@ kubectl create secret generic dd-rum-tokens --from-literal CLIENT_TOKEN=TOKEN --
 - Apply the manifests:  
   
 ```  
-kubectl apply -f https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/application/app-java.yaml 
+kubectl apply -f https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/application/app-java.yaml \
   -f https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/application/mysql_ja.yaml    
 ```  
     
