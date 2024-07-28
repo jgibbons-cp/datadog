@@ -176,18 +176,21 @@ Apply the manifest
 k apply -f datadog-agent-all.yaml  
 ```  
   
-- How many agents now?  
+- How many agents now? Why?  
   
   ```  
   kubectl get po | grep datadog-agent | wc -l  
   ```  
 
-- Check status of agents  
+- Check status of agents; the example here is for the agent.  You can also look at the status of the cluster agent.  You will need to know how to do this, and this also shows how you can use shell to your advantage.  
+
   ```  
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep -v cluster | sed -n 1p) -- agent status  
   
   kubectl exec -it $(kubectl get pods -o custom-columns="POD NAME":.metadata.name --no-headers | grep cluster | sed -n 1p) -- agent status  
   ```  
+  
+To see the options for the agent or clusteragent commands just pass ```agent or datadog-cluster-agent --help``  
 
 - In the running pods, what got installed?  
   
