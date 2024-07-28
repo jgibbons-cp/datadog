@@ -1,4 +1,4 @@
-Application Tracing - Kubernetes
+Application - Kubernetes
 --
 
 Let’s install an application  
