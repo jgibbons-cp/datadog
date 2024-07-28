@@ -84,14 +84,14 @@ Replace
   with (watch your indentation especially if you use the click copy on the far right)   
     
   ```  
-    clusterName: <cluster_name_tag>  
-    credentials:  
-      apiSecret:  
-        secretName: datadog-agent  
-        keyName: api-key  
-      appSecret:  
-        secretName: datadog-agent  
-        keyName: app-key  
+      clusterName: <cluster_name_tag>  
+      credentials:  
+        apiSecret:  
+          secretName: datadog-agent  
+          keyName: api-key  
+        appSecret:  
+          secretName: datadog-agent  
+          keyName: app-key  
   ```  
     
 Change <cluster_name_tag> to whatever you want your tag to be.  
