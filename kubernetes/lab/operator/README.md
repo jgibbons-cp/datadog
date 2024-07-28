@@ -38,7 +38,7 @@ helm repo update
 kubectl create ns datadog && kubectl config set-context --current --namespace=datadog
 ```  
   
-- Create a secret  
+- Create a secret.  How would this command be different if we had not switched context?  
   
 ```
 kubectl create secret generic datadog-secret --from-literal api-key=<key> --from-literal app-key=<key>  
@@ -53,11 +53,21 @@ do so:
   helm install dd-operator datadog/datadog-operator
   ```  
   
+What is running?  
+  
+```  
+kubectl get po  
+kubectl describe po <operator_pod_name>  
+```  
+  
+What can we see in the describe?  
+  
 - Pull a sample manifest with logs, APM, live processes, and metrics enabled.  You can further configure it using the documentation 
 [here](https://github.com/DataDog/datadog-operator/blob/main/docs/configuration.v2alpha1.md#manifest-templates).  
   
 ```  
 wget https://raw.githubusercontent.com/DataDog/datadog-operator/main/examples/datadogagent/datadog-agent-all.yaml  
+# or curl -O <URL>  
 ```  
   
 Configure the manifest to use a secret for your application and API key.  
@@ -74,14 +84,14 @@ Replace
   with (watch your indentation especially if you use the click copy on the far right)   
     
   ```  
-      clusterName: <cluster_name_tag>  
-      credentials:  
-        apiSecret:  
-          secretName: datadog-agent  
-          keyName: api-key  
-        appSecret:  
-          secretName: datadog-agent  
-          keyName: app-key  
+    clusterName: <cluster_name_tag>  
+    credentials:  
+      apiSecret:  
+        secretName: datadog-agent  
+        keyName: api-key  
+      appSecret:  
+        secretName: datadog-agent  
+        keyName: app-key  
   ```  
     
 Change <cluster_name_tag> to whatever you want your tag to be.  
