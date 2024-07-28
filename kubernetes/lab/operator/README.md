@@ -32,7 +32,7 @@ helm repo add datadog https://helm.datadoghq.com
 helm repo update  
 ```  
   
-- Let's install this in another namespace. Create it and switch to it.  
+- What are [namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)?  Why would we want to install in a particular namespace other than ```default```?  Let's install this in another namespace. Create it and switch to it.  
   
 ```  
 kubectl create ns datadog && kubectl config set-context --current --namespace=datadog
