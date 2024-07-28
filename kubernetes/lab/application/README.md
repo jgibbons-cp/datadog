@@ -3,15 +3,8 @@ Application Tracing - Kubernetes
 
 Let’s install an application  
   
-1) Go to the application directory  
+1) We will run a very basic Java application here, but from a different namespace:  
   
-```  
-datadog/kubernetes/lab/application/  
-```  
-  
-2) There is a very basic Java application here.  Let’s run it, but from a different namespace:  
-  
-
 ```
 kubectl create ns application && kubectl config set-context --current --namespace=application  
 ```  
