@@ -44,9 +44,9 @@ There are multiple ways; let's start with the admission controller.
   
 1) Admission controller - we applied the Java application with a URL.  We have no state.  What happens if we just edit the running YAML? Let's get a manifest.  
   
-```  
-kubectl get deploy app-java -o yaml > ry_app_java.yaml  
-```  
+    ```  
+    kubectl get deploy app-java -o yaml > ry_app_java.yaml  
+    ```  
   
     Now we have a manifest.  We are going to add a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) and an [annotation](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)  
     
