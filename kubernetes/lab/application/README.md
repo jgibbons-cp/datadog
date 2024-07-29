@@ -109,16 +109,16 @@ There are multiple ways; let's start with the admission controller.
     ```  
         apm:  
         enabled: true  
-        instrumentation:  
-            enabled: true  
-            libVersions:  
-            java: "v1.37.1"  
+          instrumentation:  
+              enabled: true  
+              libVersions:  
+              java: "v1.37.1"  
     ```  
 
     Apply the new agent configuration:  
     
     ```  
-    kubectl apply -f datadog/kubernetes/lab/datadog-agent-all.yaml -n datadog
+    kubectl apply -f datadog-agent-all.yaml -n datadog  
     kubectl apply -f datadog/kubernetes/lab/application/app-java.yaml  
     kubectl port-forward deploy/app-java 33333:8080  
     ```  
