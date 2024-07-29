@@ -92,7 +92,8 @@ kubectl port-forward deploy/app-java 33333:8080
   
 In a browser navigate to http://localhost:33333/app-java-0.0.1-SNAPSHOT/  
   
-What do we see [now](https://app.datadoghq.com/apm/traces)?
+What do we see [now](https://app.datadoghq.com/apm/traces)?  
+  
 * Single-step instrumentation - reapply the non-admission controller application  
   
 ```  
