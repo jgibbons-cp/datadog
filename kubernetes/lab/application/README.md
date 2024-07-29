@@ -110,9 +110,9 @@ There are multiple ways; let's start with the admission controller.
         apm:  
         enabled: true  
           instrumentation:  
-              enabled: true  
+            enabled: true  
               libVersions:  
-              java: "v1.37.1"  
+                java: "v1.37.1"  
     ```  
 
     Apply the new agent configuration:  
