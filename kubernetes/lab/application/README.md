@@ -119,7 +119,6 @@ There are multiple ways; let's start with the admission controller.
     
     ```  
     kubectl apply -f datadog-agent-all.yaml -n datadog  
-    kubectl apply -f datadog/kubernetes/lab/application/app-java.yaml  
     kubectl port-forward deploy/app-java 33333:8080  
     ```  
 
