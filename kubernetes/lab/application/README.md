@@ -111,8 +111,8 @@ There are multiple ways; let's start with the admission controller.
         enabled: true  
           instrumentation:  
             enabled: true  
-              libVersions:  
-                java: "v1.37.1"  
+            libVersions:  
+              java: "v1.37.1"  
     ```  
 
     Apply the new agent configuration:  
