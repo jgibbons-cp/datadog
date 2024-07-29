@@ -96,36 +96,36 @@ There are multiple ways; let's start with the admission controller.
   
 2) Single-step instrumentation - reapply the non-admission controller application  
   
-```  
-kubectl delete -f datadog/kubernetes/lab/application/app-java-ac-trace.yaml  
-```  
+    ```  
+    kubectl delete -f datadog/kubernetes/lab/application/app-java-ac-trace.yaml  
+    ```  
 
-Edit your agent manifest at ```datadog/kubernetes/lab/datadog-agent-all.yaml by adding the following to the apm section.  Below:    
-  
-```  
-    apm:  
-      enabled: true  
-```  
-  
-add (so the whole thing looks like this - don't put the lines above in twice):  
+    Edit your agent manifest at ```datadog/kubernetes/lab/datadog-agent-all.yaml by adding the following to the apm section.  Below:    
     
-```  
-    apm:  
-      enabled: true  
-      instrumentation:  
+    ```  
+        apm:  
         enabled: true  
-        libVersions:  
-          java: "v1.37.1"  
-```  
+    ```  
+    
+    add (so the whole thing looks like this - don't put the lines above in twice):  
+        
+    ```  
+        apm:  
+        enabled: true  
+        instrumentation:  
+            enabled: true  
+            libVersions:  
+            java: "v1.37.1"  
+    ```  
 
-Apply the new agent configuration:  
-  
-```  
-kubectl apply -f datadog/kubernetes/lab/datadog-agent-all.yaml -n datadog
-kubectl apply -f datadog/kubernetes/lab/application/app-java.yaml  
-kubectl port-forward deploy/app-java 33333:8080  
-```  
+    Apply the new agent configuration:  
+    
+    ```  
+    kubectl apply -f datadog/kubernetes/lab/datadog-agent-all.yaml -n datadog
+    kubectl apply -f datadog/kubernetes/lab/application/app-java.yaml  
+    kubectl port-forward deploy/app-java 33333:8080  
+    ```  
 
-In a browser navigate to http://localhost:33333/app-java-0.0.1-SNAPSHOT/
+    In a browser navigate to http://localhost:33333/app-java-0.0.1-SNAPSHOT/
       
 * OTEL - we will not cover this in practice today.  Why would we use it?  It is a ds with a configmap for our exporter or using our agent with otlp listener and the OTEL support in the agent.    
