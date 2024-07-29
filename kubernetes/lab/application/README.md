@@ -25,17 +25,17 @@ kubectl apply -f https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kube
   -f https://raw.githubusercontent.com/jgibbons-cp/datadog/main/kubernetes/lab/application/mysql_ja.yaml    
 ```  
     
-5) What is running?  Let’s hit it:  
+- What is running?  Let’s hit it:  
   
 ```  
 kubectl port-forward deploy/app-java 33333:8080  
 ```  
   
-6) In a browser navigate to http://localhost:33333/app-java-0.0.1-SNAPSHOT/  
+- In a browser navigate to http://localhost:33333/app-java-0.0.1-SNAPSHOT/  
   
 Let’s look at [traces](https://app.datadoghq.com/apm/traces).  Why are we seeing what we are seeing?  
   
-7) How do we add tracing?  
+- How do we add tracing?  
   
 There are multiple ways; let's start with the admission controller.  
   
