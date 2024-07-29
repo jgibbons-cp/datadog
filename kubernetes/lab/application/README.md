@@ -94,14 +94,11 @@ There are multiple ways; let's start with the admission controller.
     
     What do we see [now](https://app.datadoghq.com/apm/traces)?  
   
-2) Single-step instrumentation - reapply the non-admission controller application  
+2) Single-step instrumentation  
   
-    ```  
-    kubectl delete -f datadog/kubernetes/lab/application/app-java-ac-trace.yaml  
-    ```  
+    The label and annotation we added, let's remove them.  
 
-    Edit your agent manifest at ```datadog/kubernetes/lab/datadog-agent-all.yaml by adding the following to the apm section.  Below:    
-    
+    We now need to update our agent configuration to    
     ```  
         apm:  
         enabled: true  
