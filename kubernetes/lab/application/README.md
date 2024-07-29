@@ -37,7 +37,8 @@ Let’s look at [traces](https://app.datadoghq.com/apm/traces).  Why are we seei
   
 - How do we add tracing?  
 
-##Tracing
+Tracing
+-
   
 There are multiple ways; let's start with the admission controller.  
   
