@@ -44,9 +44,9 @@ To create an application pod with a Datadog agent sidecar:
 
 * Copy the DaemonSet manifest to <file_name>.yaml to create an application pod with a Datadog agent sidecar  
   
-* Change ```metadata.name```  
-  
 * Search for ```kind: DaemonSet``` and change to ```kind: Deployment```  
+  
+* Change ```metadata.name``` in the Deployment  
   
 * Add in your application container(s) into spec.template.spec.containers[0-n]  
   
