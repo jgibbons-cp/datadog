@@ -1,0 +1,92 @@
+datadog:
+  clusterName: openshift
+  apiKeyExistingSecret: datadog-secret
+  appKeyExistingSecret: datadog-secret
+  # true for all other than crc, azure
+  kubelet:
+    tlsVerify: false
+  apm:
+    instrumentation:
+      enabled: false
+      libVersions: # Add any libraries and versions you want to set
+        java: v1.35.2
+
+  logs:
+    enabled: true
+    containerCollectAll: true
+    autoMultiLineDetection: true  
+
+  processAgent:
+    processCollection: true
+
+  networkMonitoring:
+    enabled: false
+
+  securityAgent:
+    compliance:
+      enabled: false
+
+    runtime:
+      enabled: false
+      fimEnabled: false
+      network:
+        enabled: false
+
+  criSocketPath:  /var/run/crio/crio.sock
+
+  serviceMonitoring:
+    enabled: false
+
+agents:
+  useHostNetwork: true
+  podSecurity:
+    securityContextConstraints:
+      create: true
+
+  image:
+    tagSuffix: ""  
+
+clusterAgent:
+  enabled: false
+  admissionController:
+    remoteInstrumentation:
+      enabled: false
+
+  podSecurity:
+    securityContextConstraints:
+      create: true
+
+  confd:
+    kube_controller_manager.yaml: |-
+      cluster_check: true
+      init_config:
+      instances:
+        - prometheus_url: https://kube-controller-manager.openshift-kube-controller-manager/metrics
+          ssl_verify: false
+          bearer_token_auth: true
+          leader_election: false
+    kube_scheduler.yaml: |-
+      cluster_check: true
+      init_config:
+      instances:
+        - prometheus_url: https://scheduler.openshift-kube-scheduler/metrics
+          ssl_verify: false
+          bearer_token_auth: true
+    kube_apiserver_metrics.yaml: |-
+      cluster_check: true
+      init_config:
+      instances:
+        - prometheus_url: https://apiserver.openshift-kube-apiserver/metrics
+          ssl_verify: false
+          bearer_token_auth: true
+    coredns.yaml: |-
+      cluster_check: true
+      init_config:
+      instances:
+        - prometheus_url: https://dns-default.openshift-dns:9154/metrics
+          ssl_verify: false
+          bearer_token_auth: true
+
+kube-state-metrics:
+  securityContext:
+    enabled: false
