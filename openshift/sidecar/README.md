@@ -31,7 +31,7 @@ To create an application pod with a Datadog agent sidecar:
 
 * Create a new project in OpenShift  
   ```  
-  oc new-project $NAMESPACE  
+  oc new-project $NAMESPACE
   ``` 
 
 * Get your API and APP keys. Datadog keys are located at 1: [API keys](https://app.datadoghq.com/organization-settings/api-keys) and 2: [APP keys](https://app.datadoghq.com/organization-settings/application-keys)  
