@@ -23,7 +23,8 @@ To create an application pod with a Datadog agent sidecar:
   export NAMESPACE=<namespace>  
   ```  
 
-* Use ```helm template``` to create the base DaemonSet  
+* Use ```helm template``` to create the base DaemonSet.  The file ```openshift_helm_values.yaml``` is a sample values file.  For other options such as turning on APM or network performance monitoring see the options [here](https://github.com/DataDog/helm-charts/blob/main/charts/datadog/values.yaml).  The options in this values file turn on infrastructure, process and log monitoring within the agent.  
+  
   ```  
   helm template datadog-agent -f openshift_helm_values.yaml datadog/datadog --namespace $NAMESPACE > openshift_agent_ds.yaml  
   ```  
@@ -37,9 +38,9 @@ To create an application pod with a Datadog agent sidecar:
   
 * Create a secret for the keys  
 
-```  
-oc create secret generic datadog-secret --from-literal api-key=<API_KEY> --from-literal app-key=<APP_KEY>  
-```  
+  ```  
+  oc create secret generic datadog-secret --from-literal api-key=<API_KEY> --from-literal app-key=<APP_KEY>  
+  ```  
 
 * Copy the DaemonSet manifest to <file_name>.yaml to create an application pod with a Datadog agent sidecar  
   
