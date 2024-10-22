@@ -16,7 +16,6 @@ jobs:
       with:
         type: git
         path: app-java
-        app: app-java
         environment: datadog
         username: ${{ secrets.APTIBLE_USERNAME }}
         password: ${{ secrets.APTIBLE_PASSWORD }}
