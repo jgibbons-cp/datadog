@@ -15,7 +15,8 @@ jobs:
       uses: aptible/aptible-deploy-action@v4
       with:
         type: git
-        app: ${GITHUB_WORKSPACE}/app-java
+        repository: datadog/app-java
+        app: app-java
         environment: datadog
         username: ${{ secrets.APTIBLE_USERNAME }}
         password: ${{ secrets.APTIBLE_PASSWORD }}
