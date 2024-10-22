@@ -1,0 +1,21 @@
+name: aptible
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    environment: datadog
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Deploy to Aptible
+      uses: aptible/aptible-deploy-action@v4
+      with:
+        type: git
+        app: app-java
+        environment: app-java-testing
+        username: ${{ secrets.APTIBLE_USERNAME }}
+        password: ${{ secrets.APTIBLE_PASSWORD }}
