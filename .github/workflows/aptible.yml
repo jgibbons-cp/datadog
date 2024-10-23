@@ -11,7 +11,10 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        path: /app-java
+    - name: checkout feature branch
+      uses: actions/checkout@v3
+      with:
+        ref: dev-app-java      
     - name: Deploy to Aptible
       uses: aptible/aptible-deploy-action@v4
       with:
