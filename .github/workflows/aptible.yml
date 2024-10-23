@@ -8,11 +8,15 @@ jobs:
     environment: datadog
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+#    - uses: actions/checkout@v4
+#      with:
+#        fetch-depth: 0
+    - name: checkout main branch
+      uses: actions/checkout@v4
       with:
-        fetch-depth: 0
+        ref: main  
     - name: checkout feature branch
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: dev-app-java      
     - name: Deploy to Aptible
