@@ -11,11 +11,12 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        path: app-java
     - name: Deploy to Aptible
       uses: aptible/aptible-deploy-action@v4
       with:
         type: git
-        path: app-java
+        app: app-java
         environment: datadog
         username: ${{ secrets.APTIBLE_USERNAME }}
         password: ${{ secrets.APTIBLE_PASSWORD }}
