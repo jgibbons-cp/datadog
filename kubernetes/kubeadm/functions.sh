@@ -90,12 +90,11 @@ add_ips_to_sec_group () {
 get_instances () {
     instance_data=$(aws --region $region \
     ec2 describe-instances \
-        --filters "Name=tag:$tag_key,Values=$tag_value" \
+        --filters "Name=tag:name,Values=$tag_value" \
         "Name=instance-state-name,Values=running"\
         --profile $profile \
         --query 'Reservations[*].Instances[*].InstanceId' \
         --output text)
-
     instances=($instance_data)
 }
 
