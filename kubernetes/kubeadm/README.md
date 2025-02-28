@@ -27,8 +27,8 @@ Variables:
 - setup.sh - AWS Launch template: ```launch_template_id``` sets the EC2 template with vm size, ssh key etc.  
 - setup.sh - Number of nodes (control plane plus optional worker(s)): ```node_count``` defaults to 2  
 - functions.sh - Tags: key value pair to get security group and VMs  
-    - ```tag_key```  
-    - ```tag_value```  
+    - ```tag_key - default cluster```  
+    - ```tag_value - default kubeadm```  
 - functions.sh - AWS region: ```region``` in which the infrastructure is located.  Defaults to ```us-west-2```  
 - functions.sh - AWS credential profile: ```profile``` Defaults to ```default```  
 - install_control_plane.sh - Controle Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private.  
