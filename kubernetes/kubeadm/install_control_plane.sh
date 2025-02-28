@@ -67,7 +67,7 @@ install_docker_engine () {
 
   # Add Docker's official GPG key:
   sudo apt-get update && \
-  sudo apt-get install ca-certificates curl && \
+  sudo apt-get install -y ca-certificates curl && \
   sudo install -m 0755 -d /etc/apt/keyrings && \
   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
         -o /etc/apt/keyrings/docker.asc && \
@@ -136,7 +136,7 @@ fi
 
 # configure / install kubelet kubeadm kubectl then put on hold
 sudo apt-get update
-sudo apt-get install ca-certificates curl 
+sudo apt-get -y install ca-certificates curl 
 
 dir="/etc/apt/keyrings"
 if [ ! -d $dir ];then
