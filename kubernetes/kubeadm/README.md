@@ -1,12 +1,12 @@
 Install Kubernetes with kubeadm
 --
 
-This script will create a control plane and worker node using the latest version of Kubernetes.  The install is done via ```kubeadm```.  The default ```cri``` is ```containerd``` however ```dockerd``` and ```cri_o``` are also supported.  Currently the only pod network supported is ```weaveworks```.
+This script will create a control plane and worker node(s) using a stable version of Kubernetes.  The install is done via ```kubeadm```.  The default ```cri``` is ```containerd``` however ```dockerd``` and ```cri_o``` are also supported.  Currently the only pod network supported is ```weaveworks```.
   
 Testing
 --
 
-This was tested with an Amazon Machine Image (AMI) running ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20231207.  
+This was tested with an Amazon Machine Image (AMI) ID ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20250115.  
   
 Pre-Installation - no automation
 --
@@ -22,16 +22,16 @@ This automates bringing up/down the infrastructure and the cluster.
   
 Variables:  
   
-- Container runtime: ```cri``` - default is an empty string which installs containerd.  For the dockerd runtime set to ```dockerd```, and 
+- install_control_plane.sh - Container runtime: ```cri``` - default is an empty string which installs containerd.  For the dockerd runtime set to ```dockerd```, and 
 ```cri_o``` for cri-o. 
-- AWS Launch template: ```launch_template_id``` sets the EC2 template with vm size, ssh key etc.  
-- Number of nodes (control plane plus optional worker(s)): ```node_count``` defaults to 2  
-- Tags: key value pair to get security group and VMs  
+- setup.sh - AWS Launch template: ```launch_template_id``` sets the EC2 template with vm size, ssh key etc.  
+- setup.sh - Number of nodes (control plane plus optional worker(s)): ```node_count``` defaults to 2  
+- functions.sh - Tags: key value pair to get security group and VMs  
     - ```tag_key```  
     - ```tag_value```  
-- AWS region: ```region``` in which the infrastructure is located.  Defaults to ```us-west-2```  
-- AWS credential profile: ```profile``` Defaults to ```default```  
-- Controle Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private.  
+- functions.sh - AWS region: ```region``` in which the infrastructure is located.  Defaults to ```us-west-2```  
+- functions.sh - AWS credential profile: ```profile``` Defaults to ```default```  
+- install_control_plane.sh - Controle Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private.  
   
 Files
 --
