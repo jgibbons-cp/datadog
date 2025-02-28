@@ -4,11 +4,11 @@
 region=us-west-2
 
 # for aws credentials
-profile=default
+profile=account-admin-601427279990
 
 # for filtering out aws resources
-tag_key=<your_key>
-tag_value=<your_value>
+tag_key=env
+tag_value=dev
 
 get_sec_group_id () {
     sec_group_id=None
