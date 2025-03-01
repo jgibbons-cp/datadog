@@ -34,7 +34,7 @@ Exiting and deleting infra...\n"
 done
 
 echo "installing control plane...\n" && \
-ssh -o IdentitiesOnly=yes ubuntu@$control_plane "sh ~/install_control_plane.sh" && \
+ssh ubuntu@$control_plane "sh ~/install_control_plane.sh"
 
 echo "pulling worker node code...\n" && \
 scp ubuntu@$control_plane:~/install_cluster_worker_node.sh . && \
@@ -46,10 +46,14 @@ do
   scp install_cluster_worker_node.sh "ubuntu@${var}:~/" && \
    
   echo "installing worker node...\n"
-  ssh -o IdentitiesOnly=yes "ubuntu@${var}" "sudo sh ~/install_cluster_worker_node.sh"
+  ssh "ubuntu@${var}" "sudo sh ~/install_cluster_worker_node.sh"
+
+  if [ "$?" -ne "0" ]; then
+    echo "\nssh failed to host...\n"
+  fi
 done
 
-echo "\nUsage: 'ssh -o IdentitiesOnly=yes ubuntu@$control_plane' to use kubectl. If the control plane \
+echo "\nUsage: 'ssh ubuntu@$control_plane' to use kubectl. If the control plane \
 has a public IP then 'scp ubuntu@$control_plane:~/.kube/config . && export KUBECONFIG=$(pwd)/config'\n"
 
 # clean up repo
