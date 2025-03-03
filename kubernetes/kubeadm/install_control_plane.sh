@@ -5,6 +5,7 @@ cri=""
 node="control_plane"
 pod_network="weaveworks"
 public_cp_endpoint=1
+KUBERNETES_VERSION='v1.32'
 
 install_containerd () {
   # clean up if necessary
@@ -157,18 +158,22 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 
-#update and install 
-sudo apt-get update && \
+#install 
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
 # If the folder `/etc/apt/keyrings` does not exist, 
 #it should be created before the curl command, read the note below.
 # sudo mkdir -p -m 755 /etc/apt/keyrings
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | \
+key_url_beginning='https://pkgs.k8s.io/core:/stable:/'
+key_url_end='/deb/Release.key'
+
+curl -fsSL "$key_url_beginning$KUBERNETES_VERSION$key_url_end" | \
   sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
+key='deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg]'
+key_url_end='/deb/'
 # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' |
+echo "$key $key_url_beginning$KUBERNETES_VERSION$key_url_end /" |
   sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt-get update
