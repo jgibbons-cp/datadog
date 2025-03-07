@@ -30,38 +30,15 @@ Use the 'oc' command line interface:
   $ oc login -u developer https://api.crc.testing:6443  
 ```  
   
+NOTE: if you ever need to get credentials enter ```crc console --credentials```  
+  
 4) Setup OpenShift's CLI client, their version of ```kubectl```, with ```eval $(crc oc-env)```  
   
 5) Login to use ```oc```.  This is different from just setting ```KUBECONFIG``` or moving the config to ~/.kube  Login and you can the use the CLI.  
   
-6) We will install in the project ```openshift-operators```  To use this we need to be logged in as ```kubeadmin```  Once logged in switch to the project with ```oc project openshift-operators```  
+6) Navigate to [OperatorHub](https://console-openshift-console.apps-crc.testing/operatorhub/all-namespaces?keyword=datadog). Install the [community operator](https://console-openshift-console.apps-crc.testing/operatorhub/all-namespaces?keyword=datadog&details-item=datadog-operator-community-operators-openshift-marketplace&channel=stable&version=1.12.1).  
   
-7) When installing with a cloud/commercial offering the operator will be bundled with the scc creation.  In crc you need to create it.  
-  
-- [SCC](https://docs.openshift.com/container-platform/4.13/authentication/managing-security-context-constraints.html#:~:text=In%20OpenShift%20Container%20Platform%2C%20you,some%20Operators%20or%20other%20components.) - In OpenShift Container Platform, you can use security context constraints (SCCs) to control permissions for the pods in your cluster.  
-  
-Default SCCs are created during installation and when you install some Operators or other components. As a cluster administrator, you can also create your own SCCs by using the OpenShift CLI (oc).  
-  
-```
-wget https://raw.githubusercontent.com/DataDog/datadog-agent/main/Dockerfiles/manifests/openshift/scc.yaml && sed -i.bak 's/default:datadog-agent/openshift-operators:datadog-agent-scc/g' scc.yaml && oc apply -f scc.yaml
-```  
-  
-8) Install the operator  
-  
-```  
-helm repo add datadog https://helm.datadoghq.com &&  
-helm repo update &&  
-helm install dd-operator datadog/datadog-operator  
-```  
-  
-9) Create a secret for your agent - ```oc create secret generic datadog-secret --from-literal api-key=<API_KEY> --from-literal app-key=<APP_KEY>```  
-  
-10) Install the agent using the manifest from [here](https://github.com/DataDog/datadog-operator/blob/main/docs/install-openshift.md#deploy-the-datadog-agent-with-the-operator) using ```oc apply -f <DD_OPERATOR_AGENT_YAML>  The service account will be created from this.
-
-UI
---
-
-The Datadog operator is not available in the CRC UI by default.  To add apply the following:  
+7) UI - the Datadog operator used to not be available in the CRC UI by default.  It appears to be in by default now, however if it is not there apply the following:  
   
 ```  
 apiVersion: operators.coreos.com/v1alpha1  
@@ -75,4 +52,65 @@ spec:
   source: community-operators  
   sourceNamespace: openshift-marketplace  
 ```  
+  
+7) Take a look at the running ```operator```:  
+  
+```  
+$ oc get po -n openshift-operators  
+NAME                                        READY   STATUS    RESTARTS   AGE  
+datadog-operator-manager-7c7cb97985-ddnk9   1/1     Running   0          101m  
+```  
 
+8) The operator will be bundled with the SCC.  
+  
+9) Let's install the agent.  Navigate to [Installed Operators](https://console-openshift-console.apps-crc.testing/k8s/all-namespaces/operators.coreos.com~v1alpha1~ClusterServiceVersion)  
+  
+10) Click on the [Create Instance](https://console-openshift-console.apps-crc.testing/k8s/ns/openshift-operators/clusterserviceversions/datadog-operator.v1.12.1/datadoghq.com~v2alpha1~DatadogAgent/~new) in the ```Datadog Agent``` tile  
+  
+11) Click on YAML view.  This will provide a basic agent CRD manifest.  Configuration documentation is [here](https://github.com/DataDog/datadog-operator/blob/main/docs/configuration.v2alpha1.md).  
+  
+Change the template before we apply:  
+  
+```  
+# change  
+     apiKey: <DATADOG_API_KEY>  
+      appKey: <DATADOG_APP_KEY>  
+  
+# to  
+   credentials:  
+      apiSecret:  
+        secretName: datadog-agent  
+        keyName: api-key  
+      appSecret:  
+        secretName: datadog-agent  
+        keyName: app-key  
+  
+# remove  
+   clusterAgentToken: <DATADOG_CLUSTER_AGENT_TOKEN>  
+
+# set the clustername  
+   clusterName: <CLUSTER_NAME>
+```  
+  
+12) Create a secret in the ```openshift-operators``` namespace.  
+  
+```  
+oc create secret generic datadog-agent --from-literal api-key=<API_KEY> --from-literal app-key=<APP_KEY> -n openshift-operators  
+```  
+  
+13) Click ```Create``` in the UI to deploy.  
+  
+14) Wait for the agent to deploy.  
+  
+```  
+Every 2.0s: kubectl get pod -n openshift-operators                     Thu Mar  6 17:28:01 2025  
+
+NAME                                                         READY   STATUS    RESTARTS   AGE  
+datadog-operator-manager-7c7cb97985-ddnk9                    1/1     Running   0          4h51m  
+datadogagent-sample-agent-rcxnj                              2/2     Running   0          5m16s  
+datadogagent-sample-cluster-agent-7485cb9d5c-69879           1/1     Running   0          5m16s  
+datadogagent-sample-cluster-agent-7485cb9d5c-zpn74           1/1     Running   0          5m16s  
+datadogagent-sample-cluster-checks-runner-65d487b9db-2xkqm   1/1     Running   0          5m15s  
+datadogagent-sample-cluster-checks-runner-65d487b9db-9mkj5   1/1     Running   0          5m15s  
+```  
+  
