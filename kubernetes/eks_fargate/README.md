@@ -90,6 +90,7 @@ apiVersion: datadoghq.com/v2alpha1
 kind: DatadogAgent  
 metadata:  
   name: datadog  
+  namespace: <applicaation_namespace>  
 spec:  
   global:  
     clusterAgentTokenSecret:  
