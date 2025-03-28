@@ -112,4 +112,5 @@ spec:
 ```
 $ kubectl apply -n datadog-agent -f datadog-agent.yaml  
 ```  
-
+  
+This will create the cluster agent which will inject the sidecar agents into the application pods.  
