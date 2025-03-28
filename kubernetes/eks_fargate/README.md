@@ -68,7 +68,9 @@ The installation method will be the Datadog Operator. There are a few prerequisi
   
 1) Set up RBAC in the application namespace(s) as shown above.  
   
-2) Create a Kubernetes secret containing your Datadog API key and Cluster Agent token (32 character string) in the Datadog installation and application namespaces.  
+2) Install the operator
+
+3) Create a Kubernetes secret containing your Datadog API key and Cluster Agent token (32 character string) in the Datadog installation and application namespaces.  
   
 ```  
 $ kubectl create secret generic datadog-secret -n datadog-agent --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal token=<CLUSTER_AGENT_TOKEN>  
