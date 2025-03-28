@@ -78,9 +78,9 @@ helm install datadog-operator datadog/datadog-operator -n <namespace>
 3) Create a Kubernetes secret containing your Datadog API key and Cluster Agent token (32 character string) in the Datadog installation and application namespaces.  
   
 ```  
-$ kubectl create secret generic datadog-secret -n datadog-agent --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal token=<CLUSTER_AGENT_TOKEN>  
+$ kubectl create secret generic datadog-secret -n <agent_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal token=<CLUSTER_AGENT_TOKEN>  
   
-$ kubectl create secret generic datadog-secret -n fargate --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal token=<CLUSTER_AGENT_TOKEN>  
+$ kubectl create secret generic datadog-secret -n <app_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal token=<CLUSTER_AGENT_TOKEN>  
 ```  
 
 3) Create the DatadogAgent resource (example datadog-agent.yaml below):
