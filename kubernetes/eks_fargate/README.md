@@ -68,8 +68,13 @@ The installation method will be the Datadog Operator. There are a few prerequisi
   
 1) Set up RBAC in the application namespace(s) as shown above.  
   
-2) Install the operator
-
+2) Install the operator  
+  
+```  
+helm repo add datadog https://helm.datadoghq.com  
+helm install datadog-operator datadog/datadog-operator -n <namespace>  
+```  
+  
 3) Create a Kubernetes secret containing your Datadog API key and Cluster Agent token (32 character string) in the Datadog installation and application namespaces.  
   
 ```  
