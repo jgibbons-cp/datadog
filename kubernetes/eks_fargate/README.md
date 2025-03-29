@@ -52,13 +52,13 @@ roleRef:
 subjects:  
   - kind: ServiceAccount  
     name: datadog-agent  
-    namespace: default  
+    namespace: <namespace>  
 ---  
 apiVersion: v1  
 kind: ServiceAccount  
 metadata:  
   name: datadog-agent  
-  namespace: default  
+  namespace: <namespace>  
 ```  
   
 Running the Agent as a Sidecar  
