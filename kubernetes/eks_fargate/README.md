@@ -110,7 +110,7 @@ spec:
 4) Apply the configuration:  
 
 ```
-$ kubectl apply -n datadog-agent -f datadog-agent.yaml  
+$ kubectl apply -n <agent_namespace> -f datadog-agent.yaml  
 ```  
   
 This will create the cluster agent which will inject the sidecar agents into the application pods that have the pod label:  
