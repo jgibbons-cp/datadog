@@ -25,9 +25,10 @@ NOTE: the values file provided here is bare minimum.  The options to add feature
 which can be found [here](https://github.com/DataDog/helm-charts/blob/main/charts/datadog/values.yaml).  
   
 ```  
-$ kubectl create secret generic datadog-secret -n <your_agent_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY>  
+# token is any 32 bit alpha-numeric string  
+$ kubectl create secret generic datadog-secret -n <your_agent_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY> --from-literal token=u1w53uj*&^tgBHNJ*UIJ54rtygfdewqw  
   
-$ kubectl create secret generic datadog-secret -n <your_application_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY>  
+$ kubectl create secret generic datadog-secret -n <your_application_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY> --from-literal token=u1w53uj*&^tgBHNJ*UIJ54rtygfdewqw    
   
 $ helm install datadog-agent -f values.yaml datadog/datadog -n <your_agent_namespace>  
 ```  
