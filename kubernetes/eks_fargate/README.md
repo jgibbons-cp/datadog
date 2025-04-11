@@ -52,13 +52,13 @@ roleRef:
 subjects:  
   - kind: ServiceAccount  
     name: datadog-agent  
-    namespace: <namespace>  
+    namespace: <application_namespace>  
 ---  
 apiVersion: v1  
 kind: ServiceAccount  
 metadata:  
   name: datadog-agent  
-  namespace: <namespace>  
+  namespace: <application_namespace>  
 ```  
   
 Running the Agent as a Sidecar  
@@ -66,7 +66,7 @@ Running the Agent as a Sidecar
   
 The installation method will be the Datadog Operator. There are a few prerequisites for this step:  
   
-1) Set up RBAC in the application namespace(s) as shown above.  
+1) Set up RBAC in the application namespace(s) as shown above. The RBAC is applied to the application namespace so the agent can use the service account.  
   
 2) Install the operator  
   
@@ -93,6 +93,7 @@ metadata:
   namespace: <applicaation_namespace>  
 spec:  
   global:  
+    clusterName: fargate-usw2 #<cluster_name>
     clusterAgentTokenSecret:  
       secretName: datadog-secret  
       keyName: token  
@@ -110,7 +111,7 @@ spec:
 4) Apply the configuration:  
 
 ```
-$ kubectl apply -n <agent_namespace> -f datadog-agent.yaml  
+$ kubectl apply -f datadog-agent.yaml  
 ```  
   
 This will create the cluster agent which will inject the sidecar agents into the application pods that have the pod label:  
