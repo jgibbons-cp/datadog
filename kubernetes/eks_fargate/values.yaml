@@ -1,0 +1,13 @@
+datadog:
+  # just a tag so change if you want
+  clusterName: fargate
+  apiKeyExistingSecret: datadog-secret
+agents:
+  # no eks ec2 nodes in cluster, just fargate so false
+  enabled: false
+clusterAgent:
+  tokenExistingSecret: datadog-secret
+  admissionController:
+    agentSidecarInjection:
+      enabled: true
+      provider: fargate

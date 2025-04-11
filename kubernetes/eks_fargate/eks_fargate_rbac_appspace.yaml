@@ -1,0 +1,22 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: datadog-agent
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: datadog-agent
+subjects:
+  - kind: ServiceAccount
+    name: datadog-agent
+    namespace: <your_application_namespace>
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  # if you use a custom service account in your deployment, change the name of 
+  # this service account from datadog-agent to what yours is called
+  name: datadog-agent
+  namespace: <your_application_namespace>
+

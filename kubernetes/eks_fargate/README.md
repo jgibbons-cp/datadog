@@ -6,116 +6,51 @@ Configuration
 
 The following outlines how to collect data from your applications running in AWS EKS Fargate.
 
-1) Set up AWS EKS Fargate RBAC rules.
-2) Deploy the Agent as a sidecar.
-
-AWS EKS Fargate RBAC
---
-
-When deploying the agent as a sidecar, you'll need to apply the following RBAC.
-  
-```  
-apiVersion: rbac.authorization.k8s.io/v1  
-kind: ClusterRole  
-metadata:  
-  name: datadog-agent  
-rules:  
-  - apiGroups:  
-    - ""  
-    resources:  
-    - nodes  
-    - namespaces  
-    - endpoints  
-    verbs:  
-    - get  
-    - list  
-  - apiGroups:  
-      - ""  
-    resources:  
-      - nodes/metrics  
-      - nodes/spec  
-      - nodes/stats  
-      - nodes/proxy  
-      - nodes/pods  
-      - nodes/healthz  
-    verbs:  
-      - get  
----  
-apiVersion: rbac.authorization.k8s.io/v1  
-kind: ClusterRoleBinding  
-metadata:  
-  name: datadog-agent  
-roleRef:  
-  apiGroup: rbac.authorization.k8s.io  
-  kind: ClusterRole  
-  name: datadog-agent  
-subjects:  
-  - kind: ServiceAccount  
-    name: datadog-agent  
-    namespace: <application_namespace>  
----  
-apiVersion: v1  
-kind: ServiceAccount  
-metadata:  
-  name: datadog-agent  
-  namespace: <application_namespace>  
-```  
-  
-Running the Agent as a Sidecar  
---
-  
-The installation method will be the Datadog Operator. There are a few prerequisites for this step:  
-  
-1) Set up RBAC in the application namespace(s) as shown above. The RBAC is applied to the application namespace so the agent can use the service account.  
-  
-2) Install the operator  
-  
-```  
-helm repo add datadog https://helm.datadoghq.com  
-helm install datadog-operator datadog/datadog-operator -n <namespace>  
-```  
-  
-3) Create a Kubernetes secret containing your Datadog API key and Cluster Agent token (32 character string) in the Datadog installation and application namespaces.  
-  
-```  
-$ kubectl create secret generic datadog-secret -n <agent_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal token=<CLUSTER_AGENT_TOKEN>  
-  
-$ kubectl create secret generic datadog-secret -n <app_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal token=<CLUSTER_AGENT_TOKEN>  
-```  
-
-3) Create the DatadogAgent resource (example datadog-agent.yaml below):
-  
-```  
-apiVersion: datadoghq.com/v2alpha1  
-kind: DatadogAgent  
-metadata:  
-  name: datadog  
-  namespace: <applicaation_namespace>  
-spec:  
-  global:  
-    clusterName: fargate-usw2 #<cluster_name>
-    clusterAgentTokenSecret:  
-      secretName: datadog-secret  
-      keyName: token  
-    credentials:  
-      apiSecret:  
-        secretName: datadog-secret  
-        keyName: api-key  
-  features:  
-    admissionController:  
-      agentSidecarInjection:  
-        enabled: true  
-        provider: fargate  
-```  
-  
-4) Apply the configuration:  
-
-```
-$ kubectl apply -f datadog-agent.yaml  
-```  
-  
-This will create the cluster agent which will inject the sidecar agents into the application pods that have the pod label:  
+1) Install the agent (example here uses helm)  
+2) Bind the clusterrole datadog-agent to the service account used in the deployment. If you use 
+the default service account, create a new one called datadog-agent and bind it to the clusterrole.  
+3) Set the service account in your deployment to the one from step 2, either datadog-agent or another 
+custom one that is not the default.  
+4) If you have not labeled your namespace for Datadog agent injection, then label your pods in the 
+deployment with:  
   
 ```  
 agent.datadoghq.com/sidecar: fargate  
 ```  
+5) Deploy
+
+Agent Install  
+--  
+NOTE: the values file provided here is bare minimum.  The options to add features are in the default
+which can be found [here](https://github.com/DataDog/helm-charts/blob/main/charts/datadog/values.yaml).  
+  
+```  
+$ kubectl create secret generic datadog-secret -n <your_agent_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY>  
+  
+$ helm install datadog-agent -f values.yaml datadog/datadog -n <any_namespace>  
+```  
+  
+This will install the service accounts as well as the cluster agent in the namespace you choose.  
+
+Application Namespace RBAC  
+---
+The namespace(s) you choose to install applications, will need RBAC for Datadog agent functionality. So, bind your service account to the clusterrole created when the agent deployed.  The service account can be called anything, but you can use datadog-agent if you are not using a custom one for the deployment. If you are using a custom service account, bind that to the clusterrole datadog-agent for any namespace where you want to use Datadog.  
+  
+Add the Service Account to your Deployment if not there
+---
+Whatever service account you bound to the datadog-agent clusterrole, add it to the pod spec of your deployment.  
+  
+```  
+serviceAccountName: <your_service_account>  
+```    
+  
+Setup Agent Injection
+---
+If you have not added selectors for Datadog agent injection in your agent config, then label your pods in the 
+deployment with:  
+  
+```  
+agent.datadoghq.com/sidecar: fargate  
+```  
+  
+Deploy your Application  
