@@ -29,7 +29,7 @@ $ kubectl create secret generic datadog-secret -n <your_agent_namespace> --from-
   
 $ kubectl create secret generic datadog-secret -n <your_application_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY>  
   
-$ helm install datadog-agent -f values.yaml datadog/datadog -n <any_namespace>  
+$ helm install datadog-agent -f values.yaml datadog/datadog -n <your_agent_namespace>  
 ```  
   
 This will install the service accounts as well as the cluster agent in the namespace you choose.  
