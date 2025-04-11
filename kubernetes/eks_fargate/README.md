@@ -37,7 +37,7 @@ This will install the service accounts as well as the cluster agent in the names
 
 Application Namespace RBAC  
 ---
-The namespace(s) you choose to install applications, will need RBAC for Datadog agent functionality. So, bind your service account to the clusterrole created when the agent deployed.  The service account can be called anything, but you can use datadog-agent if you are not using a custom one for the deployment. If you are using a custom service account, bind that to the clusterrole datadog-agent for any namespace where you want to use Datadog.  
+The namespace(s) you choose to install applications, will need RBAC for Datadog agent functionality. So, bind your service account to the clusterrole created when the agent deployed.  The service account can be called anything, but you can use datadog-agent if you are not using a custom one for the deployment. If you are using a custom service account, bind that to the clusterrole datadog-agent for any namespace where you want to use Datadog.  An example manifest can be found in eks_fargate_rbac_appspace.yaml  
   
 Add the Service Account to your Deployment if not there
 ---
