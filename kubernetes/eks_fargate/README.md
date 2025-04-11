@@ -27,6 +27,8 @@ which can be found [here](https://github.com/DataDog/helm-charts/blob/main/chart
 ```  
 $ kubectl create secret generic datadog-secret -n <your_agent_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY>  
   
+$ kubectl create secret generic datadog-secret -n <your_application_namespace> --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY>  
+  
 $ helm install datadog-agent -f values.yaml datadog/datadog -n <any_namespace>  
 ```  
   
