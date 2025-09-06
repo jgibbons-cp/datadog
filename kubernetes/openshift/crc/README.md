@@ -3,7 +3,7 @@ CRC and Datadog
 
 [CRC](https://crc.dev/docs/introducing/) "brings a minimal OpenShift Container Platform 4 cluster to your local computer. This runtime provides minimal environments for development and testing purposes."  
 
-- Installing Datadog's operator on CRC - why? Commercial OpenShift environments are difficult to bring up (e.g cloud infrastructure limits, personal account, enxpensing outside of Expensify as they are large expensive clusters).  This provides a viable, affordable environment for learning to prepare for working with OpenShift customers.  
+- Installing Datadog's operator on CRC - why? Commercial OpenShift environments are difficult to bring up (e.g cloud infrastructure limits, personal account using Brex as they are large expensive clusters).  This provides a viable, affordable environment for learning to prepare for working with OpenShift customers.  
 
 1) [Install CRC](https://crc.dev/crc/getting_started/getting_started/installing/)  
   
