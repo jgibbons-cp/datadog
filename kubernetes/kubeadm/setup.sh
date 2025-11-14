@@ -3,7 +3,18 @@ source ./functions.sh
 
 # template for infra
 launch_template_id=<your_template_id>
+
+# let's bail if no template
+if [ "$launch_template_id" == "your_template_id" ]; then
+    echo "Launch template ${launch_template_id} is invalid... exiting...\n"
+fi
+
 node_count=2
+
+# let's bail if no nodes
+if [ "$node_count" -lt "1" ]; then
+    echo "Node count is ${node_count}... exiting...\n"
+fi
 
 tag_spec='ResourceType=instance,Tags=[{Key='"$tag_key"',Value='"$tag_value"'}]'
 # launch vms from template
