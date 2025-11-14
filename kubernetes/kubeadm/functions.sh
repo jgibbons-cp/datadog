@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # aws region
-region=us-west-2
+region=us-west-1
 
 # for aws credentials
 profile=default
