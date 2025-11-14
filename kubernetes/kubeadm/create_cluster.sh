@@ -1,7 +1,7 @@
 #!/bin/bash
 source ./functions.sh
 
-PEM="ADD_KEY_TO_USE"
+PEM="-i ADD__PATH_TO_KEY_TO_USE"
 SSH_FLAGS="-o IdentitiesOnly=yes $PEM"
 
 # use first IP as control plane
