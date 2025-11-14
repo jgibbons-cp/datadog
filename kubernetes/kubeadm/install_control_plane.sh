@@ -5,7 +5,7 @@ cri=""
 node="control_plane"
 pod_network="weaveworks"
 public_cp_endpoint=1
-KUBERNETES_VERSION='v1.32'
+KUBERNETES_VERSION='v1.34'
 
 install_containerd () {
   # clean up if necessary
@@ -25,7 +25,7 @@ install_containerd () {
   # install and configure the config file
   sudo apt-get install -y containerd.io && \
   sudo containerd config default | sudo tee -a config.toml && \
-  sed -i 's/pause:3.*/pause:3.9\"/' config.toml && \
+  sed -i 's/pause:3.[0-9]\+/pause:3.9/' config.toml && \
   sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' config.toml && \
   chmod 0400 config.toml && \
   sudo chown root:root config.toml && \
@@ -37,7 +37,7 @@ install_containerd () {
 install_cri_o () {
   sudo apt-get install -y software-properties-common curl
 
-  KUBERNETES_VERSION=v1.29
+  KUBERNETES_VERSION=v1.34
   PROJECT_PATH=prerelease:/main
 
   curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key |
@@ -73,7 +73,7 @@ install_docker_engine () {
   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
         -o /etc/apt/keyrings/docker.asc && \
   sudo chmod a+r /etc/apt/keyrings/docker.asc && \
-
+  
   # Add the repository to Apt sources:
   echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
