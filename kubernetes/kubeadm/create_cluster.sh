@@ -1,6 +1,9 @@
 #!/bin/bash
 source ./functions.sh
 
+PEM="ADD_KEY_TO_USE"
+SSH_FLAGS="-o IdentitiesOnly=yes $PEM"
+
 # use first IP as control plane
 control_plane=$1
 
@@ -19,10 +22,10 @@ while [[ "$return_code" != [0] ]]
 do
   sleep 5
   echo "attempting ssh connection...\n"
-  scp install_control_plane.sh ubuntu@$control_plane:~/
+  scp $SSH_FLAGS install_control_plane.sh ubuntu@$control_plane:~/
   return_code=$?
   
-  if [ $counter -eq 10 ]; then
+  if [ $counter -eq 3 ]; then
     echo $counter
     echo "Can't connect to host $control_plane.  \
 Exiting and deleting infra...\n"
@@ -34,19 +37,19 @@ Exiting and deleting infra...\n"
 done
 
 echo "installing control plane...\n" && \
-ssh ubuntu@$control_plane "sh ~/install_control_plane.sh"
+ssh $SSH_FLAGS ubuntu@$control_plane "sh ~/install_control_plane.sh"
 
 echo "pulling worker node code...\n" && \
-scp ubuntu@$control_plane:~/install_cluster_worker_node.sh . && \
+scp $SSH_FLAGS ubuntu@$control_plane:~/install_cluster_worker_node.sh . && \
 
 #create all worker nodes
 for var in "$@"
 do  
   echo "pushing worker node code to worker node...\n" && \
-  scp install_cluster_worker_node.sh "ubuntu@${var}:~/" && \
+  scp $SSH_FLAGS install_cluster_worker_node.sh "ubuntu@${var}:~/" && \
    
   echo "installing worker node...\n"
-  ssh "ubuntu@${var}" "sudo sh ~/install_cluster_worker_node.sh"
+  ssh $SSH_FLAGS "ubuntu@${var}" "sudo sh ~/install_cluster_worker_node.sh"
 
   if [ "$?" -ne "0" ]; then
     echo "\nssh failed to host...\n"
