@@ -12,7 +12,7 @@ Pre-Installation - no automation
 --
 
 1) The hosts to install should be running and accessible via ssh.  
-2) To automate, use ssh-add to load your ssh key.  If you don't want to worry about host keys then set ```StrictHostKeyChecking no``` in your ssh client.  
+2) To automate, use ssh-add to load your ssh key or add it in create_cluster.sh so it is passed to the ssh/scp commands.  If you don't want to worry about host keys then set ```StrictHostKeyChecking no``` in your ssh client.  
 3) Ensure all hosts can talk to each other and that they allow the necessary traffic.  I just opened up all traffic between the host IPs in the security group, but if you want to restrict to specific ports you can use [this](https://kubernetes.io/docs/reference/networking/ports-and-protocols/) as a reference.  
   
 Pre-Installation - automated with AWS
