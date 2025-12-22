@@ -1,0 +1,34 @@
+datadog:
+  apiKeyExistingSecret:  datadog-secret
+  appKeyExistingSecret:  datadog-secret
+  clusterName: dd-daemonset-up
+
+  kubelet:
+    tlsVerify: false
+
+  apm:
+    instrumentation:
+      enabled: true
+      libVersions:
+        java: latest
+        
+  env:
+  - name: DD_HOSTNAME
+    valueFrom:
+      fieldRef:
+        apiVersion: v1
+        fieldPath: spec.nodeName
+
+clusterAgent:
+  tolerations:
+    - key: "datadog"
+      effect: "NoSchedule" 
+    - key: "datadog"
+      effect: "NoExecute" 
+
+agents:
+  tolerations:
+    - key: "datadog"
+      effect: "NoSchedule"
+    - key: "datadog"
+      effect: "NoExecute" 

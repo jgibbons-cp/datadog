@@ -1,0 +1,38 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: deny-deployment
+  annotations:
+    policies.kyverno.io/title: Deny DaemonSet
+    policies.kyverno.io/category: Other
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      This policy denies the creation of deployment resources in certain namespaces.
+spec:
+  # Set to "Enforce" to block resources, or "Audit" to only log violations
+  validationFailureAction: Enforce 
+  rules:
+    - name: deny-deployment
+      match:
+        any:
+        - resources:
+            kinds:
+              - 'Deployment'
+      # Exclude the Kyverno namespace to prevent the policy from blocking itself
+      exclude:
+        any:
+        - resources:
+            namespaces:
+              - kyverno
+              - datadog
+              - kube-system
+      validate:
+        message: "Deployment creation is blocked by policy 'deny-deployment' \
+          until the Datadog agent is up."
+        deny:
+          conditions:
+            any:
+            - key: "{{request.operation}}"
+              operator: Equal
+              value: CREATE
+
