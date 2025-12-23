@@ -2,7 +2,7 @@ Datadog DaemonSet Up
 --
 
 Have you ever wanted to ensure a DaemonSet is running before deploying other pods?  I have heard 
-that asked for in regards to the Datadog agent.  This idea was explored in the article (Kubernetes: Do not Schedule Pods until the Datadog Agent is Running)[NEED LINK].  
+that asked for in regards to the Datadog agent.  This idea was explored in the article [Kubernetes: Do not Schedule Pods until the Datadog Agent is Running](https://medium.com/@jenksgibbons/3bccd0f84a2e)].  
   
 Files:  
   
