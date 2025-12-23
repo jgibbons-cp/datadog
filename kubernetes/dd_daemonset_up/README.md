@@ -31,7 +31,19 @@ for reboots by applying ```datadog:NoSchedule``` and ```datadog:NoExecute```  Th
  the manifest is set to do nothing.  To remove taints when the agent is up set TAINTS to 0.  
   
 2) Use-case: monitor if the agent is up so applications are not deployed until the admission controller is up to ensure applications don't need to be restarted for single-step APM.  
-- [Install Kyverno](https://kyverno.io/docs/installation/methods/#standalone-installation)  
+- [Install Kyverno](https://kyverno.io/docs/installation/methods/#standalone-installation)  This can take a bit so make sure the pods are all up before you try to use it.  
+  
+```  
+$ k get po -n kyverno  
+NAME                                             READY   STATUS    RESTARTS   AGE  
+kyverno-admission-controller-58cb4b76c9-lsrxm    1/1     Running   0          2m16s  
+kyverno-background-controller-74fbc6479f-x24t5   1/1     Running   0          2m16s  
+kyverno-cleanup-controller-7b8559544b-mbwxv      1/1     Running   0          2m16s  
+kyverno-reports-controller-576566fb98-f9s8q      1/1     Running   0          2m16s  
+$  
+```  
+  
 - Create ns apps: ```k create ns apps```  
+- Apply the Kyverno policy: ```k apply -f kyverno-deny-deployment.yaml```  
 - Apply manifest to monitor the agent deployment: ```k apply -f dd-agent-running.yaml```  By default
  the manifest is set to do nothing.  To remove the Kyverno policy when the agent is up set KYVERNO to 0.  
