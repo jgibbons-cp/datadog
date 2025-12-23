@@ -20,7 +20,7 @@ kyverno, datadog and kube-system.
 Usage:  
   
 - Create namespace for agent: ```k create ns datadog```  
-- Create secret for agent: ```kubectl create secret generic datadog-secret --from-literal api-key=[API-KEY](https://app.datadoghq.com/organization-settings/api-keys) --from-literal app-key=[APP-KEY](https://app.datadoghq.com/organization-settings/application-keys) -n datadog```  
+- Create secret for agent: ```kubectl create secret generic datadog-secret --from-literal api-key=```[API-KEY](https://app.datadoghq.com/organization-settings/api-keys)``` --from-literal app-key=```[APP-KEY](https://app.datadoghq.com/organization-settings/application-keys)``` -n datadog```  
 - Add helm repo: ```helm repo add datadog https://helm.datadoghq.com```  
 - Update repo: ```helm repo update```  
 - Install agent: ```helm upgrade --install -n datadog dd-agent -f dd-agent-with-tolerations.yaml datadog/datadog```  
