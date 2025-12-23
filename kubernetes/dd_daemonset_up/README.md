@@ -19,6 +19,8 @@ kyverno, datadog and kube-system.
   
 Usage:  
   
+1) Use-case: monitor if the agent is up on a newly created cluster with default taints, ```datadog:NoSchedule```  This ensures the agent is up before allowing scheduling.  It also allows
+for reboots by applying ```datadog:NoSchedule``` and ```datadog:NoExecute```  This does not make much sense to me.  
 - Create namespace for agent: ```k create ns datadog```  
 - Create secret for agent: ```kubectl create secret generic datadog-secret --from-literal api-key=```[API-KEY](https://app.datadoghq.com/organization-settings/api-keys)``` --from-literal app-key=```[APP-KEY](https://app.datadoghq.com/organization-settings/application-keys)``` -n datadog```  
 - Add helm repo: ```helm repo add datadog https://helm.datadoghq.com```  
@@ -26,9 +28,10 @@ Usage:
 - Install agent: ```helm upgrade --install -n datadog dd-agent -f dd-agent-with-tolerations.yaml datadog/datadog```  
 - Apply the RBAC: ```k apply -f rbac.yaml```  
 - Apply manifest to monitor the agent deployment: ```k apply -f dd-agent-running.yaml```  By default
- the manifest is set to do nothing.  To remove taints set TAINTS to 0 and to remove the Kyverno policy set KYVERNO to 0.  
-
-- Use-case: monitor if the agent is up on a newly created cluster with default taints, ```datadog:NoSchedule```  This ensures the agent is up before allowing scheduling.  It also allows
-for reboots by applying ```datadog:NoSchedule``` and ```datadog:NoExecute```  This does not make much sense to me.  
-- Use-case: monitor if the agent is up so applications are not deployed until the admission controller
-is up to ensure applications don't need to be restarted for single-step APM.  
+ the manifest is set to do nothing.  To remove taints when the agent is up set TAINTS to 0.  
+  
+2) Use-case: monitor if the agent is up so applications are not deployed until the admission controller is up to ensure applications don't need to be restarted for single-step APM.  
+- [Install Kyverno](https://kyverno.io/docs/installation/methods/#standalone-installation)  
+- Create ns apps: ```k create ns apps```  
+- Apply manifest to monitor the agent deployment: ```k apply -f dd-agent-running.yaml```  By default
+ the manifest is set to do nothing.  To remove the Kyverno policy when the agent is up set KYVERNO to 0.  
