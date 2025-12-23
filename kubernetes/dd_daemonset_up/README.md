@@ -24,7 +24,8 @@ Usage:
 - Add helm repo: ```helm repo add datadog https://helm.datadoghq.com```  
 - Update repo: ```helm repo update```  
 - Install agent: ```helm upgrade --install -n datadog dd-agent -f dd-agent-with-tolerations.yaml datadog/datadog```  
-- Apply manifest to monitor the agent deployment: ```k apply -f dd-agent-running.yaml```
+- Apply manifest to monitor the agent deployment: ```k apply -f dd-agent-running.yaml```  By default
+ the manifest is set to do nothing.  To remove taints set TAINTS to 0 and to remove the Kyverno policy set KYVERNO to 0.  
 
 - Use-case: monitor if the agent is up on a newly created cluster with default taints, ```datadog:NoSchedule```  This ensures the agent is up before allowing scheduling.  It also allows
 for reboots by applying ```datadog:NoSchedule``` and ```datadog:NoExecute```  This does not make much sense to me.  
