@@ -27,5 +27,12 @@ spec:
                 kubernetes.io/metadata.name: apps
       validate:
         message: "Deployment creation in the apps namespace is blocked by \
-                  policy 'deny-deployment' until the Datadog agent is up."
-        deny: {}
+                  policy 'deny-deployment' until the Datadog admission controller is up."
+        deny:
+          conditions:
+            any:
+              - key: "{{request.operation || 'BACKGROUND'}}"
+                operator: AnyIn
+                value:
+                - CREATE
+                - UPDATE
