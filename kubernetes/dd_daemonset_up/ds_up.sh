@@ -23,16 +23,16 @@ is_node_tainted(){
 # service IP
 # service port
 datadog_connection_check(){
-  agent_listening=1
-  while [ "$agent_listening" -ne "0" ]; do
+  port_listening=1
+  while [ "$port_listening" -ne "0" ]; do
     curl -k $1:$2
     if [ "$?" -eq "0" ]; then
-      agent_listening=0
+      port_listening=0
     fi
   done
 
   # don't do anything with this now
-  return $agent_listening
+  return $port_listening
 }
 
 # remove datadog taints
