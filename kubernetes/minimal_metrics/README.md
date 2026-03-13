@@ -1,7 +1,7 @@
 Minimal Kubernetes Metrics
 --
 
-License: Apache 
+License for Repository: [Apache](https://github.com/jgibbons-cp/datadog/blob/main/LICENSE) 
   
 This is a base set of guidelines for decreasing Kubernetes metrics from the Datadog agent. Often this is done to decrease traffic for a limited pipe to the Internet.  
   
