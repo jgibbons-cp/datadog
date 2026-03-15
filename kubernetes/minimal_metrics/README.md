@@ -26,7 +26,7 @@ As a guideline, it is up to the user to review and determine the minimal set of 
     * [CoreDNS](https://docs.datadoghq.com/integrations/coredns/?tab=docker#metrics): coredns.* This is an agent integration, so if you don't want any of the metrics you can turn it off in the agent or cherry pick with either [Vector](https://vector.dev/) or [OP](https://docs.datadoghq.com/observability_pipelines/?tab=logs).  For example with Helm:  
       
       ```  
-      # [values](https://github.com/DataDog/helm-charts/blob/main/charts/datadog/values.yaml#L1298-#L1303) file  
+      # values file: https://github.com/DataDog/helm-charts/blob/main/charts/datadog/values.yaml#L1298-#L1303  
       datadog:  
         ignoreAutoConfig:  
           - coredns  
