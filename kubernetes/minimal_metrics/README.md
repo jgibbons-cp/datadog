@@ -9,6 +9,8 @@ Based on the license, use is as-is.
   
 As a guideline, it is up to the user to review and determine the minimal set of metrics needed for observability. Not all objects may be relevant (e.g. do you use pod autoscaling). It is also up to the user to test, in a lower environment, that the observability that is needed is provided by the metrics.  
   
+NOTE: Datadog provides [monitor templates](https://app.datadoghq.com/monitors/templates?q=&origination=installed&p=1). These can be filtered down to Kubernetes templates as seen [here](https://app.datadoghq.com/monitors/templates?q=kubernetes&origination=installed&p=1). The metrics in the template monitors are included in the minimal metrics here.  
+  
 * MinimalKubernetesMetrics.xls: this is in Excel format because it is easy to navigate, the colors are helpful and works on a Mac.  
   
   * Metrics. 
