@@ -1,8 +1,9 @@
 #!/bin/bash
 source ./functions.sh
 
-PEM="-i ADD__PATH_TO_KEY_TO_USE"
-SSH_FLAGS="-o IdentitiesOnly=yes $PEM"
+# can solve for key not loaded with ssh-add
+PEM="-i <PATH_TO_PEM>"
+SSH_FLAGS="-o IdentitiesOnly=yes -o StrictHostKeyChecking=no $PEM"
 
 # use first IP as control plane
 control_plane=$1
@@ -23,6 +24,8 @@ do
   sleep 5
   echo "attempting ssh connection...\n"
   scp $SSH_FLAGS install_control_plane.sh ubuntu@$control_plane:~/
+  # TODO to add taints by default
+  #scp $SSH_FLAGS kubelet_patch.yaml install_control_plane.sh ubuntu@$control_plane:~/
   return_code=$?
   
   if [ $counter -eq 3 ]; then
@@ -40,11 +43,15 @@ echo "installing control plane...\n" && \
 ssh $SSH_FLAGS ubuntu@$control_plane "sh ~/install_control_plane.sh"
 
 echo "pulling worker node code...\n" && \
-scp $SSH_FLAGS ubuntu@$control_plane:~/install_cluster_worker_node.sh . && \
+scp $SSH_FLAGS ubuntu@$control_plane:~/install_cluster_worker_node.sh .
 
 #create all worker nodes
 for var in "$@"
 do  
+  if test -f /etc/containerd/config.toml; then
+    # set to use with Longhorn for dynamic volume creation
+    sudo sed -i 's/SystemdCgroup = true/SystemdCgroup = false/' /etc/containerd/config.toml
+  fi
   echo "pushing worker node code to worker node...\n" && \
   scp $SSH_FLAGS install_cluster_worker_node.sh "ubuntu@${var}:~/" && \
    
@@ -52,8 +59,21 @@ do
   ssh $SSH_FLAGS "ubuntu@${var}" "sudo sh ~/install_cluster_worker_node.sh"
 
   if [ "$?" -ne "0" ]; then
-    echo "\nssh failed to host...\n"
+    echo '\nssh failed to "ubuntu@${var}"... exiting...\n'
+    exit -1
   fi
+done
+
+# wait for cilium and nodes to be ready
+echo "\nwaiting for cluster to be ready...\n"
+ret_val=0
+while [ "$ret_val" -eq "0" ]; do 
+  output=$(ssh ubuntu@$control_plane kubectl get nodes | grep Ready;)
+  echo $output | grep NotReady > /dev/null
+  ret_val=$?
+  sleep 15
+  ssh ubuntu@$control_plane kubectl get nodes
+  echo ""
 done
 
 echo "\nUsage: 'ssh ubuntu@$control_plane' to use kubectl. If the control plane \
