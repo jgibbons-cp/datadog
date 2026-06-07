@@ -37,7 +37,6 @@ install_containerd () {
 install_cri_o () {
   sudo apt-get install -y software-properties-common curl
 
-  #KUBERNETES_VERSION=v1.34
   PROJECT_PATH=prerelease:/main
 
   curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key |
@@ -58,33 +57,6 @@ install_cri_o () {
   sudo apt-get install -y cri-o kubelet kubeadm kubectl
 
   sudo systemctl start crio.service
-}
-
-install_docker_engine () {
-  for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; 
-    do 
-      sudo apt-get remove $pkg; 
-    done
-
-  # Add Docker's official GPG key:
-  sudo apt-get update && \
-  sudo apt-get install -y ca-certificates curl && \
-  sudo install -m 0755 -d /etc/apt/keyrings && \
-  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-        -o /etc/apt/keyrings/docker.asc && \
-  sudo chmod a+r /etc/apt/keyrings/docker.asc && \
-  
-  # Add the repository to Apt sources:
-  echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-    https://download.docker.com/linux/ubuntu \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
-  sudo apt-get update && \
-  sudo apt-get install -y docker-ce docker-ce-cli containerd.io \
-  docker-buildx-plugin docker-compose-plugin && \
-  wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.10/cri-dockerd_0.3.10.3-0.ubuntu-jammy_amd64.deb
-  sudo dpkg -i cri-dockerd_0.3.10.3-0.ubuntu-jammy_amd64.deb
 }
 
 sudo apt-get update
@@ -144,26 +116,6 @@ if [ ! -d $dir ];then
   sudo mkdir -p $dir
 fi
 
-#sudo install -m 0755 -d /etc/apt/keyrings
-#sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-#       -o /etc/apt/keyrings/docker.asc
-#sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-# Add the repository to Apt sources:
-#echo \
-#  "deb [arch=$(dpkg --print-architecture) \
-#  signed-by=/etc/apt/keyrings/docker.asc] \
-#  https://download.docker.com/linux/ubuntu \
-#  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
-#  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-#sudo apt-get update
-
-#install 
-#sudo apt-get install -y apt-transport-https ca-certificates curl gpg
-
-# If the folder `/etc/apt/keyrings` does not exist, 
-#it should be created before the curl command, read the note below.
-# sudo mkdir -p -m 755 /etc/apt/keyrings
 key_url_beginning='https://pkgs.k8s.io/core:/stable:/'
 key_url_end='/deb/Release.key'
 
@@ -172,16 +124,13 @@ curl -fsSL "$key_url_beginning$KUBERNETES_VERSION$key_url_end" | \
 
 key='deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg]'
 key_url_end='/deb/'
+
 # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
 echo "$key $key_url_beginning$KUBERNETES_VERSION$key_url_end /" |
   sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt-get update
 
-# set socket if cri is dockerd
-#if [ "$cri" = "dockerd" ]; then
-#  cri_socket="--cri-socket=unix:///var/run/cri-dockerd.sock"
-#  install_docker_engine
 if [ "$cri" = "cri_o" ]; then
   install_cri_o
 else
@@ -190,39 +139,7 @@ fi
 
 sudo apt-get install -y kubelet kubeadm kubectl
 
-######################################### REMOVE ##############################
-#echo "KUBELET_KUBEADM_ARGS=\"--pod-infra-container-image=registry.k8s.io/pause:3.10.1 --register-with-taints key=value:NoSchedule\"" > kubeadm-flags.env
-#sudo mv kubeadm-flags.env /var/lib/kubelet/
-
-#cat <<EOF | sudo tee /var/lib/kubelet/config.yaml
-#  - key: "datadog"
-#    value: "false"
-##    effect: "NoSchedule"
-#EOF
-
-#cat << EOF >> /var/lib/kubelet/config.yaml
-#registerWithTaints:
-#  - key: "datadog"
-#    value: "false"
-#    effect: "NoSchedule"
-#EOF
-
-#sudo systemctl daemon-reload
-#cat <<EOF | sudo tee /var/lib/kubelet/config.yaml
-#  - key: "datadog"
-#    value: "false"
-#    effect: "NoSchedule"
-#EOF
-
-#sudo cp kubelet_patch.yaml /var/lib/kubelet/config.yaml
-######################################### REMOVE ##############################
-
 sudo apt-mark hold kubelet kubeadm kubectl
-
-######################################### REMOVE ##############################
-#echo "registerWithTaints:
-#register-with-taints: \"datadog=false:NoSchedule"" | sudo tee /var/lib/kubelet/config.yaml
-######################################### REMOVE ##############################
 
 if [ "$node" = "control_plane" ]; then
   
@@ -250,6 +167,7 @@ if [ "$node" = "control_plane" ]; then
     #sed -i "s/HOSTNAME/$hostname/" kubelet_patch.yaml
 
     #sudo kubeadm init --config kubelet_patch.yaml >> install_cluster.log
+
   else
     sudo kubeadm init --pod-network-cidr=192.168.0.0/16 \
       --apiserver-advertise-address=$private_ip_address \
@@ -275,13 +193,6 @@ if [ "$node" = "control_plane" ]; then
     tar xzf main.tar.gz
     cd cilium-main/install/kubernetes
     helm install cilium ./cilium --namespace kube-system
-    #install pod network from https://kubernetes.io/docs/concepts/cluster-administration/addons/
-    #kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
-    #kubectl get ds -n kube-system weave-net -o yaml > weave_ds.yaml
-    #sed -i '0,/              fieldPath: spec.nodeName/{s//              \
-#fieldPath: spec.nodeName\n        - name: IPALLOC_RANGE\n          \
-#value: 192.168.0.0\/16/}' weave_ds.yaml
-    #kubectl apply -f weave_ds.yaml
   fi
 
   # if want to taint node - tested code
