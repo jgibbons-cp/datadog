@@ -22,15 +22,14 @@ This automates bringing up/down the infrastructure and the cluster.
   
 Variables:  
   
-- install_control_plane.sh - Container runtime: ```cri``` - default is an empty string which installs containerd.  For the dockerd runtime set to ```dockerd```, and 
-```cri_o``` for cri-o. 
+- install_control_plane.sh - Container runtime: ```cri``` - default is an empty string which installs containerd.  For cri-o use ```cri_o```. 
 - setup.sh - AWS Launch template: ```<LAUNCH_TEMPLATE_ID>``` sets the EC2 template with vm size, ssh key etc.  
 - setup.sh - Number of nodes (control plane plus optional worker(s)): ```node_count``` defaults to 2  
 - functions.sh - Tags: key value pair to get security group and VMs  
     - ```tag_key - default: cluster```  
     - ```tag_value - default: kubeadm```  
 - functions.sh - AWS region: ```region``` in which the infrastructure is located.  Defaults to ```us-west-1```  
-- functions.sh - AWS credential profile: ```profile``` Defaults to ```default```  
+- functions.sh - AWS credential profile: ```<PROFILE>``` if there is one, otherwise leave empty.  
 - install_control_plane.sh - Controle Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private.  
   
 Files
