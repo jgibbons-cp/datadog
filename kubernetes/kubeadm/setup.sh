@@ -2,7 +2,7 @@
 source ./functions.sh
 
 # template for infra (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html)
-launch_template_id=<LAUNCH_TEMPLATE>
+launch_template_id=<LAUNCH_TEMPLATE_ID>
 
 # let's bail if no template
 if [ "$launch_template_id" == "your_template_id" ]; then
