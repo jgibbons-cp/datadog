@@ -2,7 +2,7 @@
 source ./functions.sh
 
 # can solve for key not loaded with ssh-add
-PEM="-i <PATH_TO_PEM>"
+PEM="-i /Users/jenks.gibbons/Downloads/dd_aws_us_west_1.pem"
 SSH_FLAGS="-o IdentitiesOnly=yes -o StrictHostKeyChecking=no $PEM"
 
 # use first IP as control plane
@@ -57,11 +57,6 @@ do
    
   echo "installing worker node...\n"
   ssh $SSH_FLAGS "ubuntu@${var}" "sudo sh ~/install_cluster_worker_node.sh"
-
-  if [ "$?" -ne "0" ]; then
-    echo '\nssh failed to "ubuntu@${var}"... exiting...\n'
-    exit -1
-  fi
 done
 
 # wait for cilium and nodes to be ready
