@@ -3,7 +3,7 @@ source ./functions.sh
 
 # can solve for key not loaded with ssh-add
 PEM="-i /Users/jenks.gibbons/Downloads/dd_aws_us_west_1.pem"
-SSH_FLAGS="-o IdentitiesOnly=yes -o StrictHostKeyChecking=no $PEM"
+SSH_FLAGS="-o IdentitiesOnly=yes -o $PEM"
 
 # use first IP as control plane
 control_plane=$1
