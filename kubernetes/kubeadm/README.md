@@ -1,12 +1,12 @@
 Install Kubernetes with kubeadm
 --
 
-This script will create a control plane and worker node(s) using a stable version of Kubernetes.  The install is done via ```kubeadm```.  The default ```cri``` is ```containerd``` however ```dockerd``` and ```cri_o``` are also supported.  Currently the only pod network supported is ```weaveworks```.
+This script will create a kubeadm Kubernetes [cluster](https://kubernetes.io/docs/reference/setup-tools/kubeadm/).  The install is done via ```kubeadm```.  The default ```cri``` is ```containerd``` however ```cri_o``` is also supported.  Currently the only pod network supported is ```cilium```.
   
 Testing
 --
 
-This was tested with an Amazon Machine Image (AMI) ID ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20250115.  
+Ubuntu AWS AMIs
   
 Pre-Installation - no automation
 --
@@ -24,12 +24,12 @@ Variables:
   
 - install_control_plane.sh - Container runtime: ```cri``` - default is an empty string which installs containerd.  For the dockerd runtime set to ```dockerd```, and 
 ```cri_o``` for cri-o. 
-- setup.sh - AWS Launch template: ```launch_template_id``` sets the EC2 template with vm size, ssh key etc.  
+- setup.sh - AWS Launch template: ```<LAUNCH_TEMPLATE_ID>``` sets the EC2 template with vm size, ssh key etc.  
 - setup.sh - Number of nodes (control plane plus optional worker(s)): ```node_count``` defaults to 2  
 - functions.sh - Tags: key value pair to get security group and VMs  
     - ```tag_key - default: cluster```  
     - ```tag_value - default: kubeadm```  
-- functions.sh - AWS region: ```region``` in which the infrastructure is located.  Defaults to ```us-west-2```  
+- functions.sh - AWS region: ```region``` in which the infrastructure is located.  Defaults to ```us-west-1```  
 - functions.sh - AWS credential profile: ```profile``` Defaults to ```default```  
 - install_control_plane.sh - Controle Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private.  
   
