@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # aws region
-region=us-west-1
+region=<REGION>
 
 # for aws credentials
-profile=default
+profile=<PROFILE>
 
 # for filtering out aws resources
 tag_key=cluster
