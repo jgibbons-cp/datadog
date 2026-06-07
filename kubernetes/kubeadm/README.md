@@ -30,7 +30,8 @@ Variables:
     - ```tag_value - default: kubeadm```  
 - functions.sh - AWS region: ```<REGION>``` in which the infrastructure is located.  
 - functions.sh - AWS credential profile: ```<PROFILE>``` if there is one, otherwise leave empty.  
-- install_control_plane.sh - Controle Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private.  
+- install_control_plane.sh - Control Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private. 
+- create_cluster.sh - if adding a key, then set PEM_FLAG to -i and set the path to your key in PEM.  
   
 Files
 --
