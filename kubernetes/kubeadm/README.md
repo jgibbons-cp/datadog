@@ -28,7 +28,7 @@ Variables:
 - functions.sh - Tags: key value pair to get security group and VMs  
     - ```tag_key - default: cluster```  
     - ```tag_value - default: kubeadm```  
-- functions.sh - AWS region: ```region``` in which the infrastructure is located.  Defaults to ```us-west-1```  
+- functions.sh - AWS region: ```<REGION>``` in which the infrastructure is located.  
 - functions.sh - AWS credential profile: ```<PROFILE>``` if there is one, otherwise leave empty.  
 - install_control_plane.sh - Controle Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private.  
   
