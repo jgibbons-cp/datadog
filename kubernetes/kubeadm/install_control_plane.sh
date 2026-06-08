@@ -8,6 +8,7 @@ public_cp_endpoint=1
 KUBERNETES_VERSION='v1.36'
 VERSION_CODENAME=$KUBERNETES_VERSION
 PAUSE_VERSION=3.10.1
+HOME_DIRECTORY=/home/ubuntu
 
 install_containerd () {
   # clean up if necessary
@@ -159,6 +160,8 @@ if [ "$node" = "control_plane" ]; then
       --control-plane-endpoint=$public_ip_address $cri_socket \
       >> install_cluster.log
 
+    # TODO for patching kublet for taints    
+    #scp ubuntu@52.53.239.117:~/.kube/config . && export KUBECONFIG=/Users/jenks.gibbons/Documents/datadog/kubernetes/kubeadm/config
 
     #sed -i "s/PUBLIC_IP/$public_ip_address/" kubelet_patch.yaml
     #sed -i "s/LOCAL_IP/$private_ip_address/" kubelet_patch.yaml
@@ -167,6 +170,7 @@ if [ "$node" = "control_plane" ]; then
     #sed -i "s/HOSTNAME/$hostname/" kubelet_patch.yaml
 
     #sudo kubeadm init --config kubelet_patch.yaml >> install_cluster.log
+    # TODO
 
   else
     sudo kubeadm init --pod-network-cidr=192.168.0.0/16 \
@@ -195,16 +199,17 @@ if [ "$node" = "control_plane" ]; then
     helm install cilium ./cilium --namespace kube-system
   fi
 
-  # if want to taint node - tested code
+  # TODO: to taint nodes during setup
   #kubectl get configmap kubelet-config -n kube-system -o yaml > running_kubelet_config.yaml
   #sed -i 's/volumeStatsAggPeriod: 0s/volumeStatsAggPeriod: 0s\n    registerWithTaints:\n      - key: \"datadog\"\n        effect: \"NoSchedule\"\n/' running_kubelet_config.yaml
   #kubectl apply -f running_kubelet_config.yaml
   #sudo kubeadm upgrade node phase kubelet-config
   #sudo systemctl restart kubelet
   #sleep 20
-  # create worker node install / cluster join
+  # TODO
 
-  cd /home/ubuntu
+  # create worker node install / cluster join
+  cd $HOME_DIRECTORY
   cp -f install_control_plane.sh install_cluster_worker_node.sh 
   sed -i '0,/node=\"control_plane\"/{s//node=\"\"/}' \
     install_cluster_worker_node.sh
