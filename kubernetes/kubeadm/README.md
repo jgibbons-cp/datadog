@@ -6,14 +6,7 @@ This script will create a kubeadm Kubernetes [cluster](https://kubernetes.io/doc
 Testing
 --
 
-Ubuntu AWS AMIs
-  
-Pre-Installation - no automation
---
-
-1) The hosts to install should be running and accessible via ssh.  
-2) To automate, use ssh-add to load your ssh key or add it in create_cluster.sh so it is passed to the ssh/scp commands.  If you don't want to worry about host keys then set ```StrictHostKeyChecking no``` in your ssh client.  
-3) Ensure all hosts can talk to each other and that they allow the necessary traffic.  I just opened up all traffic between the host IPs in the security group, but if you want to restrict to specific ports you can use [this](https://kubernetes.io/docs/reference/networking/ports-and-protocols/) as a reference.  
+Ubuntu AWS AMIs  
   
 Pre-Installation - automated with AWS
 --
@@ -22,16 +15,17 @@ This automates bringing up/down the infrastructure and the cluster.
   
 Variables:  
   
-- install_control_plane.sh - Container runtime: ```cri``` - default is an empty string which installs containerd.  For cri-o use ```cri_o```. 
 - setup.sh - AWS Launch template: ```<LAUNCH_TEMPLATE_ID>``` sets the EC2 template with vm size, ssh key etc.  
 - setup.sh - Number of nodes (control plane plus optional worker(s)): ```node_count``` defaults to 2  
+- create_cluster.sh - if adding a key, then set PEM_FLAG to -i and set the path to your key in PEM.  
 - functions.sh - Tags: key value pair to get security group and VMs  
     - ```tag_key - default: cluster```  
     - ```tag_value - default: kubeadm```  
 - functions.sh - AWS region: ```<REGION>``` in which the infrastructure is located.  
 - functions.sh - AWS credential profile: ```<PROFILE>``` if there is one, otherwise leave empty.  
 - install_control_plane.sh - Control Plane IP: ```public_cp_endpoint``` defaults to 1 which is public, set to 0 for private. 
-- create_cluster.sh - if adding a key, then set PEM_FLAG to -i and set the path to your key in PEM.  
+- install_control_plane.sh - Container runtime: ```cri``` - default is an empty string which installs containerd.  For cri-o use ```cri_o``` 
+- install_control_plane.sh - set HOME_DIRECTORY to the non-priveleged user home (e.g. default is /home/ubuntu)  
   
 Files
 --
@@ -42,6 +36,22 @@ Files
 4) functions.sh - shared functions.  
 5) destroy.sh - tear down cluster and infrastructure.  
   
+Automated up:  
+  
+1) Configure variables noted above  
+2) ```sh setup.sh```  
+  
+Automated down:  
+  
+1) ```sh destroy.sh```  
+
+Pre-Installation - no automation
+--
+
+1) The hosts to install should be running and accessible via ssh.  
+2) To automate, use ssh-add to load your ssh key or add it in create_cluster.sh so it is passed to the ssh/scp commands.  If you don't want to worry about host keys then set ```StrictHostKeyChecking no``` in your ssh client.  
+3) Ensure all hosts can talk to each other and that they allow the necessary traffic.  I just opened up all traffic between the host IPs in the security group, but if you want to restrict to specific ports you can use [this](https://kubernetes.io/docs/reference/networking/ports-and-protocols/) as a reference.  
+
 Usage
 -- 
 
@@ -54,12 +64,4 @@ sh create_cluster.sh <ip_of_control_plane> <optional ip_of_worker_node(s)>
 ```  
   
 - Down: terminate EC2 instances  
-  
-Automated up:  
-  
-1) Configure variables noted above  
-2) ```sh setup.sh```  
-  
-Automated down:  
-  
-1) ```sh destroy.sh```  
+
