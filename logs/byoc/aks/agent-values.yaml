@@ -1,0 +1,42 @@
+apiVersion: datadoghq.com/v2alpha1
+kind: DatadogAgent
+metadata:
+  name: datadog
+spec:
+  global:
+    clusterName: cloudprem
+    site: datadoghq.com
+    kubelet:
+      tlsVerify: false
+    credentials:
+      apiSecret:
+        secretName: datadog-secret
+        keyName: api-key
+    env:
+      - name: DD_LOGS_CONFIG_LOGS_DD_URL
+        value: http://byoclogs-cloudprem-indexer.byoclogs.svc.cluster.local:7280
+        #value: http://byoclogs-cloudprem-indexer.byoclogs.svc.cluster.local:7280
+        #value: https://byoclogs-cloudprem-indexer.default.svc.cluster.local:7280
+        #value: https://10.224.0.5
+      - name: DD_LOGS_CONFIG_EXPECTED_TAGS_DURATION
+        value: "100000"
+  features:
+    logCollection:
+      enabled: true
+      containerCollectAll: true
+    otlp:
+      receiver:
+        protocols:
+          grpc:
+            enabled: true
+            endpoint: 0.0.0.0:4417
+    prometheusScrape:
+      enabled: true
+      enableServiceEndpoints: true
+  override:
+    nodeAgent:
+      env:
+        - name: DD_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
