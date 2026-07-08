@@ -33,7 +33,7 @@ Usage
 
 ```  
 # setup  
-bash create_lab.sh.sh  
+bash create_lab.sh  
   
 # teardown  
 bash cleanup_lab.sh  
