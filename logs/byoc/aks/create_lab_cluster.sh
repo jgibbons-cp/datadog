@@ -43,18 +43,19 @@ az aks create \
   --ssh-access disabled
 
 # get kubeconfig
-FILE="/tmp/config"
+KUBECONFIG="$(pwd)/config"
 
-# -f checks if the file exists AND is a regular file
-if [ -f "$FILE" ]; then
-    rm $FILE
+# make sure it is not mixed up with cluster of same name e.g. eks
+if [ -f "$KUBECONFIG" ]; then
+    mv "$KUBECONFIG" "$KUBECONFIG"_$(date +%s).bk
+    echo "Backing up kubeconfig to ${KUBECONFIG}_$(date +%s).bk"
 fi
 
 az aks get-credentials --resource-group "$BYOC_LOGS_RESOURCE_GROUP" \
-  --name "$BYOC_LOGS_CLUSTER_NAME" -f /tmp/config
+  --name "$BYOC_LOGS_CLUSTER_NAME" -f $KUBECONFIG
 
 if [ $? -ne 0 ]; then
     exit 1
 fi
 
-export KUBECONFIG=/tmp/config
+export KUBECONFIG="$KUBECONFIG"
