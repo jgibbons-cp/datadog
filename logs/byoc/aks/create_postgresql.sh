@@ -17,4 +17,5 @@ az postgres flexible-server create --resource-group "$BYOC_LOGS_RESOURCE_GROUP" 
   --sku-name "$BYOC_LOGS_POSTGRES_NODE_SIZE" \
   --tier GeneralPurpose --public-access "$cluster_egress_ip" \
   --storage-size 128 --tags "Environment=Development" \
+  --node-count $BYOC_POSTGRES_NODE_COUNT --version $BYOC_POSTGRES_VERSION \
   --database-name "$BYOC_LOGS_DB_NAME"
