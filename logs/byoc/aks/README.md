@@ -23,7 +23,11 @@ The hidden file .env stores configuration variables.
 - Defaults - most likely to be changed by the user  
   - BYOC_LOGS_LOCATION="westus"  
   - BYOC_LOGS_AKS_NODE_SIZE=Standard_E16s_v6  
+  - BYOC_LOGS_NODE_COUNT
   - BYOC_LOGS_POSTGRES_NODE_SIZE=Standard_D4ds_v5  
+  - BYOC_POSTGRES_NODE_COUNT
+  - BYOC_POSTGRES_VERSION # some regions don't support all versions / default is 17
+  - API_KEY # have to add
 
 - Need configuration  
   - API_KEY= # can be located in the [Datadog UI](https://app.datadoghq.com/organization-settings/api-keys)  
