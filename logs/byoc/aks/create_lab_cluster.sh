@@ -34,12 +34,17 @@ else
   echo "Created resource group $BYOC_LOGS_RESOURCE_GROUP..."
 fi
 
+# get ip
+host_ip=$(curl ipinfo.io/ip)
+
 # create cluster
 az aks create \
   --resource-group "$BYOC_LOGS_RESOURCE_GROUP" \
   --name "$BYOC_LOGS_CLUSTER_NAME" \
   --node-count "$BYOC_LOGS_NODE_COUNT" \
   --node-vm-size "$BYOC_LOGS_AKS_NODE_SIZE" \
+  --enable-addons azure-policy \
+  --api-server-authorized-ip-ranges "$host_ip/32" \
   --ssh-access disabled
 
 # get kubeconfig
