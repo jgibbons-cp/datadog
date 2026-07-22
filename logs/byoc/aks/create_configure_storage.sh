@@ -1,6 +1,13 @@
 #!/bin/bash
+set -euo pipefail
 
 source ./.env
+
+# can't reuse storage name for 14 days without UI purge so need to grab it
+byoc_logs_storage_account=".byoc_logs_storage_account"
+BYOC_LOGS_STORAGE_ACCOUNT=byoclogs-$(date +%s)
+BYOC_LOGS_STORAGE_ACCOUNT="${BYOC_LOGS_STORAGE_ACCOUNT//-/}"
+echo $BYOC_LOGS_STORAGE_ACCOUNT > $(pwd)/$byoc_logs_storage_account
 
 az storage account create \
   --name "$BYOC_LOGS_STORAGE_ACCOUNT" \
@@ -15,6 +22,7 @@ az storage account show \
   --query "provisioningState" \
   --output none
 
+set +e
 while [[ "$?" -ne "0" ]]; do
     echo "Waiting for storage to be created..."
     sleep 1
@@ -24,6 +32,7 @@ while [[ "$?" -ne "0" ]]; do
       --query "provisioningState" \
       --output none
 done
+set -e
 
 az storage container create \
     --name "$BYOC_LOGS_STORAGE_CONTAINER" \
@@ -50,6 +59,7 @@ SERVICE_PRINCIPAL_APPLICATION_ID=$(echo "$service_principal" | jq -r '.[keys_uns
 SERVICE_PRINCIPAL_SECRET=$(echo "$service_principal" | jq -r '.[keys_unsorted[2]]')
 SERVICE_PRINCIPAL_TENANT_ID=$(echo "$service_principal" | jq -r '.[keys_unsorted[3]]')
 
+# use to debug connection to storage/permission issues
 #echo AZURE_TENANT_ID="$SERVICE_PRINCIPAL_TENANT_ID"
 #echo AZURE_CLIENT_ID="$SERVICE_PRINCIPAL_APPLICATION_ID"
 #echo AZURE_CLIENT_SECRET="$SERVICE_PRINCIPAL_SECRET"
@@ -64,7 +74,7 @@ SERVICE_PRINCIPAL_TENANT_ID=$(echo "$service_principal" | jq -r '.[keys_unsorted
 cp datadog-values.yaml datadog-values-modified.yaml
 sed -i '' "s/TENANT_ID/$SERVICE_PRINCIPAL_TENANT_ID/" datadog-values-modified.yaml
 sed -i '' "s/CLIENT_ID/$SERVICE_PRINCIPAL_APPLICATION_ID/" datadog-values-modified.yaml
-
+sed -i '' "s/STORAGE_ACCOUNT/$BYOC_LOGS_STORAGE_ACCOUNT/" datadog-values-modified.yaml
 NAMESPACE=byoclogs
 kubectl create namespace $NAMESPACE
 
@@ -72,12 +82,7 @@ kubectl create secret generic byoclogs-storage \
   --from-literal storage-key="$SERVICE_PRINCIPAL_SECRET" \
   -n $NAMESPACE
 
-scope="
-/subscriptions/$SUBSCRIPTION_ID/resourceGroups/\
-$BYOC_LOGS_RESOURCE_GROUP/providers/Microsoft.Storage/\
-storageAccounts/$BYOC_LOGS_STORAGE_ACCOUNT/blobServices/\
-default/containers/$BYOC_LOGS_STORAGE_CONTAINER
-"
+scope="/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$BYOC_LOGS_RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$BYOC_LOGS_STORAGE_ACCOUNT/blobServices/default/containers/$BYOC_LOGS_STORAGE_CONTAINER"
 
 # assign role for rw
 az role assignment create \
@@ -123,4 +128,3 @@ az storage account network-rule add \
   --resource-group "$BYOC_LOGS_RESOURCE_GROUP" \
   --account-name "$BYOC_LOGS_STORAGE_ACCOUNT" \
   --subnet "$SUBNET_ID"
-
