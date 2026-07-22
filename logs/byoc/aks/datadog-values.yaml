@@ -8,7 +8,7 @@ azure:
     name: byoclogs-storage 
     key: storage-key
   storageAccount:
-    name: byoclogs
+    name: STORAGE_ACCOUNT
     # If you are using a storage account access key to authenticate with Blob Storage,
     # comment out the `clientSecretRef` section above,
     # and uncomment the `storageAccount` section below:
