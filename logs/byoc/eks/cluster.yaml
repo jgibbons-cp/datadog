@@ -1,0 +1,49 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: "CLUSTER"
+  region: "REGION"
+  version: "K8S_VERSION"
+
+upgradePolicy:
+  supportType: STANDARD
+
+iam:
+  withOIDC: true
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["*"]
+
+vpc:
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+  subnets:
+    public:
+      public-one:
+          id: "SUBNET_1"
+      public-two:
+          id: "SUBNET_2"
+
+addons:
+  - name: vpc-cni
+  - name: coredns
+  - name: kube-proxy
+  - name: aws-ebs-csi-driver
+
+nodeGroups:
+  #- name: control-plane-nodes # Or any other descriptive name for your control plane nodes
+  #  instanceType: t3.medium
+  #  desiredCapacity: 1
+  #  minSize: 1
+  #  maxSize: 1
+  #  taints:
+  #    - key: "node-role.kubernetes.io/control-plane"
+  #      value: "true"
+  #      effect: "NoSchedule"
+  - name: linux-ng
+    instanceType: "NODE_TYPE"
+    minSize: 1
+    maxSize: 1
