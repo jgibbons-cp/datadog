@@ -23,12 +23,16 @@ Functionality:
 ## Setup
 
 ```bash
-1) Create Pipeline  
+1) Export API and APP keys.  API keys are [here](https://app.datadoghq.com/organization-settings/api-keys)
+ and APP keys are [here](https://app.datadoghq.com/organization-settings/application-keys).
+export DD_API_KEY=<API_KEY>
+export DD_APP_KEY=<APP_KEY>
+2) Create Pipeline  
 cd terraform
 terraform init
 TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply
 
-2) After entering yes for terraform apply  
+3) After entering yes for terraform apply  
 export DD_API_KEY=$DD_API_KEY
 export DD_OP_PIPELINE_ID=$(terraform output -raw pipeline_id)
 cd ..
