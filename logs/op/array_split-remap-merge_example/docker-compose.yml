@@ -1,0 +1,42 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8282:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - opw1
+      - opw2
+      - opw3
+    restart: unless-stopped
+
+  opw1:
+    image: datadog/observability-pipelines-worker:latest
+    command: run
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_OP_PIPELINE_ID=${DD_OP_PIPELINE_ID}
+      - DD_SITE=datadoghq.com
+      - DD_OP_SOURCE_HTTP_SERVER_ADDRESS=0.0.0.0:8282
+    restart: unless-stopped
+
+  opw2:
+    image: datadog/observability-pipelines-worker:latest
+    command: run
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_OP_PIPELINE_ID=${DD_OP_PIPELINE_ID}
+      - DD_SITE=datadoghq.com
+      - DD_OP_SOURCE_HTTP_SERVER_ADDRESS=0.0.0.0:8282
+    restart: unless-stopped
+
+  opw3:
+    image: datadog/observability-pipelines-worker:latest
+    command: run
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_OP_PIPELINE_ID=${DD_OP_PIPELINE_ID}
+      - DD_SITE=datadoghq.com
+      - DD_OP_SOURCE_HTTP_SERVER_ADDRESS=0.0.0.0:8282
+    restart: unless-stopped
