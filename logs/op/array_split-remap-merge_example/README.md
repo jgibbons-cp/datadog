@@ -25,12 +25,12 @@ Functionality:
 ```bash
 cd terraform
 terraform init
-TF_VAR_dd_api_key=$DD_KHAX TF_VAR_dd_app_key=$DD_KHAX_APP terraform apply
+TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply
 
-export DD_API_KEY=$DD_KHAX
+export DD_API_KEY=$DD_API_KEY
 export DD_OP_PIPELINE_ID=$(terraform output -raw pipeline_id)
 cd ..
-docker compose up -d
+docker-compose up -d
 ```
 
 ## Scripts
@@ -62,7 +62,7 @@ Real options if HA matters:
 ## Teardown
 
 ```bash
-docker compose down
+docker-compose down
 cd terraform
 TF_VAR_dd_api_key=$DD_KHAX TF_VAR_dd_app_key=$DD_KHAX_APP terraform destroy
 ```
