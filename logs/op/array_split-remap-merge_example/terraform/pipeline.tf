@@ -33,7 +33,7 @@ resource "datadog_observability_pipeline" "opw_demo" {
         rename_fields {
           field {
             destination     = "record_id"
-            preserve_source = false
+            preserve_source = true
             source          = "ongoing.record_id"
           }
         }
