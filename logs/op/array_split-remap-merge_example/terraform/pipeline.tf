@@ -1,4 +1,4 @@
-resource "datadog_observability_pipeline" "preview" {
+resource "datadog_observability_pipeline" "opw_demo" {
   config {
     destination {
       datadog_logs {
@@ -9,13 +9,13 @@ resource "datadog_observability_pipeline" "preview" {
     pipeline_type = "logs"
     processor_group {
       display_name = "reduce-group"
-      enabled      = true
+      enabled      = false
       id           = "reduce-group"
       include      = "*"
       inputs       = ["dd-agent-in"]
       processor {
         display_name = "Split Arrays"
-        enabled      = true
+        enabled      = false
         id           = "processor-d11f284a-cc36-4f81-ac1b-b618043a9cd8"
         include      = "*"
         split_array {
@@ -27,7 +27,7 @@ resource "datadog_observability_pipeline" "preview" {
       }
       processor {
         display_name = "Edit Fields"
-        enabled      = true
+        enabled      = false
         id           = "processor-37b6b5e9-7bb8-4706-92a1-18a328edb2ce"
         include      = "source:opw-api-demo"
         rename_fields {
@@ -40,7 +40,7 @@ resource "datadog_observability_pipeline" "preview" {
       }
       processor {
         display_name = "reduce-by-record-id"
-        enabled      = true
+        enabled      = false
         id           = "reduce-by-record-id"
         include      = "*"
         reduce {
@@ -60,6 +60,6 @@ resource "datadog_observability_pipeline" "preview" {
       id = "dd-agent-in"
     }
   }
-  name = "opw-api-demo"
+  name = "opw-demo"
 }
 
