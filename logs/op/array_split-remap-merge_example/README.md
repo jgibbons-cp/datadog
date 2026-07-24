@@ -4,13 +4,15 @@
 
 Functionality:
 
-#**Direct vs OPW** — shows a client sending to the Datadog API (`/api/v2/logs`) can route through OPW with zero payload #changes. Only the hostname changes.
+<!--**Direct vs OPW** — shows a client sending to the Datadog API (`/api/v2/logs`) can route through OPW with zero payload changes. Only the hostname changes.-->
 
-**OPW Split** Arrays processor breaks the array ongoing into logs for each record_id in ongoing.record_id. Result is two logs from one in this example.
-**OPW Edit** Edit Fields processor remaps ongoing.record_id to record_id so we have a common attribute to merge.
-**Reduce processor** — Groups related log events (cncMessage + fullRecords) by `record_id` into single merged events. 3 events in, split and have 4 logs, remap, then merge and have 2 logs out after the 10s flush window. 10s is not configurable.
+**OPW Split** Arrays processor breaks the array ongoing into logs for each record_id in ongoing.record_id. Result is two logs from one in this example.  
 
-**Horizontal scaling failure scenario** — nginx consistent-hash LB routes by `X-Record-ID` header so the same record always hits the same OPW instance so reduce works. But if that instance dies mid-reduce, the state is gone. demonstrates why in-memory reduce doesn't survive failures.
+**OPW Edit** Edit Fields processor remaps ongoing.record_id to record_id so we have a common attribute to merge.  
+
+**Reduce processor** — Groups related log events (cncMessage + fullRecords) by `record_id` into single merged events. 3 events in, split and have 4 logs, remap, then merge and have 2 logs out after the 10s flush window. 10s is not configurable.  
+
+**Horizontal scaling failure scenario** — nginx consistent-hash LB routes by `X-Record-ID` header so the same record always hits the same OPW instance so reduce works. But if that instance dies mid-reduce, the state is gone. demonstrates why in-memory reduce doesn't survive failures.  
 
 ## Stack
 
