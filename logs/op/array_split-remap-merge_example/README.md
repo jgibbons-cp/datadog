@@ -110,6 +110,11 @@ Real options if HA matters:
 docker-compose down
 cd terraform
 TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform destroy  
+```  
+  
+Clean up configuration  
+  
+```bash
 rm pipeline-modified.tf  
 cd ..
 mv ../pipeline.tf .  
