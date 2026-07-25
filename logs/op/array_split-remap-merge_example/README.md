@@ -85,6 +85,8 @@ mv pipeline.tf ..
 TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply && cd ..  
 ```  
   
+Ensure pipeline opw-demo is [active](https://app.datadoghq.com/observability-pipelines?isEditor=false&pageIndex=0&sort=created%2Cdesc&tab=pipelines)  
+  
 4) Send logs  
   
 ```bash
