@@ -66,6 +66,8 @@ bash send-via-opw.sh # sends through OPW
 bash send-via-opw.sh  
 ```  
   
+![App Screenshot](no_opw_processors.png)  
+  
 2) Turn processors on:
   
 ```bash
