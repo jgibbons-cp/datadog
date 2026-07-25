@@ -84,15 +84,6 @@ cd ..
 bash send-via-opw.sh  
 ```  
   
-## Log Explorer
-
-https://khax.datadoghq.com/logs?query=demo%3Aopw-api-comparison&agg_m=count&agg_m_source=base&agg_t=count&cols=host%2Cservice&fromUser=true&messageDisplay=inline&refresh_mode=paused&storage=hot&stream_sort=desc&viz=stream&from_ts=1784759079479&to_ts=1784759165982&live=false
-
-Filter `demo:opw-api-comparison`:
-
-- `service:opw-demo-direct` — all 9 events arrive separately, nothing merged
-- `service:opw-demo-via-opw` — 3 events, one per `record_id`, fields from all 3 source events merged in
-
 ## horizontal scaling
 
 Consistent-hash routing works in steady state. When an instance dies, only its keys remap (consistent hashing, not full rebalance). But in-memory reduce state dies with the process — no persistence, no replication. Calls mid-window on the dead instance produce partial merges, logs are lost.
