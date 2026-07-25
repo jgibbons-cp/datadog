@@ -49,7 +49,9 @@ export DD_OP_PIPELINE_ID=$(terraform output -raw pipeline_id)
 cd ..
 docker-compose up -d  
 ```
-
+  
+4) Ensure pipeline is [active](https://app.datadoghq.com/observability-pipelines?isEditor=false&pageIndex=0&sort=created%2Cdesc&tab=pipelines)  
+  
 ## Scripts
 
 ```bash
