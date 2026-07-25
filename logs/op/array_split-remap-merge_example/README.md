@@ -50,7 +50,7 @@ cd ..
 docker-compose up -d  
 ```
   
-4) Ensure pipeline is [active](https://app.datadoghq.com/observability-pipelines?isEditor=false&pageIndex=0&sort=created%2Cdesc&tab=pipelines)  
+4) Ensure pipeline `opw-demo` is [active](https://app.datadoghq.com/observability-pipelines?isEditor=false&pageIndex=0&sort=created%2Cdesc&tab=pipelines)  
   
 ## Scripts
 
