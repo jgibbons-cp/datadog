@@ -93,6 +93,8 @@ Ensure pipeline opw-demo is [active](https://app.datadoghq.com/observability-pip
 bash send-via-opw.sh  
 ```  
   
+![App Screenshot](images/op_processed_logs.png)  
+  
 ## horizontal scaling
 
 Consistent-hash routing works in steady state. When an instance dies, only its keys remap (consistent hashing, not full rebalance). But in-memory reduce state dies with the process — no persistence, no replication. Calls mid-window on the dead instance produce partial merges, logs are lost.
