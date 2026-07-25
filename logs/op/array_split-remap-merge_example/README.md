@@ -15,7 +15,14 @@
 ```
 [client] -> nginx (consistent hash on X-Record-ID) -> opw1 / opw2 / opw3 -> Datadog  
   
-The client is a script -> nginx -> op workers on a laptop (e.g. tested on Mac OSX) -> Datadog  
+The client is a script -> nginx -> op workers on the host we are on (e.g. tested on Mac OSX) -> Datadog  
+  
+Requirements:  
+  
+1) Docker  
+  - docker-compose
+2) bash  
+3) Terraform  
 ```
 
 ## Setup
