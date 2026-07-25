@@ -13,7 +13,9 @@
 ## Stack
 
 ```
-[client] -> nginx (consistent hash on X-Record-ID) -> opw1 / opw2 / opw3 -> Datadog
+[client] -> nginx (consistent hash on X-Record-ID) -> opw1 / opw2 / opw3 -> Datadog  
+  
+The client is a script -> nginx -> op workers on a laptop (e.g. tested on Mac OSX) -> Datadog  
 ```
 
 ## Setup
