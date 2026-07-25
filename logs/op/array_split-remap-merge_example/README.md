@@ -40,7 +40,6 @@ TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply
 3) After entering yes for terraform apply  
 
 ```bash
-#export DD_API_KEY=$DD_API_KEY
 export DD_OP_PIPELINE_ID=$(terraform output -raw pipeline_id)
 cd ..
 docker-compose up -d  
@@ -54,15 +53,37 @@ bash send-via-opw.sh # sends through OPW
 
 ## Usage
 
-1) Unmodified logs: the initial pipeline has all processors turned off.  Therefore it is just a passthrough.
+1) Unmodified logs: the initial pipeline has all processors turned off.  Therefore it is just a passthrough.  
+  
+```bash  
+bash send-via-opw.sh  
+```  
+
 2) Turn processors on:
   
 ```bash
-sed -i '' "s/true/true.bk/" pipeline.tf
-sed -i '' "s/false/true/" pipeline.tf
-sed -i '' "s/true.bk/false/" pipeline.tf
+cd terraform
+cp pipeline.tf pipeline-modified.tf
+sed -i '' "s/true/true.bk/" pipeline-modified.tf
+sed -i '' "s/false/true/" pipeline-modified.tf
+sed -i '' "s/true.bk/false/" pipeline-modified.tf
 ```  
+  
+3) Apply changes to turn processors on  
 
+```bash
+mv pipeline.tf ..  
+TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply  
+mv ../pipeline.tf .  
+cd ..  
+```  
+  
+4) Send logs  
+  
+```bash
+bash send-via-opw.sh  
+```  
+  
 ## Log Explorer
 
 https://khax.datadoghq.com/logs?query=demo%3Aopw-api-comparison&agg_m=count&agg_m_source=base&agg_t=count&cols=host%2Cservice&fromUser=true&messageDisplay=inline&refresh_mode=paused&storage=hot&stream_sort=desc&viz=stream&from_ts=1784759079479&to_ts=1784759165982&live=false
