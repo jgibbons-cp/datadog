@@ -25,13 +25,13 @@ Functionality:
 1) Export API and APP keys.  API keys are [here](https://app.datadoghq.com/organization-settings/api-keys)
  and APP keys are [here](https://app.datadoghq.com/organization-settings/application-keys).  
 
-```
+```bash
 export DD_API_KEY=<API_KEY>  
 export DD_APP_KEY=<APP_KEY>  
 ```
 2) Create Pipeline  
 
-```
+```bash
 cd terraform
 terraform init
 TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply
@@ -39,8 +39,8 @@ TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply
 
 3) After entering yes for terraform apply  
 
-```
-export DD_API_KEY=$DD_API_KEY
+```bash
+#export DD_API_KEY=$DD_API_KEY
 export DD_OP_PIPELINE_ID=$(terraform output -raw pipeline_id)
 cd ..
 docker-compose up -d  
@@ -49,10 +49,19 @@ docker-compose up -d
 ## Scripts
 
 ```bash
-#bash send-direct.sh # sends directly to Datadog API — 9 separate events
-bash send-via-opw.sh # sends through OPW reduce — 3 merged events
-#bash fail-scenario.sh # kills opw1 mid-reduce, shows partial merges in DD
+bash send-via-opw.sh # sends through OPW
 ```
+
+## Usage
+
+1) Unmodified logs: the initial pipeline has all processors turned off.  Therefore it is just a passthrough.
+2) Turn processors on:
+  
+```bash
+sed -i '' "s/true/true.bk/" pipeline.tf
+sed -i '' "s/false/true/" pipeline.tf
+sed -i '' "s/true.bk/false/" pipeline.tf
+```  
 
 ## Log Explorer
 
