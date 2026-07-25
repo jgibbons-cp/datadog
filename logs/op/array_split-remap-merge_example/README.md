@@ -118,6 +118,6 @@ Clean up configuration
   
 ```bash
 rm pipeline-modified.tf  
-cd ..
 mv ../pipeline.tf .  
+cd ..  
 ```
