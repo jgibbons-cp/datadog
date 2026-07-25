@@ -82,8 +82,7 @@ sed -i '' "s/true.bk/false/" pipeline-modified.tf
 
 ```bash
 mv pipeline.tf ..  
-TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply  
-cd ..  
+TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply && cd ..  
 ```  
   
 4) Send logs  
