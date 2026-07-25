@@ -2,10 +2,6 @@
 
 ## Summary
 
-Functionality:
-
-<!--**Direct vs OPW** — shows a client sending to the Datadog API (`/api/v2/logs`) can route through OPW with zero payload changes. Only the hostname changes.-->
-
 **OPW Split** Arrays processor breaks the array `ongoing` into logs for each `record_id` in `ongoing.record_id`. Result is two logs from one in this example.  
 
 **OPW Edit** Edit Fields processor remaps `ongoing.record_id` to `record_id` so we have a common attribute to merge.  
