@@ -79,7 +79,6 @@ sed -i '' "s/true.bk/false/" pipeline-modified.tf
 ```bash
 mv pipeline.tf ..  
 TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform apply  
-mv ../pipeline.tf .  
 cd ..  
 ```  
   
@@ -105,4 +104,6 @@ docker-compose down
 cd terraform
 TF_VAR_dd_api_key=$DD_API_KEY TF_VAR_dd_app_key=$DD_APP_KEY terraform destroy  
 cd ..
+rm pipeline-modified.tf
+mv ../pipeline.tf .  
 ```
