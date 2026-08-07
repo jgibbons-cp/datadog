@@ -93,8 +93,12 @@ export STORAGE_TYPE=gp3
 export AWS_LB_ControllerIAMPolicy=AWSLoadBalancerControllerIAMPolicy-$RESOURCE_NAME
 export AWS_LB_Controller_Role=aws-lb-controller-role-$RESOURCE_NAME
 export WORKLOAD_CLUSTER=workload-cluster-"${HOSTNAME}"
+
+# https://app.datadoghq.com/organization-settings/api-keys
+export DD_API_KEY=
+
 EOF
-  log "Edit it if needed, then run: source $ENV_FILE"
+  log "Edit it if needed (e.g. did you add your api key?), then run: source $ENV_FILE"
 }
 
 # ---------------------------------------------------------------------------
@@ -877,9 +881,9 @@ cmd_all() {
   #cmd_create_workload_cluster
   #cmd_setup_sg
   log "Automated portion complete."
-  warn "Next manual steps: run '$0 create-op-pipeline', then '$0 install-op',"
-  warn "then '$0 install-agent-workload', '$0 generate-load', '$0 redact-sensitive-data',"
-  warn "and '$0 install-agent-byoc'."
+  #warn "Next manual steps: run '$0 create-op-pipeline', then '$0 install-op',"
+  #warn "then '$0 install-agent-workload', '$0 generate-load', '$0 redact-sensitive-data',"
+  #warn "and '$0 install-agent-byoc'."
 }
 
 usage() {
