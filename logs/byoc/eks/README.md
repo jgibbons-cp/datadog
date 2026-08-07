@@ -34,8 +34,10 @@ The variables that are most likely to need changing from the default are:
 * export NODE_TYPE=m5.4xlarge  
 * export REGION=us-west-1  
 * export NAMESPACE=byoclogs  
-* # change if not using the ese sandbox  
+* \# change if not using the ese sandbox  
   export PROFILE="--profile account-admin-770341584863"  
 * export SITE=datadoghq.com # us1  
+* \# https://app.datadoghq.com/organization-settings/api-keys
+* export DD_API_KEY=
   
 2) bash eks_lab_setup.sh  
