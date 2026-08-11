@@ -484,7 +484,7 @@ metastore:
         name: byoc-logs-metastore-uri
 searcher:
   replicaCount: 1
-  podSize: medium
+  podSize: large
 # uncomment if you want to use a pv with searchers
 #. persistentVolume:
 #    enabled: true
@@ -492,7 +492,7 @@ searcher:
 #    storage: "1Gi"
 #    storageClass: "gp3"
 indexer:
-  podSize: medium
+  podSize: large
   persistentVolume:
     enabled: true
     annotations: {}
