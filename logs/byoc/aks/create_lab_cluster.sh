@@ -60,6 +60,7 @@ az aks get-credentials --resource-group "$BYOC_LOGS_RESOURCE_GROUP" \
   --name "$BYOC_LOGS_CLUSTER_NAME" -f $KUBECONFIG
 
 if [ $? -ne 0 ]; then
+    echo "Can't get kubeconfig..."
     exit 1
 fi
 

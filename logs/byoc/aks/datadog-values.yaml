@@ -63,7 +63,7 @@ metastore:
 # See the sizing guide for available tiers and their configurations.
 indexer:
   replicaCount: 1
-  podSize: medium
+  podSize: large
   persistentVolume:
     enabled: true
     storage: 50Gi
@@ -84,4 +84,4 @@ indexer:
  # Memory is particularly important for searchers as they cache frequently accessed index data in memory.
 searcher:
   replicaCount: 1
-  podSize: medium
+  podSize: large
