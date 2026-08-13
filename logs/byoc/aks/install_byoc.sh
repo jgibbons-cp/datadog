@@ -2,6 +2,11 @@
 
 source ./.env
 
+if [[ -z "$API_KEY" ]]; then
+    echo "Datadog API key required... exiting..."
+    exit 1
+fi 
+
 helm repo add datadog https://helm.datadoghq.com
 helm repo update || true
 
