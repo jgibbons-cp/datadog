@@ -63,5 +63,3 @@ if [ $? -ne 0 ]; then
     echo "Can't get kubeconfig..."
     exit 1
 fi
-
-export KUBECONFIG="$KUBECONFIG"

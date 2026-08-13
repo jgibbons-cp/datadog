@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./.env 
+
 bash create_lab_cluster.sh
 if [ $? -ne 0 ]; then
     echo "Error: There appears to be an issue with the cluster... exiting setup..."
