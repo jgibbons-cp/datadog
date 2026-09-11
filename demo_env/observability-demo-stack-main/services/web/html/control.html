@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>__DEMO_BRAND__ &mdash; Demo Control Panel</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Demo Control Panel<span>__DEMO_BRAND__ &mdash; failure injection</span></div>
+    <nav>
+      <button onclick="window.open('/','_blank')">Open storefront</button>
+      <button id="reset-btn">Reset all</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="panel">
+      <strong>How to drive this.</strong> Leave the storefront and the load generator running,
+      flip one scenario at a time, then wait 30&ndash;60&nbsp;seconds for the signal to land in
+      Datadog. Every scenario below maps to a specific place in the product &mdash; the
+      <em>Where to look</em> line tells you where to go.
+    </div>
+
+    <div class="ctl-grid">
+
+      <div class="scenario">
+        <h3>Slow query &mdash; unsargable predicates</h3>
+        <p>Wraps <code>DATE()</code> around an indexed timestamp column and switches order
+           search to a leading-wildcard <code>LIKE</code>. Both defeat the index. This is the
+           single most common cause of database slowness in production.</p>
+        <div class="what"><strong>Where to look:</strong> APM &rarr; Databases, then Database
+           Monitoring &rarr; Query Samples. Compare the explain plan before and after.</div>
+        <div class="switch">
+          <input type="checkbox" id="slow_query">
+          <label for="slow_query">Enable</label>
+          <span id="slow_query-state" class="state-off">off</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <h3>N+1 queries</h3>
+        <p>Turns one batched join into roughly a hundred sequential round trips per request
+           &mdash; the classic ORM lazy-loading pattern. Each query is fast; the request is not.</p>
+        <div class="what"><strong>Where to look:</strong> APM &rarr; Traces. Open a
+           <code>/api/orders/recent</code> trace and show the flame graph wall of
+           <code>mysql.query</code> spans.</div>
+        <div class="switch">
+          <input type="checkbox" id="n_plus_one">
+          <label for="n_plus_one">Enable</label>
+          <span id="n_plus_one-state" class="state-off">off</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <h3>Connection pool exhaustion</h3>
+        <p>Checkout holds its pooled connection open running real analytical aggregates.
+           With a pool of 10 and concurrent traffic, requests queue for a connection and
+           the whole storefront stalls.</p>
+        <div class="what"><strong>Where to look:</strong> APM service page for
+           <code>__DEMO_NAME__-orders</code> (latency spike, no matching DB time), then the
+           pool readout on the storefront Insights tab.</div>
+        <div class="switch">
+          <input type="checkbox" id="pool_exhaustion">
+          <label for="pool_exhaustion">Enable</label>
+          <span id="pool_exhaustion-state" class="state-off">off</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <h3>Row-lock contention</h3>
+        <p>Forces every checkout onto one hot SKU with <code>SELECT &hellip; FOR UPDATE</code>
+           held open. Concurrent orders serialise behind a single row lock, and PostgreSQL
+           picks up an idle-in-transaction session at the same time.</p>
+        <div class="what"><strong>Where to look:</strong> Database Monitoring &rarr; Query
+           Activity. Show sessions in lock wait and the blocking session tree.</div>
+        <div class="switch">
+          <input type="checkbox" id="lock_contention">
+          <label for="lock_contention">Enable</label>
+          <span id="lock_contention-state" class="state-off">off</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <h3>Injected latency</h3>
+        <p>Adds fixed delay at the BFF, ahead of any database work. Useful for showing that
+           the trace tells you it is <em>not</em> the database &mdash; which is half of what
+           observability is for.</p>
+        <div class="what"><strong>Where to look:</strong> RUM &rarr; Performance, and the
+           service map latency on <code>__DEMO_NAME__-bff</code>.</div>
+        <div class="slider-row">
+          <input type="range" id="latency_ms" min="0" max="5000" step="100" value="0">
+          <span id="latency_ms-value">0 ms</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <h3>Frontend error rate</h3>
+        <p>Returns <code>503</code> for a percentage of storefront API calls, so RUM records
+           real user-facing errors and failed sessions you can replay.</p>
+        <div class="what"><strong>Where to look:</strong> RUM &rarr; Error Tracking, then open
+           a Session Replay of a customer hitting the error.</div>
+        <div class="slider-row">
+          <input type="range" id="error_rate" min="0" max="100" step="5" value="0">
+          <span id="error_rate-value">0 %</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <h3>Hold duration</h3>
+        <p>How long the lock-contention and pool-exhaustion scenarios hold a connection or a
+           row lock, doing genuine query work throughout. Four seconds is enough to be
+           obvious without stalling the demo.</p>
+        <div class="slider-row">
+          <input type="range" id="hold_seconds" min="1" max="15" step="1" value="4">
+          <span id="hold_seconds-value">4 s</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <h3>Live remediation &mdash; indexes</h3>
+        <p>Add the index that Database Monitoring tells you is missing, live on the call, and
+           watch the same query drop from seconds to milliseconds. This is the moment that
+           sells the product.</p>
+        <div class="what"><strong>Order of play:</strong> show the slow query in DBM, read the
+           explain plan, add the index here, refresh the storefront.</div>
+        <div class="actions">
+          <button class="primary" data-index="orders/create">Add MySQL orders index</button>
+          <button class="danger"  data-index="orders/drop">Drop it</button>
+          <button class="primary" data-index="catalog/create">Add PG product_views index</button>
+          <button class="danger"  data-index="catalog/drop">Drop it</button>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <h3>Connection pool live view</h3>
+        <p>Polls the orders service HikariCP pool every two seconds. Watch
+           <code>waiting</code> climb the moment pool exhaustion is switched on.</p>
+        <pre class="pool" id="pool-stats">loading&hellip;</pre>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/control.js"></script>
+</body>
+</html>

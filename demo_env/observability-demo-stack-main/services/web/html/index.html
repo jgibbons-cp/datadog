@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>__DEMO_BRAND__ &mdash; Shop</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/rum-config.js"></script>
+  <script src="/rum-init.js"></script>
+</head>
+<body>
+  <header>
+    <div class="logo">__DEMO_BRAND__<span>D2C Storefront</span></div>
+    <input type="search" id="search-box" placeholder="Search neem, ashvagandha, baby care&hellip;">
+    <nav>
+      <button data-tab="shop" class="active">Shop</button>
+      <button data-tab="orders">My Orders</button>
+      <button data-tab="insights">Insights</button>
+      <button onclick="window.open('/control.html','_blank')">Control Panel</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="banner" id="rum-banner">
+      <strong>RUM is not configured.</strong> Add <code>DD_RUM_APPLICATION_ID</code> and
+      <code>DD_RUM_CLIENT_TOKEN</code> to <code>.env</code>, then run
+      <code>docker compose up -d --force-recreate web</code>.
+    </div>
+
+    <!-- ------------------------------------------------------------ shop -->
+    <section id="tab-shop">
+      <h2>Featured products <span class="timing" id="products-timing"></span></h2>
+      <div class="grid" id="product-grid"></div>
+
+      <h2>Trending this month <span class="timing" id="trending-timing"></span></h2>
+      <table id="trending-table">
+        <thead><tr><th>Product</th><th>Views</th><th>Sessions</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- ---------------------------------------------------------- orders -->
+    <section id="tab-orders" class="hidden">
+      <h2>Order lookup</h2>
+      <div class="row">
+        <input type="email" id="order-email" value="customer1@demo.example">
+        <button id="order-search-btn">Search orders</button>
+        <span class="timing" id="order-search-timing"></span>
+      </div>
+      <table id="orders-table">
+        <thead><tr><th>Order</th><th>Email</th><th>Status</th><th>Channel</th><th>Amount</th><th>Placed</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <h2>Recent orders across the store <span class="timing" id="recent-timing"></span></h2>
+      <table id="recent-table">
+        <thead><tr><th>Order</th><th>Status</th><th>Items</th><th>Amount</th><th>City</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- -------------------------------------------------------- insights -->
+    <section id="tab-insights" class="hidden">
+      <h2>Top products by revenue (last 7 days) <span class="timing" id="top-timing"></span></h2>
+      <table id="top-table">
+        <thead><tr><th>SKU</th><th>Product</th><th>Units</th><th>Revenue</th><th>Buyers</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <h2>Connection pool</h2>
+      <div class="panel"><pre class="pool" id="pool-stats">loading&hellip;</pre></div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+# ---------------------------------------------------------------------------
+# Remediation for the missing index on orders.customer_email.
+#
+#   kubectl apply -f k8s/manifests/90-index-migration-job.yaml
+#   kubectl logs -n __DEMO_NAME__ job/orders-add-customer-email-index -f
+#
+# Re-run with:
+#   kubectl delete job orders-add-customer-email-index -n __DEMO_NAME__
+#   kubectl apply -f k8s/manifests/90-index-migration-job.yaml
+#
+# Idempotent, and uses online DDL so the table is never locked -- the first
+# question any competent DBA will ask about an index added under load.
+# ---------------------------------------------------------------------------
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: orders-add-customer-email-index
+  namespace: __DEMO_NAME__
+  labels:
+    app: orders-migration
+    change: add-index-orders-customer-email
+spec:
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app: orders-migration
+        tags.datadoghq.com/env: demo
+        tags.datadoghq.com/service: __DEMO_NAME__-orders
+        tags.datadoghq.com/version: 1.4.1
+      annotations:
+        ad.datadoghq.com/migrate.logs: '[{"source": "mysql", "service": "__DEMO_NAME__-orders"}]'
+    spec:
+      enableServiceLinks: false
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - { name: MYSQL_HOST, value: mysql }
+            - { name: MYSQL_DB,   value: __DEMO_NAME___orders }
+            - { name: MYSQL_USER, value: __DEMO_NAME__ }
+            - name: MYSQL_PASSWORD
+              valueFrom: { secretKeyRef: { name: __DEMO_NAME__-db, key: MYSQL_APP_PASSWORD } }
+          command: ["sh", "-c"]
+          args:
+            - |
+              set -eu
+              echo "[migration] adding idx_orders_customer_email to ${MYSQL_DB}.orders"
+
+              mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DB" <<'SQL'
+              SET @exists := (
+                SELECT COUNT(*) FROM information_schema.statistics
+                WHERE table_schema = DATABASE()
+                  AND table_name   = 'orders'
+                  AND index_name   = 'idx_orders_customer_email'
+              );
+
+              -- ALGORITHM=INPLACE, LOCK=NONE keeps the table readable and
+              -- writable for the whole build. No maintenance window required.
+              SET @ddl := IF(@exists = 0,
+                'ALTER TABLE orders ADD INDEX idx_orders_customer_email (customer_email), ALGORITHM=INPLACE, LOCK=NONE',
+                'DO 0');
+
+              PREPARE stmt FROM @ddl;
+              EXECUTE stmt;
+              DEALLOCATE PREPARE stmt;
+
+              SELECT IF(@exists = 0, 'created', 'already present') AS result;
+
+              SELECT index_name, column_name, cardinality
+              FROM information_schema.statistics
+              WHERE table_schema = DATABASE() AND table_name = 'orders'
+              ORDER BY index_name, seq_in_index;
+              SQL
+
+              echo "[migration] complete"
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits:   { cpu: 500m, memory: 256Mi }

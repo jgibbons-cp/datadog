@@ -1,0 +1,32 @@
+## Datadog Database Monitoring -- PostgreSQL (catalog domain)
+init_config:
+
+instances:
+  - dbm: true
+    host: postgres
+    port: 5432
+    username: datadog
+    password: "%%env_POSTGRES_DD_PASSWORD%%"
+    dbname: "%%env_DEMO_NAME%%_catalog"
+    reported_hostname: "%%env_DEMO_NAME%%-postgres-prod"
+    tags:
+      - env:demo
+      - account:%%env_DEMO_NAME%%
+      - domain:catalog
+      - db_engine:postgresql
+    relations:
+      - relation_regex: .*
+        relkind:
+          - r
+          - i
+    query_metrics:
+      enabled: true
+    query_samples:
+      enabled: true
+      explained_queries_per_hour_per_query: 60
+    query_activity:
+      enabled: true
+    collect_settings:
+      enabled: true
+    collect_schemas:
+      enabled: true

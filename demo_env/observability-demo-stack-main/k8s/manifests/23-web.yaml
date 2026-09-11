@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: __DEMO_NAME__
+  labels:
+    app: web
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+        tier: frontend
+        tags.datadoghq.com/env: demo
+        tags.datadoghq.com/service: __DEMO_NAME__-web
+        tags.datadoghq.com/version: 1.4.0
+        team: __DEMO_NAME__-storefront
+      annotations:
+        ad.datadoghq.com/web.logs: '[{"source": "nginx", "service": "__DEMO_NAME__-web"}]'
+    spec:
+      # Kubernetes injects legacy Docker-link env vars for every Service in the
+      # namespace (REDIS_PORT=tcp://10.96.x.x:6379 and friends), which shadow
+      # application variables of the same name. Turn the whole mechanism off.
+      enableServiceLinks: false
+      containers:
+      - name: web
+        image: __DEMO_NAME__/web:1.4.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 80
+        env:
+        - name: DEMO_BRAND
+          valueFrom:
+            secretKeyRef:
+              name: __DEMO_NAME__-datadog
+              key: DEMO_BRAND
+        - name: DD_SITE
+          valueFrom:
+            secretKeyRef:
+              name: __DEMO_NAME__-datadog
+              key: DD_SITE
+        - name: DD_RUM_APPLICATION_ID
+          valueFrom:
+            secretKeyRef:
+              name: __DEMO_NAME__-datadog
+              key: DD_RUM_APPLICATION_ID
+        - name: DD_RUM_CLIENT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: __DEMO_NAME__-datadog
+              key: DD_RUM_CLIENT_TOKEN
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        readinessProbe:
+          httpGet:
+            path: /index.html
+            port: http
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: __DEMO_NAME__
+spec:
+  selector:
+    app: web
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-nodeport
+  namespace: __DEMO_NAME__
+spec:
+  type: NodePort
+  selector:
+    app: web
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    nodePort: 30080

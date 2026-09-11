@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgen
+  namespace: __DEMO_NAME__
+  labels:
+    app: loadgen
+    tier: tooling
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loadgen
+  template:
+    metadata:
+      labels:
+        app: loadgen
+        tier: tooling
+        tags.datadoghq.com/env: demo
+        tags.datadoghq.com/service: __DEMO_NAME__-loadgen
+    spec:
+      # Kubernetes injects legacy Docker-link env vars for every Service in the
+      # namespace (REDIS_PORT=tcp://10.96.x.x:6379 and friends), which shadow
+      # application variables of the same name. Turn the whole mechanism off.
+      enableServiceLinks: false
+      containers:
+      - name: loadgen
+        image: __DEMO_NAME__/loadgen:1.4.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: TARGET
+          value: http://bff:3000
+        - name: CONCURRENCY
+          value: '6'
+        - name: THINK_TIME_MS
+          value: '700'
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi

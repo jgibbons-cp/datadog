@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: __DEMO_NAME__-orders
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:__DEMO_NAME___orders}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${MYSQL_USER:__DEMO_NAME__}
+    password: ${MYSQL_PASSWORD:__DEMO_NAME___app_pw}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      # Deliberately small so the pool-exhaustion scenario is reproducible.
+      maximum-pool-size: ${DB_POOL_MAX:10}
+      minimum-idle: 2
+      connection-timeout: 8000
+      pool-name: __DEMO_NAME__-orders-pool
+
+chaos:
+  redis-host: ${REDIS_HOST:localhost}
+  redis-port: ${REDIS_PORT:6379}
+
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [dd.trace_id=%X{dd.trace_id} dd.span_id=%X{dd.span_id}] %logger{36} - %msg%n'

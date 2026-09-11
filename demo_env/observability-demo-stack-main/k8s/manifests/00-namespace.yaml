@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: __DEMO_NAME__
+  labels:
+    name: __DEMO_NAME__
+    tags.datadoghq.com/env: demo
