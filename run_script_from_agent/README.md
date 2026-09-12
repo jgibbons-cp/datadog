@@ -11,7 +11,7 @@ This document will guide you through an example of setting up a private action r
 2) Using [fleet automation](https://docs.datadoghq.com/actions/private_actions/set_up_agent_based/?tab=linux#using-fleet-automation-recommended) is the recommended way to install the agent with the correct configuration.  
   
   - In additional configuration in the UI choose "Enable agent to take action."  
-  - Choose an API key then copy the instruction and install the agent.  
+  - Choose an API key then copy the command and install the agent.  
   
   - NOTE: if this is an existing agent you can add it to `/etc/datadog-agent/datadog.yaml` then restart the agent.  The `actions_allowlist` can't be added in fleet view so it must be done here.
 
