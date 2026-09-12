@@ -109,7 +109,7 @@ b) Choose a monitor for the trigger.
   
 c) At the bottom of the trigger box in the UI choose the blue `+` then the action: `Script -> Run Predefined Script`  
   
-d) In the action configuration in `Inputs`, choose `Connection` then your 'Private Action Runner Connection' from the dropdown.  
+d) In the action configuration in `Inputs`, choose `Connection` then your `Private Action Runner Connection` from the dropdown.  
   
 e) In 'Script Parameters' toggle the variable input on the right '{{' and add your script name: `clean_up_stale_processes`.  Note, this is from the block that has the command in `/etc/datadog-agent/private-action-runner/script-config.yaml`  
   
