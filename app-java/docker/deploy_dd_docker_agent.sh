@@ -28,4 +28,10 @@ fi
 # DD_PROCESS_AGENT_ENABLED - love process collection
 
 #deploy datadog agent
-docker run -d --network $lab_network --name dd-agent -v /var/run/docker.sock:/var/run/docker.sock:ro -v /proc/:/host/proc/:ro -v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro -e DD_API_KEY=$DD_API_KEY -e DD_SERVICE=java-app -e DD_ENV=lab -e DD_VERSION=.01 -e DD_APM_NON_LOCAL_TRAFFIC=true -e DD_LOGS_ENABLED=true -e DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true -v /etc/passwd:/etc/passwd:ro -e DD_PROCESS_AGENT_ENABLED=true -e DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true $npm_args -p 8125:8125/udp gcr.io/datadoghq/agent:7
+#DD_API_KEY is passed via a restricted-permission env file instead of -e to avoid
+#exposing the secret value in process listings (ps aux) and docker inspect command args.
+dd_agent_env_file=$(mktemp)
+chmod 600 "$dd_agent_env_file"
+echo "DD_API_KEY=$DD_API_KEY" > "$dd_agent_env_file"
+docker run -d --network $lab_network --name dd-agent -v /var/run/docker.sock:/var/run/docker.sock:ro -v /proc/:/host/proc/:ro -v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro --env-file "$dd_agent_env_file" -e DD_SERVICE=java-app -e DD_ENV=lab -e DD_VERSION=.01 -e DD_APM_NON_LOCAL_TRAFFIC=true -e DD_LOGS_ENABLED=true -e DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true -v /etc/passwd:/etc/passwd:ro -e DD_PROCESS_AGENT_ENABLED=true -e DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true $npm_args -p 8125:8125/udp gcr.io/datadoghq/agent:7
+rm -f "$dd_agent_env_file"
