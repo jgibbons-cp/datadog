@@ -4,7 +4,7 @@ This document will guide you through an example of setting up a private action r
 
 ## Private Action Runner
 
-[Setup](https://docs.datadoghq.com/actions/private_actions/set_up_agent_based/?tab=linux#manual-installation)
+### Setup
 
 1) [Install](https://docs.datadoghq.com/actions/private_actions/set_up_agent_based/?tab=linux#install-the-runner) the runner on your choice of infrastructure.  In this example we will use an Ubuntu VM and the Datadog agent.  
   
@@ -24,7 +24,7 @@ This document will guide you through an example of setting up a private action r
         - com.datadoghq.script.runPredefinedScript
     ```
   
-3) [Confirm](https://app.datadoghq.com/actions/private-action-runners) your private action runner is available.  
+3) [Confirm](https://app.datadoghq.com/actions/private-action-runners) your private action runner is available.  Note, it may take a minute to connect so if it shows `INACTIVE` give it a minute.  
   
 ## Run a Script with the Runner
 
@@ -32,11 +32,11 @@ The documentation is [here](https://docs.datadoghq.com/actions/private_actions/r
   
 ## Configure the Script to Run
 
-The script will live in `/etc/datadog-agent/private-action-runner/script-config.yaml`.  An example can be found [here](https://docs.datadoghq.com/actions/private_actions/run_script/?tab=linux#configure-scripts).  
+The script will live in `/etc/datadog-agent/private-action-runner/script-config.yaml`.  An example can be found [here](https://docs.datadoghq.com/actions/private_actions/run_script/?tab=linux#configure-scripts).  We will walk through a full example below.  
   
 ## Permissions
 
-The script will be run by a non-root user called dd-agent.  If you need to run privileged commands you will need to [grant permissions](https://docs.datadoghq.com/actions/private_actions/run_script/?tab=linux#grant-permissions).  Narrow them down as granular as possible.  
+The script will be run by a non-root user called `dd-agent`.  If you need to run privileged commands you will need to [grant permissions](https://docs.datadoghq.com/actions/private_actions/run_script/?tab=linux#grant-permissions).  Narrow them down to be as granular as possible.  
 
 ## Testing
 
@@ -73,10 +73,14 @@ dd-agent ALL=(ALL) NOPASSWD: /usr/bin/killall nginx
 3) Install nginx on the host and confirm it is running  
   
   ```
-  sudo apt install nginx -y
-  ps auxww | grep nginx
+  $ sudo apt install nginx -y
+  $ ps auxww | grep nginx
+  root        3149  0.0  0.7  11208  7076 ?        S    19:57   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+  www-data    3152  0.0  0.4  12896  4504 ?        S    19:57   0:00 nginx: worker process
+  www-data    3153  0.0  0.4  12896  4444 ?        S    19:57   0:00 nginx: worker process
+  ubuntu      3240  0.0  0.2   7084  2228 pts/0    S+   19:57   0:00 grep --color=auto nginx
   ```
-4) Create the script in `/home/ubuntu` and configure it  
+4) Create the script `/home/ubuntu/test_script.sh` and configure it  
   
 a) 
 ```
@@ -103,11 +107,11 @@ a) Create a [workflow](https://app.datadoghq.com/workflow?my=false&sort=-favorit
 
 b) Choose a monitor for the trigger.  
   
-c) At the bottom of the trigger in the UI choose the action: Script -> Run Predefined Script  
+c) At the bottom of the trigger box in the UI choose blue `+` then the action: Script -> Run Predefined Script  
   
-d) Click into the action and in `Inputs` choose `Connection` then your 'Private Action Runner Connection' from the dropdown.  
+d) In the action configuration in `Inputs`, choose `Connection` then your 'Private Action Runner Connection' from the dropdown.  
   
-e) In 'Script Parameters' toggle the variable input on the right '{{' and add your script name: `clean_up_stale_processes`  
+e) In 'Script Parameters' toggle the variable input on the right '{{' and add your script name: `clean_up_stale_processes`.  Note, this is from the block that has the command in `/etc/datadog-agent/private-action-runner/script-config.yaml`  
   
 f) In the top right corner click `Run` then with `Manual` chosen click `Run` in the pop-up.  
   
@@ -120,4 +124,19 @@ ubuntu      6248  0.0  0.2   7084  2200 pts/0    S+   02:25   0:00 grep --color=
 
 Either publish the workflow or delete it.  
 
+## Connect to a Monitor
+
+To automate the process in the event of some condition create a monitor.  For example, a [log monitor](https://app.datadoghq.com/monitors/create/log) can alert if a certain number of logs meets a condition (e.g. greater than x over n minutes),  
+
+In the alert section you can use the monitor as a notification.  In my example, my workflow is called `Test Running a Script`.  Therefore, I can alert off of it using `@` notation in the notification section.  
+
+```
+{{#is_alert}}
+Condition is met, alerting to workflow.
+# NOTE, then name when choosing is 'Test Running a Script' but internally the workflow is referred to by a reference to owner and time.
+@workflow-Jenks-Sep-12-2026-1259 
+{{/is_alert}}
+```
+
+After you configure it, you can test the alert by clicking the `Test Notifications` button at the bottom.  
 
