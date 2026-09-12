@@ -107,7 +107,7 @@ a) Create a [workflow](https://app.datadoghq.com/workflow?my=false&sort=-favorit
 
 b) Choose a monitor for the trigger.  
   
-c) At the bottom of the trigger box in the UI choose the blue `+` then the action: Script -> Run Predefined Script  
+c) At the bottom of the trigger box in the UI choose the blue `+` then the action: `Script -> Run Predefined Script`  
   
 d) In the action configuration in `Inputs`, choose `Connection` then your 'Private Action Runner Connection' from the dropdown.  
   
